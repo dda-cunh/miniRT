@@ -4,7 +4,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+/*
+function vmisup
+{
+  ISUP='VBoxManage showvminfo "ubuntu_server64" | grep -c "running (since"'
+	return (ISUP);
+}
 
+alias norm="norminette | grep -A 1 Error!"
+alias repo="git config --get remote.origin.url"
+alias code="flatpak run com.visualstudio.code"
+alias codevm="echo 'opening vscode' && code --folder-uri vscode-remote://ssh-remote+linux_server/home/dda-cunh/"
+alias vmup="!vmisup && VBoxManage startvm 6e817c6d-b2b5-40e5-b135-e37b0c510211 --type headless && echo 'Finishing setting up the server' && sleep 10 && codevm"
+alias vmdown="vmisup && VBoxManage controlvm 6e817c6d-b2b5-40e5-b135-e37b0c510211 poweroff"
+alias openrc="code ~/.zshrc; code ~/.bashrc; code ~/.config/fish/config.fish"
+*/
 typedef enum	e_bool
 {
 	False,
