@@ -17,14 +17,21 @@ PROG_DIR	=	program/
 
 RAY_DIR		=	raytrace/
 
+UTILS_DIR	= 	utils/
+
 LFT_DIR		=	libft/
 
-LINKS		=	-L$(addprefix $(INC_DIR), $(LFT_DIR)) -lft -lXext -lX11 -lm -Linc/minilibx-linux -lmlx
+LFT_FULL	=	$(addprefix $(INC_DIR), $(LFT_DIR))
+
+LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -Linc/minilibx-linux -lmlx
 
 SRC			=	$(addprefix $(SRC_DIR),	main.c \
-										$(addprefix $(PROG_DIR), program.c) \
-										$(addprefix $(RAY_DIR), line.c))
-																
+										$(addprefix $(PROG_DIR),	program.c \
+																	events.c) \
+										$(addprefix $(RAY_DIR),		line.c) \
+										$(addprefix $(UTILS_DIR),	color.c \
+																	image.c \
+																	math.c))
 
 OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(RAY_DIR))
@@ -84,6 +91,6 @@ compiled:
 				printf "																\n"
 
 run:			all
-				./minishell
+				./$(NAME)
 
 .PHONY: 		all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:33:58 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/11/03 16:09:24 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/06 14:54:36 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@ int	key_hook(int keycode, t_prog *program)
 {
 	if (keycode == 65307)
 		return (killprogram(0, program));
-	if (keycode == 119)
-		try_move(1, program);
-	else if (keycode == 97)
-		try_move(2, program);
-	else if (keycode == 115)
-		try_move(3, program);
-	else if (keycode == 100)
-		try_move(4, program);
 	return (0);
 }
 

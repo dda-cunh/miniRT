@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/11/03 17:54:48 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/06 14:22:37 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,3 @@ t_color	sum_colors(t_color color1, t_color color2)
 	return (int_to_color(sum));
 }
 
-t_color	get_pixel_color(t_image image, int x, int y)
-{
-	char	*img_data;
-	int		color;
-
-	img_data = mlx_get_data_addr(image.ptr, &image.bpp,
-			&image.line_len, &image.endian);
-	color = *(int *)(img_data + (y * image.line_len + x * (image.bpp / 8)));
-	return (int_to_color(color));
-}

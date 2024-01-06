@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/08/17 11:49:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/06 13:31:23 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "get_next_line.h"
+
+typedef enum e_bool
+{
+	FALSE,
+	TRUE
+}	t_bool;
 
 typedef struct s_list
 {

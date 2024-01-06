@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/11/05 16:20:22 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/06 15:01:50 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,21 @@
 
 # define WINDOW_W	1280
 # define WINDOW_H	720
+
 # define BYTE		unsigned char
+
+# define BAD_EXIT	"Error\n"
 
 typedef enum exit_status
 {
-	_GOOD,
-	_MALLOC,
-	_SCENE
+	EXIT_GOOD,
+	EXIT_MALLOC,
+	EXIT_ARGC,
+	EXIT_FILE_EXTENSION,
+	EXIT_OPENING_SCENE,
+	EXIT_SCENE,
+	EXIT_MLX
 }	t_exit_status;
-
-struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-};
-
-typedef struct s_vec3	t_point3;
-
-typedef struct s_vec3	t_vec3;
 
 typedef struct s_color
 {
@@ -51,21 +47,21 @@ typedef struct s_color
 	BYTE	blue;
 }	t_color;
 
-typedef struct s_object_sphere
+struct s_vec3
 {
-	t_point3	center;
-	t_color		color;
-	double		diameter;
-}	t_object_sphere;
+	float	x;
+	float	y;
+	float	z;
+};
 
-typedef struct s_map
+typedef struct s_vec3	t_point3;
+typedef struct s_vec3	t_vec3;
+
+typedef struct s_line3d
 {
-	char	**lines;
-	int		width;
-	int		height;
-	int		pmoves;
-	char	underp;
-}		t_map;
+	t_point3	point;
+	t_vec3		direction;
+}	t_line3d;
 
 typedef struct s_camera
 {
@@ -75,14 +71,65 @@ typedef struct s_camera
 	BYTE		fov;
 }	t_camera;
 
+typedef struct s_light
+{
+	t_point3	coords;
+	t_color		color;
+}	t_light;
+
+typedef enum e_collidable_id
+{
+	ID_EMPTY,
+	ID_CYLINDER,
+	ID_SPHERE,
+	ID_PLANE
+}	t_collidable_id;
+
+typedef struct s_object_cylinder
+{
+	t_point3				center;
+	t_color					color;
+	t_vec3					axis;
+	float					diameter;
+	float					height;
+}	t_object_cylinder;
+
+typedef struct s_object_sphere
+{
+	t_point3				center;
+	t_color					color;
+	float					diameter;
+}	t_object_sphere;
+
+typedef struct s_object_plane
+{
+	t_point3				point;
+	t_color					color;
+	t_vec3					direction;
+}	t_object_plane;
+
+typedef union u_collidable_shape
+{
+	t_object_cylinder	cy;
+	t_object_sphere		sp;
+	t_object_plane		pl;
+}	t_collidable_shape;
+
+typedef struct s_collidable_entity
+{
+	t_collidable_shape	object;
+	t_collidable_id		id;
+}	t_collidable_entity;
+
 typedef struct s_prog
 {
-	t_map	mapold;
-	t_map	map;
-	void	*mlx_ptr;
-	void	*win_ptr;
-	int		status;
-}		t_prog;
+	t_collidable_entity	*collidables;
+	t_camera			camera;
+	t_light				*lights;
+	t_color				ambient_l;
+	void				*mlx_ptr;
+	void				*win_ptr;
+}	t_prog;
 
 typedef struct s__img
 {
@@ -99,53 +146,19 @@ typedef struct s__img
 /* ************************************************************************** */
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
-t_prog			*new_program(char *title);
-/* ************************************************************************** */
-/*                                 window.c                                   */
-/* ************************************************************************** */
-void			put_object(char object, t_prog *p, int event, int *coords);
-void			render_map(t_prog *program, int event, int firstrender);
-char			*get_path(char object, int event);
-
-/* ************************************************************************** */
-/*                                  image.c                                   */
-/* ************************************************************************** */
-t_color			get_pixel_color(t_image image, int x, int y);
-void			print_blend(t_prog *prog, t_image t, t_image u, int *coords);
-t_image			new_image(int w, int h, t_prog window);
-void			print_floor(t_prog *program);
-
-/* ************************************************************************** */
-/*                                events.c                                    */
-/* ************************************************************************** */
+t_prog			*init_program(int scene_fd);
 int				killprogram(int keycode, t_prog *program);
 int				key_hook(int keycode, t_prog *window);
 int				kill_x(void *program);
 
 /* ************************************************************************** */
-/*                                  map.c                                     */
+/*                                   UTILS                                    */
 /* ************************************************************************** */
-t_map			get_map(int mapfd, char *map_path);
-
-/* ************************************************************************** */
-/*                                 utils.c                                    */
-/* ************************************************************************** */
+t_color			get_pixel_color(t_image image, int x, int y);
+t_color			sum_colors(t_color color1, t_color color2);
+t_color			int_to_color(int packed);
+t_image			new_image(int w, int h, t_prog window);
+int				color_to_int(t_color color);
 int				exit_(int status);
-char			**copy2d(char **map, int height);
-void			putstr_footer(t_prog *program, int y, int color);
-void			clearendbl(char **matrix);
-void			free_2d(char **matrix);
-
-/* ************************************************************************** */
-/*                                  path.c                                    */
-/* ************************************************************************** */
-int				parse_path(t_map map);
-
-/* ************************************************************************** */
-/*                                player.c                                    */
-/* ************************************************************************** */
-int				*object_coords(char object, char **map, int width, int height);
-void			try_move(int direction, t_prog *program);
-void			move_player(t_prog *prog, int event, int *coords);
 
 #endif
