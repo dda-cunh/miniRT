@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:42:07 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/14 19:03:00 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:17:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (s)
-		while (*s)
-			ft_putchar_fd(*s++, fd);
+		write(fd, s, ft_strlen(s));
+	return ;
 }

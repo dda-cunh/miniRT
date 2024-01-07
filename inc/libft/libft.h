@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 13:31:23 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:55:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,6 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "get_next_line.h"
-
-typedef enum e_bool
-{
-	FALSE,
-	TRUE
-}	t_bool;
 
 typedef struct s_list
 {
@@ -59,7 +53,7 @@ int				ft_tolower(int c);
 char			*ft_strdup(const char *s);
 void			*ft_calloc(size_t nmemb, size_t size);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
-char			*ft_strdup_tail(const char *s, int tail);
+char			*ft_strdup_tail(const char *s, size_t tail);
 char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strtrim(char const *s1, char const *set);
 char			*ft_strreplace(char *str, int index, int torem, char *torepl);
@@ -88,5 +82,6 @@ int				len_2d(char **matrix);
 char			*ft_notdir(char *path);
 int				ft_sisnum(const char *s);
 int				ft_sislong(const char *s);
+int				ft_abs(int n);
 
 #endif

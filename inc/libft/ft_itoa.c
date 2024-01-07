@@ -3,55 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:22:34 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/14 15:45:11 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 02:49:34 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned char	a_len(long n)
+static unsigned char	n_digs(long n)
 {
 	if (n == 0)
-		return (1);
-	return (1 + a_len(n / 10));
-}
-
-static	void	fill_a(char *a, long l, unsigned char len, int neg)
-{
-	if (neg)
-		a[0] = '-';
-	a[--len] = '\0';
-	while (l)
-	{
-		a[--len] = (l % 10) + 48;
-		l /= 10;
-	}
+		return (0);
+	if (n < 0)
+		return (2 + n_digs(-n / 10));
+	return (1 + n_digs(n / 10));
 }
 
 char	*ft_itoa(int n)
 {
-	long			l;
-	char			*a;
-	int				neg;
 	unsigned char	len;
+	unsigned char	neg;
+	char			*a;
 
-	l = n;
-	if (l == 0)
+	if (n == 0)
 		return (ft_strdup("0"));
-	len = a_len(l);
+	len = n_digs(n);
 	neg = 0;
-	if (l < 0)
-	{
-		l *= -1;
-		len++;
+	if (n < 0)
 		neg = 1;
-	}
-	a = (char *)malloc(len);
+	a = (char *) ft_calloc(len + 1, sizeof(char));
 	if (!a)
 		return (NULL);
-	fill_a(a, l, len, neg);
+	while (n)
+	{
+		a[--len] = ft_abs(n % 10) + '0';
+		n /= 10;
+	}
+	if (neg)
+		a[--len] = '-';
 	return (a);
 }

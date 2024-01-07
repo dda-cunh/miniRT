@@ -3,46 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 22:48:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/14 18:10:45 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:48:22 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*sol(const char	*big, const char *little, size_t len, size_t l_len)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	size_t	b_i;
-	size_t	l_i;
+	size_t	little_l;
+	size_t	big_i;
+	size_t	same;
 
-	b_i = 0;
-	l_i = 0;
-	while (len > l_i && big[b_i + l_i])
-	{
-		if (big[b_i + l_i] == little[l_i])
-		{
-			l_i++;
-		}
-		else
-		{
-			len--;
-			b_i++;
-			l_i = 0;
-		}
-		if (l_i == l_len)
-			return ((char *)(big + b_i));
-	}
-	return (NULL);
-}
-
-char	*ft_strnstr(const char	*big, const char *little, size_t len)
-{
-	size_t	l_len;
-
-	l_len = ft_strlen(little);
+	if (!big)
+		return (NULL);
 	if (!*little)
 		return ((char *)big);
-	return (sol(big, little, len, l_len));
+	little_l = ft_strlen(little);
+	big_i = 0;
+	while (big_i < len && big[big_i])
+	{
+		same = 0;
+		while (big_i + same < len && same < little_l
+			&& big[big_i + same] == little[same])
+			same++;
+		if (same == little_l)
+			return ((char *)(big + big_i));
+		big_i += same;
+		if (same == 0)
+			big_i++;
+	}
+	return (NULL);
 }

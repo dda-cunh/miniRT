@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:28:46 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/14 14:04:56 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:58:17 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*concat;
 	size_t	total_len;
 	size_t	i;
+	char	*concat;
 
 	total_len = ft_strlen(s1) + ft_strlen(s2);
 	concat = (char *)malloc(total_len + 1);

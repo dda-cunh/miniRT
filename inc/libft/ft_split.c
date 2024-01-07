@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:05:30 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/14 15:27:42 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:57:24 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	n_strings(char const *s, char c)
 {
+	int	start;
 	int	i;
 	int	n;
-	int	start;
 
 	n = 0;
 	i = 0;
@@ -35,12 +35,12 @@ static int	n_strings(char const *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
+	char	**sep;
+	int		start;
 	int		i;
 	int		j;
-	int		start;
-	char	**sep;
 
-	sep = (char **)malloc(sizeof(char *) * (n_strings(s, c) + 1));
+	sep = (char **) ft_calloc((n_strings(s, c) + 1), sizeof(char *));
 	if (!sep)
 		return (NULL);
 	i = 0;
@@ -55,6 +55,5 @@ char	**ft_split(char const *s, char c)
 		if (s[start])
 			sep[j++] = ft_substr(s, start, i - start);
 	}
-	sep[j] = NULL;
 	return (sep);
 }

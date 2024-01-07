@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 15:31:14 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/13 19:15:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 16:57:05 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	size_t	i;
 
-	i = -1;
+	i = 0;
 	if (s)
-		while (s[++i])
+	{
+		while (s[i])
+		{
 			f(i, &s[i]);
+			i++;
+		}
+	}
+	return ;
 }

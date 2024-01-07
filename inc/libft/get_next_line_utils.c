@@ -3,104 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:26:35 by dda-cunh          #+#    #+#             */
-/*   Updated: 2023/04/16 20:44:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:52:12 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	residual(char *buffer)
+static size_t	strlen(const char *str)
 {
-	int	i;
-
-	i = -1;
-	while (++i < BUFFER_SIZE)
-		if (buffer[i])
-			return (1);
-	return (0);
-}
-
-int	buff_endl(char *buffer)
-{
-	int	i;
-
-	i = -1;
-	while (++i < BUFFER_SIZE)
-		if (buffer[i] == '\n')
-			return (1);
-	return (0);
-}
-
-char	*seek_line(char *buffer, char *line, int r, int fd)
-{
-	while (r > 0)
-	{
-		r = read(fd, buffer, BUFFER_SIZE);
-		if (r < 0)
-		{
-			if (*line)
-				free(line);
-			return (NULL);
-		}
-		if (r == 0 && !*line)
-			return (NULL);
-		if (buff_endl(buffer))
-			return (buffjoin(line, buffer, 0, -1));
-		line = buffjoin(line, buffer, 0, -1);
-		if (!line)
-			return (NULL);
-	}
-	return (line);
-}
-
-char	*alloc_concat(char *line, char *buff)
-{
-	char	*concat;
-	size_t	i;
-	size_t	j;
 	size_t	l;
 
-	i = 0;
-	j = -1;
 	l = 0;
-	while (line[i])
-		i++;
-	while (++j < BUFFER_SIZE)
-	{
-		if (buff[j])
+	if (str)
+		while (str[l])
 			l++;
-		if (buff[j] == '\n')
-			break ;
+	return (l);
+}
+
+static void	*memset(void *s, int c, size_t n)
+{
+	unsigned char	*bytes;
+
+	bytes = (unsigned char *)s;
+	while (n--)
+		*bytes++ = (unsigned char)c;
+	return (s);
+}
+
+static void	*memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char	*src_bytes;
+	unsigned char	*dest_bytes;
+	size_t			i;
+
+	if (!src || !dest)
+		return (NULL);
+	src_bytes = (unsigned char *)src;
+	dest_bytes = (unsigned char *)dest;
+	if (dest_bytes >= src_bytes && dest_bytes <= src_bytes + n)
+	{
+		if (dest)
+			while (n--)
+				dest_bytes[n] = src_bytes[n];
 	}
-	concat = malloc(i + l + 1);
+	else
+	{
+		i = 0;
+		while (i < n)
+		{
+			dest_bytes[i] = src_bytes[i];
+			i++;
+		}
+	}
+	return (dest);
+}
+
+static char	*alloc_concat(char *line, char *buff)
+{
+	size_t	concat_l;
+	size_t	concat_i;
+	size_t	buff_i;
+	char	*concat;
+
+	concat_l = strlen(line);
+	buff_i = 0;
+	while (buff_i < BUFFER_SIZE && !buff[buff_i])
+		buff_i++;
+	while (buff_i < BUFFER_SIZE)
+	{
+		concat_l++;
+		if (buff[buff_i] == '\n')
+			break ;
+		buff_i++;
+	}
+	concat = malloc((concat_l + 1) * sizeof(char));
+	concat_i = 0;
+	while (concat_i < concat_l + 1)
+	{
+		concat[concat_i] = '\0';
+		concat_i++;
+	}
 	return (concat);
 }
 
-char	*buffjoin(char *line, char *buff, int i, int j)
+char	*line_join(char *line, char *buff)
 {
-	char		*concat;
+	long	buff_empty_i;
+	long	breakline_i;
+	long	concat_i;
+	char	*concat;
 
 	concat = alloc_concat(line, buff);
 	if (!concat)
 		return (NULL);
-	while (*line)
-		concat[i++] = *line++;
-	if (*(line - i))
-		free(line - i);
-	while (++j < BUFFER_SIZE && buff[j] != '\n')
-	{
-		if (buff[j] && buff[j] != '\n')
-			concat[i++] = buff[j];
-		buff[j] = '\0';
-	}
-	if (j < BUFFER_SIZE && buff[j] == '\n')
-	{
-		buff[j] = '\0';
-		concat[i++] = '\n';
-	}
-	concat[i] = '\0';
+	concat_i = strlen(line);
+	memmove(concat, line, concat_i);
+	if (line)
+		free(line);
+	buff_empty_i = 0;
+	while (buff_empty_i < BUFFER_SIZE && !buff[buff_empty_i])
+		buff_empty_i++;
+	breakline_i = buff_empty_i;
+	while (breakline_i < BUFFER_SIZE)
+		if (buff[breakline_i++] == '\n')
+			break ;
+	memmove(concat + concat_i, buff + buff_empty_i, breakline_i - buff_empty_i);
+	memset(buff + buff_empty_i, 0, breakline_i - buff_empty_i);
 	return (concat);
 }
