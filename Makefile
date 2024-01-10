@@ -31,12 +31,16 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(RAY_DIR),		line.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
+																	utils.c \
 																	math.c))
 
 OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
-							$(addprefix $(OBJ_DIR), $(RAY_DIR))
+							$(addprefix $(OBJ_DIR), $(RAY_DIR)) \
+							$(addprefix $(OBJ_DIR), $(UTILS_DIR))
 
 OBJ 		= 	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+
+SCENE		=	scenes/empty.rt
 
 GREEN		= 	\033[0;32m
 
@@ -45,6 +49,7 @@ RED			=	\033[0;31m
 RESET		=	\033[0m
 
 SUS			=	\U00000D9E
+
 
 HAMMER		=	\U0001F528
 
@@ -91,6 +96,6 @@ compiled:
 				printf "																\n"
 
 run:			all
-				./$(NAME)
+				./$(NAME) $(SCENE)
 
 .PHONY: 		all clean fclean re

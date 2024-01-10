@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 14:49:51 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:28:42 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	killprogram(int keycode, t_prog *program)
 			free(program->mlx_ptr);
 		}
 	}
-	exit(exit_(keycode));
+	exit(__on_exit(keycode, NULL));
 }
 
 static t_prog	*new_program(char *title)
@@ -61,5 +61,6 @@ t_prog	*init_program(int scene_fd)
 	if (!program || !program->mlx_ptr || !program->win_ptr)
 		return (program);
 	//TODO INIT WITH READ INFO
+	(void)	scene_fd;
 	return (program);
 }

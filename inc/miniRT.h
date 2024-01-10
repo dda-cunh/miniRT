@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 15:01:50 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:24:02 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,11 +154,11 @@ int				kill_x(void *program);
 /* ************************************************************************** */
 /*                                   UTILS                                    */
 /* ************************************************************************** */
+t_exit_status	__on_exit(t_exit_status exit_code, char *verbose);
 t_color			get_pixel_color(t_image image, int x, int y);
 t_color			sum_colors(t_color color1, t_color color2);
 t_color			int_to_color(int packed);
 t_image			new_image(int w, int h, t_prog window);
 int				color_to_int(t_color color);
-int				exit_(int status);
 
 #endif

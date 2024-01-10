@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 14:55:02 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:41:18 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	mini_rt(t_prog *program)
 {
-	render_map(program, 0, 1);
 	mlx_hook(program->win_ptr, 2, 1L << 0, key_hook, program);
 	mlx_hook(program->win_ptr, 17, 1L << 17, kill_x, program);
 	mlx_loop(program->mlx_ptr);
@@ -29,8 +28,8 @@ static int	mini_rt(t_prog *program)
 
 int	main(int ac, char **av)
 {
-	t_prog				*program;
-	int					scene_fd;
+	t_prog	*program;
+	int		scene_fd;
 
 	if (ac != 2)
 		return (killprogram(EXIT_ARGC, NULL));

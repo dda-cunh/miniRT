@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/07 17:55:07 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/10 12:25:57 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include "get_next_line.h"
+
+# define STD_OUT	1
+# define STD_ERR	2
+# define STD_IN		0
 
 typedef struct s_list
 {
