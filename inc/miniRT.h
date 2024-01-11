@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/11 13:16:41 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:36:40 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@
 # include <stdio.h>
 # include <math.h>
 
-# define WINDOW_W	1280
-# define WINDOW_H	720
+# ifndef WINDOW_H
+#  define WINDOW_H	720
+# endif
+# ifndef WINDOW_W
+#  define WINDOW_W	720
+# endif
 
 # define BAD_EXIT	"Error\n"
 

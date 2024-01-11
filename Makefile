@@ -28,7 +28,8 @@ LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -Linc/minilibx-linux -lmlx
 SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
 																	events.c) \
-										$(addprefix $(RAY_DIR),		line.c) \
+										$(addprefix $(RAY_DIR),		line.c \
+																	collisions.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
 																	utils.c \
