@@ -50,7 +50,6 @@ RESET		=	\033[0m
 
 SUS			=	\U00000D9E
 
-
 HAMMER		=	\U0001F528
 
 BROOM		=	\U0001F9F9
@@ -98,4 +97,6 @@ compiled:
 run:			all
 				./$(NAME) $(SCENE)
 
-.PHONY: 		all clean fclean re
+rerun:			fclean | run
+
+.PHONY: 		all clean fclean re run rerun

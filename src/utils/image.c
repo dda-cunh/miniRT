@@ -6,18 +6,18 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 14:22:10 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 14:58:17 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:02:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-t_image	new_image(int w, int h, t_prog window)
+t_image	new_image(int w, int h, t_prog program)
 {
 	t_image	image;
 
-	image.win = window;
-	image.ptr = mlx_new_image(window.mlx_ptr, w, h);
+	image.win = program;
+	image.ptr = mlx_new_image(program.mlx_ptr, w, h);
 	image.addr = mlx_get_data_addr(image.ptr, &(image.bpp),
 			&(image.line_len), &(image.endian));
 	image.w = w;
@@ -25,13 +25,25 @@ t_image	new_image(int w, int h, t_prog window)
 	return (image);
 }
 
+void	set_image_pixel(t_image image, int x, int y, t_color color)
+{
+	char	*pixel_addr;
+
+	if ( x < 0 || x >= image.w || y < 0 || y >= image.h)
+		return ;
+	pixel_addr = image.addr + (y * image.line_len + x * (image.bpp / 8));
+	*pixel_addr = color_to_int(color);
+	return ;
+}
+
 t_color	get_pixel_color(t_image image, int x, int y)
 {
-	char	*img_data;
+	char	*pixel_addr;
 	int		color;
 
-	img_data = mlx_get_data_addr(image.ptr, &image.bpp,
-			&image.line_len, &image.endian);
-	color = *(int *)(img_data + (y * image.line_len + x * (image.bpp / 8)));
+	if ( x < 0 || x >= image.w || y < 0 || y >= image.h)
+		return ((t_color){0, 0, 0, 0});
+	pixel_addr = image.addr + (y * image.line_len + x * (image.bpp / 8));
+	color = *(int *)pixel_addr;
 	return (int_to_color(color));
 }

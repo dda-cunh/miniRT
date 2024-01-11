@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/10 12:24:02 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:16:41 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # define WINDOW_W	1280
 # define WINDOW_H	720
 
-# define BYTE		unsigned char
-
 # define BAD_EXIT	"Error\n"
+
+typedef unsigned char	t_byte;
 
 typedef enum exit_status
 {
@@ -41,11 +41,20 @@ typedef enum exit_status
 
 typedef struct s_color
 {
-	BYTE	alpha;
-	BYTE	red;
-	BYTE	green;
-	BYTE	blue;
+	t_byte	alpha;
+	t_byte	red;
+	t_byte	green;
+	t_byte	blue;
 }	t_color;
+
+struct s_vec2
+{
+	float	x;
+	float	y;
+};
+
+typedef struct s_vec2	t_point2;
+typedef struct s_vec2	t_vec2;
 
 struct s_vec3
 {
@@ -68,7 +77,7 @@ typedef struct s_camera
 	t_point3	coords;
 	t_vec3		look_direction;
 	t_vec3		up_direction;
-	BYTE		fov;
+	t_byte		fov;
 }	t_camera;
 
 typedef struct s_light
@@ -152,13 +161,19 @@ int				key_hook(int keycode, t_prog *window);
 int				kill_x(void *program);
 
 /* ************************************************************************** */
+/*                                  RAYTRACE                                  */
+/* ************************************************************************** */
+void			do_rays(t_prog *program);
+
+/* ************************************************************************** */
 /*                                   UTILS                                    */
 /* ************************************************************************** */
 t_exit_status	__on_exit(t_exit_status exit_code, char *verbose);
 t_color			get_pixel_color(t_image image, int x, int y);
 t_color			sum_colors(t_color color1, t_color color2);
 t_color			int_to_color(int packed);
-t_image			new_image(int w, int h, t_prog window);
+t_image			new_image(int w, int h, t_prog program);
+void			set_image_pixel(t_image image, int x, int y, t_color color);
 int				color_to_int(t_color color);
 
 #endif
