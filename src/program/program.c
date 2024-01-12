@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/10 12:28:42 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:04:34 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	killprogram(int keycode, t_prog *program)
 	if (program)
 	{
 		if (program->collidables)
-			free(program->collidables);
+			free(program->collidables);//todo free list
 		if (program->lights)
-			free(program->lights);
+			free(program->lights);//todo free list
 		if (program->win_ptr)
 			mlx_destroy_window(program->mlx_ptr, program->win_ptr);
 		if (program->mlx_ptr)
@@ -43,9 +43,9 @@ static t_prog	*new_program(char *title)
 	mlx_ptr = mlx_init();
 	*program = (t_prog)
 	{
+		(t_camera){(t_point3){2, 2, 3}, (t_vec3){0, 0, -1}, 90},
 		NULL,
-		(t_camera){(t_point3){0, 0, 0},
-		(t_point3){0, 0, 0}, (t_point3){0, 0, 0}, 90}, NULL,
+		NULL,
 		(t_color){0, 0, 0, 0},
 		mlx_ptr,
 		mlx_new_window(mlx_ptr, WINDOW_W, WINDOW_H, title)
@@ -60,7 +60,6 @@ t_prog	*init_program(int scene_fd)
 	program = new_program("miniRT");
 	if (!program || !program->mlx_ptr || !program->win_ptr)
 		return (program);
-	//TODO INIT WITH READ INFO
-	(void)	scene_fd;
+	(void)	scene_fd; //TODO INIT WITH READ INFO
 	return (program);
 }

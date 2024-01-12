@@ -28,7 +28,7 @@ LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -Linc/minilibx-linux -lmlx
 SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
 																	events.c) \
-										$(addprefix $(RAY_DIR),		line.c \
+										$(addprefix $(RAY_DIR),		ray.c \
 																	collisions.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
@@ -62,6 +62,7 @@ $(NAME):		$(OBJ) | $(SRC)
 
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c | $(OBJ_DIRS)
 				make -C $(LFT_FULL)
+				make bonus -C $(LFT_FULL)
 				printf '$(HAMMER)\t'
 				printf "$(GREEN)Compiling $(NAME) objects... $(RED)%-33.33s\r" $(notdir $@)
 				$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)

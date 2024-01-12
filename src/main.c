@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/11 13:16:53 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:43:32 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 static int	mini_rt(t_prog *program)
 {
+	t_collidable_shape	*sp = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));	//testing
+	sp->sp = (t_object_sphere){(t_point3){0, 0, 0}, (t_color){255, 255, 255, 255}, 2};	//testing
+	ft_lstadd_back(&(program->collidables),												//testing
+		ft_lstnew(new_collidable_entity(sp, ID_SPHERE)));								//testing
 	do_rays(program);
 	mlx_hook(program->win_ptr, 2, 1L << 0, key_hook, program);
 	mlx_hook(program->win_ptr, 17, 1L << 17, kill_x, program);
