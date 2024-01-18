@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/12 14:54:45 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:57:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ typedef struct s_color
 
 struct s_vec2
 {
-	float						x;
-	float						y;
+	double						x;
+	double						y;
 };
 
 typedef struct s_vec2	t_point2;
@@ -64,9 +64,9 @@ typedef struct s_vec2	t_vec2;
 
 struct s_vec3
 {
-	float						x;
-	float						y;
-	float						z;
+	double						x;
+	double						y;
+	double						z;
 };
 
 typedef struct s_vec3	t_point3;
@@ -104,15 +104,15 @@ typedef struct s_object_cylinder
 	t_point3					center;
 	t_color						color;
 	t_vec3						axis;
-	float						diameter;
-	float						height;
+	double						diameter;
+	double						height;
 }	t_object_cylinder;
 
 typedef struct s_object_sphere
 {
 	t_point3					center;
 	t_color						color;
-	float						diameter;
+	double						diameter;
 }	t_object_sphere;
 
 typedef struct s_object_plane
@@ -182,9 +182,12 @@ t_color			get_pixel_color(t_image image, int x, int y);
 t_color			sum_colors(t_color color1, t_color color2);
 t_color			int_to_color(int packed);
 t_image			new_image(int w, int h, t_prog program);
-t_vec3			scale_vec3(t_vec3 vector, float scalar);
+t_vec3			scale_vec3(t_vec3 vector, double scalar);
+t_vec3			vec3_cross_product(t_vec3 a, t_vec3 b);
 t_vec3			normalize_vec3(t_vec3 vector);
-float			point3_distance_point3(t_point3 p1, t_point3 p2);
+t_vec3			vec3_sub(t_vec3 a, t_vec3 b);
+double			point3_distance_point3(t_point3 p1, t_point3 p2);
+double			vec3_dot_product(t_vec3 a, t_vec3 b);
 void			set_image_pixel(t_image image, int x, int y, t_color color);
 int				color_to_int(t_color color);
 

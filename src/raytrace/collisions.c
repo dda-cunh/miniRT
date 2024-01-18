@@ -6,87 +6,99 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/12 16:05:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:57:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 #include "stdio.h"	//FORBIDDEN IMPORT
+#include <math.h>
 
-static int	belongs_cylinder(t_point3 point, t_collidable_entity cy_ent)
+static int	coll_cylinder(t_ray3 ray, t_collidable_entity cy_ent)
 {
 	t_object_cylinder	cy;
 
 	cy = cy_ent.object.cy;
-	return (point.x + *(int *)&cy.axis); //compilation flags placeholder
+	return (ray.origin.x + *(int *)&cy.axis); //compilation flags placeholder
 }
 
-static int	belongs_sphere(t_point3 point, t_collidable_entity sp_ent)
+static int	coll_sphere(t_ray3 ray, t_collidable_entity sp_ent)
 {
-	t_object_sphere	sp;
+    t_object_sphere sp;
+    double coll_scallar_1;
+    double coll_scallar_2;
+    double discriminant;
+    double abc[3];
 
-	sp = sp_ent.object.sp;
-	if (point3_distance_point3(point , sp.center) <= (sp.diameter / 2))
-	{
-		printf("Collision: POINT(%f, %f, %f)\n", point.x, point.y, point.z); //FORBIDDEN FUNC
-		return (color_to_int(sp.color));
-	}
-	return (0);
+    sp = sp_ent.object.sp;
+    abc[0] = vec3_dot_product(ray.direction, ray.direction);
+    abc[1] = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin, sp.center));
+    abc[2] = vec3_dot_product(vec3_sub(ray.origin, sp.center), vec3_sub(ray.origin, sp.center)) - pow(sp.diameter / 2, 2);
+    discriminant = pow(abc[1], 2) - 4 * abc[0] * abc[2];
+    printf("With ray{%f, %f, %f} got discr:%f\n", ray.direction.x, ray.direction.y, ray.direction.z, discriminant);
+    if (discriminant >= 0)
+    {
+        coll_scallar_1 = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
+        coll_scallar_2 = (-abc[1] + sqrt(discriminant)) / (2 * abc[0]);
+        if (coll_scallar_1 > coll_scallar_2)
+            return (coll_scallar_2);
+        return (coll_scallar_1);
+    }
+    return (-1);
 }
 
-static int	belongs_plane(t_point3 point, t_collidable_entity pl_ent)
+static int	coll_plane(t_ray3 ray, t_collidable_entity pl_ent)
 {
 	t_object_plane	pl;
-	float			plane_equation_app;
+	double			plane_equation_app;
 
 	pl = pl_ent.object.pl;
-	plane_equation_app = pl.normal.x * (point.x - pl.point.x)
-							+ pl.normal.y * (point.y - pl.point.y)
-							+ pl.normal.z * (point.z - pl.point.z);
+	plane_equation_app = pl.normal.x * (ray.origin.x - pl.point.x)
+							+ pl.normal.y * (ray.origin.y - pl.point.y)
+							+ pl.normal.z * (ray.origin.z - pl.point.z);
 	if (plane_equation_app == 0)
 		return (color_to_int(pl.color));
 	return (0);
 }
 
-static int	get_collision(t_point3 point, t_prog *program)
+static int	coll_wrapper(t_ray3 ray, t_collidable_entity	*curr_ent)
 {
-	t_collidable_entity	*curr_ent;
-	t_list				*curr_node;
-	int					color;
-
-	color = 0;
-	curr_node = program->collidables;
-	while (curr_node)
-	{
-		curr_ent = program->collidables->content;
-		if (curr_ent->id == ID_CYLINDER)
-			color = belongs_cylinder(point, *curr_ent);
-		else if (curr_ent->id == ID_SPHERE)
-			color = belongs_sphere(point, *curr_ent);
-		else if (curr_ent->id == ID_PLANE)
-			color = belongs_plane(point, *curr_ent);
-		curr_node = curr_node->next;
-		if (color)
-			break ;
-	}
-	return (color);
+	if (curr_ent->id == ID_CYLINDER)
+		return (coll_cylinder(ray, *curr_ent));
+	else if (curr_ent->id == ID_SPHERE)
+		return (coll_sphere(ray, *curr_ent));
+	else if (curr_ent->id == ID_PLANE)
+		return (coll_plane(ray, *curr_ent));
+	return (-1);
 }
 
 int	do_collisions(t_ray3 ray, t_prog *program)
 {
-	const float	scalar_increment = 0.5;	//TBD
-	const float	scalar_max = 20.5;		//TBD
-	float		scalar;
-	int			color;
+	t_collidable_entity	*min_coll_scalar;
+	t_collidable_entity	*curr_ent;
+	t_list				*curr_node;
+	double				curr_scalar;
+	double				min_scalar;
 
-	scalar = scalar_increment;
-	while (scalar < scalar_max)
+	curr_node = program->collidables;
+	min_coll_scalar = NULL;
+	while (curr_node)
 	{
-		color = get_collision(point3_plus_vec3(ray.origin,
-					scale_vec3(ray.direction, scalar)), program);
-		if (color)
-			return (color);
-		scalar += scalar_increment;
+		curr_ent = program->collidables->content;
+		curr_scalar = coll_wrapper(ray, curr_ent);
+		if (!min_coll_scalar && curr_scalar > 0)
+		{
+			min_scalar = curr_scalar;
+			min_coll_scalar = curr_ent;
+		}
+		else if (curr_scalar > 0 && curr_scalar < min_scalar)
+		{
+			min_scalar = curr_scalar;
+			min_coll_scalar = curr_ent;
+		}
+		curr_node = curr_node->next;
 	}
+	if (min_coll_scalar)
+		return (color_to_int(min_coll_scalar->object.cy.color));
 	return (0);
 }

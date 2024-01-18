@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/12 16:01:58 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:57:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,28 @@
 
 static int	trace(int x, int y, t_prog *program)
 {
-	t_vec3 offset;
-	t_ray3 ray;
+	double	view_x;
+	double	view_y;
+	double	ndcX;
+	double	ndcY;
 
-	offset.x = (x / (float)WINDOW_W) - 0.5f;
-	offset.y = -(y / (float)WINDOW_H) + 0.5f;
-	offset.z = 0.0f;
-	offset = normalize_vec3(offset);
-	offset = scale_vec3(offset, program->camera.fov);
-	ray.origin = program->camera.coords;
-	ray.direction = offset;
-	return (do_collisions(ray, program));
+	ndcX = (2.0f * x) / WINDOW_W - 1.0f;
+	ndcY = 1.0f - (2.0f * y) / WINDOW_H;
+	double tanFOV = tanf(program->camera.fov * 0.5f * (M_PI / 180.0f));
+	view_x = ndcX * ((double)WINDOW_W / (double)WINDOW_H) * tanFOV;
+	view_y = ndcY * tanFOV;
+	t_vec3 forward = normalize_vec3(program->camera.look_direction);
+	t_vec3 right = normalize_vec3(vec3_cross_product(forward, (t_vec3){0.0f, 1.0f, 0.0f}));
+	t_vec3 up = vec3_cross_product(right, forward);
+	t_vec3 rayDirection;
+	rayDirection.x = view_x * right.x + view_y * up.x + forward.x;
+	rayDirection.y = view_x * right.y + view_y * up.y + forward.y;
+	rayDirection.z = view_x * right.z + view_y * up.z + forward.z;
+	return do_collisions((t_ray3){program->camera.coords,
+		normalize_vec3(rayDirection)}, program);
 }
+
+
 
 void	do_rays(t_prog *program)
 {
