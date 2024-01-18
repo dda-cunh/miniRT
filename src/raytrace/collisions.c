@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/18 14:57:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:37:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	coll_sphere(t_ray3 ray, t_collidable_entity sp_ent)
     abc[1] = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin, sp.center));
     abc[2] = vec3_dot_product(vec3_sub(ray.origin, sp.center), vec3_sub(ray.origin, sp.center)) - pow(sp.diameter / 2, 2);
     discriminant = pow(abc[1], 2) - 4 * abc[0] * abc[2];
-    printf("With ray{%f, %f, %f} got discr:%f\n", ray.direction.x, ray.direction.y, ray.direction.z, discriminant);
+    //printf("With ray{%f, %f, %f} got discr:%f\n", ray.direction.x, ray.direction.y, ray.direction.z, discriminant);
     if (discriminant >= 0)
     {
         coll_scallar_1 = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
@@ -57,11 +57,11 @@ static int	coll_plane(t_ray3 ray, t_collidable_entity pl_ent)
 							+ pl.normal.y * (ray.origin.y - pl.point.y)
 							+ pl.normal.z * (ray.origin.z - pl.point.z);
 	if (plane_equation_app == 0)
-		return (color_to_int(pl.color));
+		return (1);
 	return (0);
 }
 
-static int	coll_wrapper(t_ray3 ray, t_collidable_entity	*curr_ent)
+static int	coll_func_wrapper(t_ray3 ray, t_collidable_entity	*curr_ent)
 {
 	if (curr_ent->id == ID_CYLINDER)
 		return (coll_cylinder(ray, *curr_ent));
@@ -72,7 +72,7 @@ static int	coll_wrapper(t_ray3 ray, t_collidable_entity	*curr_ent)
 	return (-1);
 }
 
-int	do_collisions(t_ray3 ray, t_prog *program)
+t_color	do_collisions(t_ray3 ray, t_prog *program)
 {
 	t_collidable_entity	*min_coll_scalar;
 	t_collidable_entity	*curr_ent;
@@ -84,8 +84,8 @@ int	do_collisions(t_ray3 ray, t_prog *program)
 	min_coll_scalar = NULL;
 	while (curr_node)
 	{
-		curr_ent = program->collidables->content;
-		curr_scalar = coll_wrapper(ray, curr_ent);
+		curr_ent = curr_node->content;
+		curr_scalar = coll_func_wrapper(ray, curr_ent);
 		if (!min_coll_scalar && curr_scalar > 0)
 		{
 			min_scalar = curr_scalar;
@@ -99,6 +99,6 @@ int	do_collisions(t_ray3 ray, t_prog *program)
 		curr_node = curr_node->next;
 	}
 	if (min_coll_scalar)
-		return (color_to_int(min_coll_scalar->object.cy.color));
-	return (0);
+		return (min_coll_scalar->object.cy.color);
+	return ((t_color){0, 0, 0, 0});
 }

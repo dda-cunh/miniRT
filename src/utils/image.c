@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 14:22:10 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/11 13:02:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:39:48 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	set_image_pixel(t_image image, int x, int y, t_color color)
 	if ( x < 0 || x >= image.w || y < 0 || y >= image.h)
 		return ;
 	pixel_addr = image.addr + (y * image.line_len + x * (image.bpp / 8));
-	*pixel_addr = color_to_int(color);
+	*pixel_addr = argb_to_int(color.alpha, color.red, color.green, color.blue);
 	return ;
 }
 
-t_color	get_pixel_color(t_image image, int x, int y)
+t_color	get_image_pixel(t_image image, int x, int y)
 {
 	char	*pixel_addr;
 	int		color;

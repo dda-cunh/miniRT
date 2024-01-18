@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/18 15:00:35 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:33:11 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 static int	mini_rt(t_prog *program)
 {
-	t_collidable_shape	*sp = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));	//testing
-	sp->sp = (t_object_sphere){(t_point3){1, 1, 0}, (t_color){255, 124, 255, 255}, 9};	//testing
-	ft_lstadd_back(&(program->collidables),												//testing
-		ft_lstnew(new_collidable_entity(sp, ID_SPHERE)));								//testing
+	for (int i = 0; i < 20; i++)																							//testing
+	{																														//testing
+		t_collidable_shape	*sp = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));									//testing
+		sp->sp = (t_object_sphere){(t_point3){i + (i / 2), i - (i / 2), 0}, (t_color){123, 123, 123, (i * 10) & 255}, 12};	//testing
+		ft_lstadd_back(&(program->collidables), ft_lstnew(new_collidable_entity(sp, ID_SPHERE)));							//testing
+	}
 	do_rays(program);
 	mlx_hook(program->win_ptr, 2, 1L << 0, key_hook, program);
 	mlx_hook(program->win_ptr, 17, 1L << 17, kill_x, program);
@@ -48,5 +50,10 @@ int	main(int ac, char **av)
 		return (killprogram(EXIT_MALLOC, program));
 	if (!program->mlx_ptr || !program->win_ptr)
 		return (killprogram(EXIT_MLX, program));
+	program->camera.right = normalize_vec3(vec3_cross_product(
+							program->camera.forward,
+							(t_vec3){0.0f, 1.0f, 0.0f}));
+	program->camera.up = vec3_cross_product(program->camera.right,
+						program->camera.forward);
 	return (mini_rt(program));
 }

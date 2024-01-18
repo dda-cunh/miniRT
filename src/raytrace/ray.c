@@ -6,14 +6,15 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/18 14:57:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:47:58 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static int	trace(int x, int y, t_prog *program)
+static t_color	trace(int x, int y, t_prog *program)
 {
+	t_vec3	ray_direction;
 	double	view_x;
 	double	view_y;
 	double	ndcX;
@@ -24,25 +25,22 @@ static int	trace(int x, int y, t_prog *program)
 	double tanFOV = tanf(program->camera.fov * 0.5f * (M_PI / 180.0f));
 	view_x = ndcX * ((double)WINDOW_W / (double)WINDOW_H) * tanFOV;
 	view_y = ndcY * tanFOV;
-	t_vec3 forward = normalize_vec3(program->camera.look_direction);
-	t_vec3 right = normalize_vec3(vec3_cross_product(forward, (t_vec3){0.0f, 1.0f, 0.0f}));
-	t_vec3 up = vec3_cross_product(right, forward);
-	t_vec3 rayDirection;
-	rayDirection.x = view_x * right.x + view_y * up.x + forward.x;
-	rayDirection.y = view_x * right.y + view_y * up.y + forward.y;
-	rayDirection.z = view_x * right.z + view_y * up.z + forward.z;
+	ray_direction.x = view_x * program->camera.right.x + view_y
+						* program->camera.up.x + program->camera.forward.x;
+	ray_direction.y = view_x * program->camera.right.y + view_y
+						* program->camera.up.y + program->camera.forward.y;
+	ray_direction.z = view_x * program->camera.right.z + view_y
+						* program->camera.up.z + program->camera.forward.z;
 	return do_collisions((t_ray3){program->camera.coords,
-		normalize_vec3(rayDirection)}, program);
+		normalize_vec3(ray_direction)}, program);
 }
-
-
 
 void	do_rays(t_prog *program)
 {
 	t_image	buffer;
+	t_color	color;
 	int		curr_y;
 	int		curr_x;
-	int		color;
 
 	curr_y = 0;
 	buffer = new_image(WINDOW_W, WINDOW_H, *program);
@@ -52,7 +50,7 @@ void	do_rays(t_prog *program)
 		while (curr_x < WINDOW_W)
 		{
 			color = trace(curr_x, curr_y, program);
-			set_image_pixel(buffer, curr_x, curr_y, int_to_color(color));
+			set_image_pixel(buffer, curr_x, curr_y, color);
 			curr_x++;
 		}
 		curr_y++;
