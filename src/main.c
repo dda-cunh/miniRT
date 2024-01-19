@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/18 17:33:11 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:25:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static int	mini_rt(t_prog *program)
 {
-	for (int i = 0; i < 20; i++)																							//testing
+	for (int i = -7; i <= 7; i++)																							//testing
 	{																														//testing
 		t_collidable_shape	*sp = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));									//testing
-		sp->sp = (t_object_sphere){(t_point3){i + (i / 2), i - (i / 2), 0}, (t_color){123, 123, 123, (i * 10) & 255}, 12};	//testing
+		sp->sp = (t_object_sphere){(t_point3){i * 5 , i * 5 , 0}, (t_color){255, 255 - abs(i) * 20 , 0, 0}, 12};	//testing
 		ft_lstadd_back(&(program->collidables), ft_lstnew(new_collidable_entity(sp, ID_SPHERE)));							//testing
 	}
 	do_rays(program);

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/18 17:36:02 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:50:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # endif
 
 # define BAD_EXIT	"Error\n"
-
-
 
 typedef unsigned char	t_byte;
 
@@ -162,36 +160,38 @@ typedef struct s__img
 /* ************************************************************************** */
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
-t_prog			*init_program(int scene_fd);
-int				killprogram(int keycode, t_prog *program);
-int				key_hook(int keycode, t_prog *window);
-int				kill_x(void *program);
+t_prog				*init_program(int scene_fd);
+int					killprogram(int keycode, t_prog *program);
+int					key_hook(int keycode, t_prog *window);
+int					kill_x(void *program);
 
 /* ************************************************************************** */
 /*                                  RAYTRACE                                  */
 /* ************************************************************************** */
-t_color			do_collisions(t_ray3 ray, t_prog *program);
-void			do_rays(t_prog *program);
+t_color				do_collisions(t_ray3 ray, t_prog *program);
+void				do_rays(t_prog *program);
 
 /* ************************************************************************** */
 /*                                   UTILS                                    */
 /* ************************************************************************** */
 t_collidable_entity	*new_collidable_entity(t_collidable_shape *shape,
-		t_collidable_id id);
-t_exit_status	__on_exit(t_exit_status exit_code, char *verbose);
-int				argb_to_int(t_byte alpha, t_byte red,
-					t_byte green, t_byte blue);
-t_point3		point3_plus_vec3(t_point3 point, t_vec3 vector);
-t_color			get_image_pixel(t_image image, int x, int y);
-t_color			sum_colors(t_color color1, t_color color2);
-t_color			int_to_color(int packed);
-t_image			new_image(int w, int h, t_prog program);
-t_vec3			scale_vec3(t_vec3 vector, double scalar);
-t_vec3			vec3_cross_product(t_vec3 a, t_vec3 b);
-t_vec3			normalize_vec3(t_vec3 vector);
-t_vec3			vec3_sub(t_vec3 a, t_vec3 b);
-double			point3_distance_point3(t_point3 p1, t_point3 p2);
-double			vec3_dot_product(t_vec3 a, t_vec3 b);
-void			set_image_pixel(t_image image, int x, int y, t_color color);
+						t_collidable_id id);
+t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
+int					argb_to_int(t_byte alpha, t_byte red,
+						t_byte green, t_byte blue);
+t_point3			point3_plus_vec3(t_point3 point, t_vec3 vector);
+t_image				new_image(int w, int h, t_prog program);
+t_color				get_image_pixel(t_image image, int x, int y);
+t_color				sum_colors(t_color color1, t_color color2);
+t_color				int_to_color(int packed);
+t_vec3				scale_vec3(t_vec3 vector, double scalar);
+t_vec3				vec3_cross_product(t_vec3 a, t_vec3 b);
+t_vec3				normalize_vec3(t_vec3 vector);
+t_vec3				vec3_sub(t_vec3 a, t_vec3 b);
+t_bool				same_color(t_color a, t_color b);
+double				point3_distance_point3(t_point3 p1, t_point3 p2);
+double				vec3_dot_product(t_vec3 a, t_vec3 b);
+void				set_image_pixel(t_image image, int x, int y, t_color color);
+int					color_to_int(t_color color);
 
 #endif
