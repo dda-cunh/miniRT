@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/19 11:50:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:45:56 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # endif
 # ifndef WINDOW_W
 #  define WINDOW_W	720
+# endif
+
+# ifndef EPSILON
+#  define EPSILON	0.0000001f
 # endif
 
 # define BAD_EXIT	"Error\n"
@@ -53,8 +57,8 @@ typedef struct s_color
 
 struct s_vec2
 {
-	double						x;
-	double						y;
+	float						x;
+	float						y;
 };
 
 typedef struct s_vec2	t_point2;
@@ -62,9 +66,9 @@ typedef struct s_vec2	t_vec2;
 
 struct s_vec3
 {
-	double						x;
-	double						y;
-	double						z;
+	float						x;
+	float						y;
+	float						z;
 };
 
 typedef struct s_vec3	t_point3;
@@ -83,6 +87,7 @@ typedef struct s_camera
 	t_vec3						right;
 	t_vec3						up;
 	t_byte						fov;
+	float						tan_fov;
 }	t_camera;
 
 typedef struct s_light
@@ -104,15 +109,15 @@ typedef struct s_object_cylinder
 	t_point3					center;
 	t_color						color;
 	t_vec3						axis;
-	double						diameter;
-	double						height;
+	float						diameter;
+	float						height;
 }	t_object_cylinder;
 
 typedef struct s_object_sphere
 {
 	t_point3					center;
 	t_color						color;
-	double						diameter;
+	float						diameter;
 }	t_object_sphere;
 
 typedef struct s_object_plane
@@ -169,7 +174,7 @@ int					kill_x(void *program);
 /*                                  RAYTRACE                                  */
 /* ************************************************************************** */
 t_color				do_collisions(t_ray3 ray, t_prog *program);
-void				do_rays(t_prog *program);
+t_image				do_rays(t_prog *program);
 
 /* ************************************************************************** */
 /*                                   UTILS                                    */
@@ -184,14 +189,15 @@ t_image				new_image(int w, int h, t_prog program);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);
-t_vec3				scale_vec3(t_vec3 vector, double scalar);
+t_vec3				scale_vec3(t_vec3 vector, float scalar);
 t_vec3				vec3_cross_product(t_vec3 a, t_vec3 b);
 t_vec3				normalize_vec3(t_vec3 vector);
 t_vec3				vec3_sub(t_vec3 a, t_vec3 b);
 t_bool				same_color(t_color a, t_color b);
-double				point3_distance_point3(t_point3 p1, t_point3 p2);
-double				vec3_dot_product(t_vec3 a, t_vec3 b);
+float				point3_distance_point3(t_point3 p1, t_point3 p2);
+float				vec3_dot_product(t_vec3 a, t_vec3 b);
 void				set_image_pixel(t_image image, int x, int y, t_color color);
+void				dump_image_window(t_image buffer);
 int					color_to_int(t_color color);
 
 #endif

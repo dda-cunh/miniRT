@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 14:22:10 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/19 12:21:34 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:25:06 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,14 @@ t_color	get_image_pixel(t_image image, int x, int y)
 	pixel_addr = image.addr + (y * image.line_len + x * (image.bpp / 8));
 	color = *(int *)pixel_addr;
 	return (int_to_color(color));
+}
+
+void	dump_image_window(t_image buffer)
+{
+	if (!buffer.win.mlx_ptr || !buffer.win.mlx_ptr)
+		return ;
+	mlx_put_image_to_window(buffer.win.mlx_ptr, buffer.win.win_ptr,
+		buffer.ptr, 0, 0);
+	mlx_destroy_image(buffer.win.mlx_ptr, buffer.ptr);
+	return ;
 }
