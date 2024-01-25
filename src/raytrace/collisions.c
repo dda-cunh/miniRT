@@ -6,45 +6,44 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/22 16:11:27 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:38:12 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
-#include "stdio.h"	//FORBIDDEN IMPORT
 
 static float	coll_cylinder(t_ray3 ray, t_collidable_entity cy_ent)
 {
 	t_object_cylinder	cy;
+	t_vec3				x;
+	float				a;
+	float				b;
+	float				c;
 
 	cy = cy_ent.object.cy;
-	return (ray.origin.x + *(int *)&cy.axis); //compilation flags placeholder
+	x = vec3_sub(ray.origin, cy.center);
+	a = vec3_dot_product(cy.axis, cy.axis)
+			- powf(vec3_dot_product(ray.direction, cy.axis), 2);
+	b = 2 * (vec3_dot_product(ray.direction, x)
+			- (vec3_dot_product(ray.direction, cy.axis)
+				* vec3_dot_product(x, cy.axis)));
+	c= vec3_dot_product(x, x) - powf(vec3_dot_product(x, cy.axis), 2)
+			- powf(cy.diameter / 2, 2);
+	return (quadratic_smallest_pos(a, b, c));
 }
 
 static float	coll_sphere(t_ray3 ray, t_collidable_entity sp_ent)
 {
 	t_object_sphere sp;
-	float			coll_scallar_1;
-	float			coll_scallar_2;
-	float			discriminant;
-	float			abc[3];
+	float				a;
+	float				b;
+	float				c;
 
 	sp = sp_ent.object.sp;
-	abc[0] = vec3_dot_product(ray.direction, ray.direction);
-	abc[1] = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin, sp.center));
-	abc[2] = vec3_dot_product(vec3_sub(ray.origin, sp.center), vec3_sub(ray.origin, sp.center)) - pow(sp.diameter / 2, 2);
-	discriminant = pow(abc[1], 2) - 4 * abc[0] * abc[2];
-	if (discriminant >= 0)
-	{
-		coll_scallar_1 = (-abc[1] - sqrt(discriminant)) / (2 * abc[0]);
-		if (discriminant == 0)
-			return (coll_scallar_1);
-		coll_scallar_2 = (-abc[1] + sqrt(discriminant)) / (2 * abc[0]);
-		if (coll_scallar_1 > coll_scallar_2)
-			return (coll_scallar_2);
-		return (coll_scallar_1);
-	}
-	return (-1);
+	a = vec3_dot_product(ray.direction, ray.direction);
+	b = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin, sp.center));
+	c = vec3_dot_product(vec3_sub(ray.origin, sp.center), vec3_sub(ray.origin, sp.center)) - pow(sp.diameter / 2, 2);
+	return (quadratic_smallest_pos(a, b, c));
 }
 
 static float	coll_plane(t_ray3 ray, t_collidable_entity pl_ent)

@@ -6,11 +6,31 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:43:28 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/22 15:52:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:30:02 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+float	quadratic_smallest_pos(float a, float b, float c)
+{
+	float	discriminant;
+	float	sol1;
+	float	sol2;
+
+	discriminant = pow(b, 2) - 4 * a * c;
+	if (discriminant >= 0)
+	{
+		sol1 = (-b + sqrt(discriminant)) / (2 * a);
+		if (discriminant == 0)
+			return (sol1);
+		sol2 = (-b - sqrt(discriminant)) / (2 * a);
+		if (sol1 > sol2)
+			return (sol2);
+		return (sol1);
+	}
+	return (-1);
+}
 
 t_vec3	vec3_cross_product(t_vec3 a, t_vec3 b)
 {

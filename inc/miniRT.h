@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/22 16:45:56 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:35:37 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,10 +194,12 @@ t_vec3				vec3_cross_product(t_vec3 a, t_vec3 b);
 t_vec3				normalize_vec3(t_vec3 vector);
 t_vec3				vec3_sub(t_vec3 a, t_vec3 b);
 t_bool				same_color(t_color a, t_color b);
+float				quadratic_smallest_pos(float a, float b, float c);
 float				point3_distance_point3(t_point3 p1, t_point3 p2);
 float				vec3_dot_product(t_vec3 a, t_vec3 b);
 void				set_image_pixel(t_image image, int x, int y, t_color color);
 void				dump_image_window(t_image buffer);
 int					color_to_int(t_color color);
+
 
 #endif
