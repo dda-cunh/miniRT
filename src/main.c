@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/25 15:04:14 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:40:23 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	mini_rt(t_prog *program)
 	pl->pl = (t_object_plane){(t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){1 , 1 , 0.5}};				//testing
 	ft_lstadd_back(&(program->collidables), ft_lstnew(new_collidable_entity(pl, ID_PLANE)));						//testing
 	t_collidable_shape	*cy = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));								//testing
-	cy->cy = (t_object_cylinder){(t_point3){0, 5, -40}, (t_color){255, 0, 0, 255}, (t_vec3){1, 0, 0}, 5, 5};				//testing
+	cy->cy = (t_object_cylinder){(t_point3){0, 5, 10}, (t_color){255, 0, 0, 255}, (t_vec3){1, 0, 0}, 8, 20};				//testing
 	ft_lstadd_back(&(program->collidables), ft_lstnew(new_collidable_entity(cy, ID_CYLINDER)));						//testing
 	buffer = do_rays(program);
 	dump_image_window(buffer);

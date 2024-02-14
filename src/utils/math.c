@@ -6,11 +6,16 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 16:43:28 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/25 15:30:02 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:29:20 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+float	pythagorean_theorem(float a, float b)
+{
+	return (sqrt(pow(a, 2) + pow(b, 2)));
+}
 
 float	quadratic_smallest_pos(float a, float b, float c)
 {
