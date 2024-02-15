@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:50:07 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:01:04 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ typedef struct s_object_plane
 
 	void						(*destroy)(struct s_object_plane *self);
 	float						(*collide)(struct s_object_plane *self,
-											t_ray3 ray);
+			t_ray3 ray);
 }	t_object_plane;
 
 typedef struct s_object_cylinder
@@ -128,7 +128,7 @@ typedef struct s_object_cylinder
 
 	void						(*destroy)(struct s_object_cylinder *self);
 	float						(*collide)(struct s_object_cylinder *self,
-											t_ray3 ray);
+			t_ray3 ray);
 }	t_object_cylinder;
 
 typedef struct s_object_sphere
@@ -139,7 +139,7 @@ typedef struct s_object_sphere
 
 	void						(*destroy)(struct s_object_sphere *self);
 	float						(*collide)(struct s_object_sphere *self,
-											t_ray3 ray);
+			t_ray3 ray);
 }	t_object_sphere;
 
 typedef union u_collidable_shape
@@ -161,8 +161,8 @@ typedef struct s_coll_list
 	struct s_coll_list	*next;
 
 	void				(*destroy)(struct s_coll_list *self);
-	void				(*add_end)(struct s_coll_list **head
-							, t_collidable_entity *ent);
+	void				(*add_end)(struct s_coll_list **head,
+			t_collidable_entity *ent);
 }	t_coll_entity_list;
 
 typedef struct s_prog
@@ -239,6 +239,6 @@ int					color_to_int(t_color color);
 t_coll_entity_list	*coll_entity_list_new(t_collidable_entity *ent);
 t_object_cylinder	*new_cylinder(t_object_cylinder cy);
 t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
-t_object_sphere		*new_sphere(t_point3 center, t_color color , float diameter);
+t_object_sphere		*new_sphere(t_point3 center, t_color color, float diameter);
 
 #endif
