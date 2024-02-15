@@ -17,6 +17,10 @@ PROG_DIR	=	program/
 
 RAY_DIR		=	raytrace/
 
+MATH_DIR	=	math/
+
+TYPES_DIR	=	t_types/
+
 UTILS_DIR	= 	utils/
 
 LFT_DIR		=	libft/
@@ -32,12 +36,20 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	collisions.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
-																	utils.c \
-																	math.c))
+																	utils.c) \
+										$(addprefix $(MATH_DIR),	common.c \
+																	point3.c \
+																	vec3.c) \
+										$(addprefix $(TYPES_DIR),	object_cylinder.c \
+																	object_sphere.c \
+																	object_plane.c \
+																	coll_entity_list.c))
 
 OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(RAY_DIR)) \
-							$(addprefix $(OBJ_DIR), $(UTILS_DIR))
+							$(addprefix $(OBJ_DIR), $(UTILS_DIR)) \
+							$(addprefix $(OBJ_DIR), $(MATH_DIR)) \
+							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
 
 OBJ 		= 	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 

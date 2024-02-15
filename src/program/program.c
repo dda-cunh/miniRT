@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/14 12:35:05 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:23:48 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	killprogram(int keycode, t_prog *program)
 	if (program)
 	{
 		if (program->collidables)
-			free(program->collidables);//todo free list
+			program->collidables->destroy(program->collidables);
 		if (program->lights)
 			free(program->lights);//todo free list
 		if (program->win_ptr)
@@ -62,6 +62,6 @@ t_prog	*init_program(int scene_fd)
 	program = new_program("miniRT");
 	if (!program || !program->mlx_ptr || !program->win_ptr)
 		return (program);
-	(void)	scene_fd; //TODO INIT WITH READ INFO
+	(void) scene_fd; //TODO: INIT WITH READ INFO
 	return (program);
 }

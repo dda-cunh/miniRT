@@ -1,61 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math.c                                             :+:      :+:    :+:   */
+/*   vec3.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 16:43:28 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/14 12:29:20 by dda-cunh         ###   ########.fr       */
+/*   Created: 2024/02/15 13:16:45 by dda-cunh          #+#    #+#             */
+/*   Updated: 2024/02/15 13:33:11 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-float	pythagorean_theorem(float a, float b)
-{
-	return (sqrt(pow(a, 2) + pow(b, 2)));
-}
-
-float	quadratic_smallest_pos(float a, float b, float c)
-{
-	float	discriminant;
-	float	sol1;
-	float	sol2;
-
-	discriminant = pow(b, 2) - 4 * a * c;
-	if (discriminant >= 0)
-	{
-		sol1 = (-b + sqrt(discriminant)) / (2 * a);
-		if (discriminant == 0)
-			return (sol1);
-		sol2 = (-b - sqrt(discriminant)) / (2 * a);
-		if (sol1 > sol2)
-			return (sol2);
-		return (sol1);
-	}
-	return (-1);
-}
-
 t_vec3	vec3_cross_product(t_vec3 a, t_vec3 b)
 {
-	return (t_vec3)
-	{
-		a.y * b.z - a.z * b.y,
-		a.z * b.x - a.x * b.z,
-		a.x * b.y - a.y * b.x
-	};
+	return ((t_vec3)
+		{
+			a.y * b.z - a.z * b.y,
+			a.z * b.x - a.x * b.z,
+			a.x * b.y - a.y * b.x
+		});
 }
 
 float	vec3_dot_product(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
-
-float	point3_distance_point3(t_point3 p1, t_point3 p2)
-{
-	return (sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2)
-			+ pow((p2.z - p1.z), 2)));
 }
 
 t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
@@ -65,16 +34,6 @@ t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 			a.x - b.x,
 			a.y - b.y,
 			a.z - b.z
-		});
-}
-
-t_point3	point3_plus_vec3(t_point3 point, t_vec3 vector)
-{
-	return ((t_point3)
-		{
-			point.x + vector.x,
-			point.x + vector.y,
-			point.x + vector.z
 		});
 }
 
