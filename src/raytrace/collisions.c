@@ -6,12 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:29:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:47:27 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
-
 
 static t_color	get_coll_entity_color(t_collidable_entity *ent)
 {
@@ -29,7 +28,7 @@ static float	coll_func_wrapper(t_ray3 ray, t_collidable_entity *curr_ent)
 	if (curr_ent)
 	{
 		if (curr_ent->id == ID_CYLINDER)
-		return (curr_ent->object->cy->collide(curr_ent->object->cy, ray));
+			return (curr_ent->object->cy->collide(curr_ent->object->cy, ray));
 		else if (curr_ent->id == ID_SPHERE)
 			return (curr_ent->object->sp->collide(curr_ent->object->sp, ray));
 		else if (curr_ent->id == ID_PLANE)

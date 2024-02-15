@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:49:44 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:57:13 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static float	collide(t_object_sphere *self, t_ray3 ray)
 
 	a = vec3_dot_product(ray.direction, ray.direction);
 	b = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin,
-			self->center));
+				self->center));
 	c = vec3_dot_product(vec3_sub(ray.origin, self->center),
 			vec3_sub(ray.origin, self->center)) - pow(self->diameter / 2, 2);
 	return (quadratic_smallest_pos(a, b, c));

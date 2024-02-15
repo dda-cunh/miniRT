@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:35:17 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:50:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,8 +237,7 @@ int					color_to_int(t_color color);
 /*                                 T_TYPES                                    */
 /* ************************************************************************** */
 t_coll_entity_list	*coll_entity_list_new(t_collidable_entity *ent);
-t_object_cylinder	*new_cylinder(t_point3 center, t_color color,
-				t_vec3 axis, float diameter, float height);
+t_object_cylinder	*new_cylinder(t_object_cylinder cy);
 t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
 t_object_sphere		*new_sphere(t_point3 center, t_color color , float diameter);
 

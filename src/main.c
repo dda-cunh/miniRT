@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:34:27 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:53:59 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@ static void	populate_test(t_prog *program)	//TESTING
 	pl->pl = new_plane((t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){1 , 1 , 0.5});
 	program->collidables->add_end(&program->collidables, new_collidable_entity(pl, ID_PLANE));
 	t_collidable_shape	*cy = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));
-	cy->cy = new_cylinder((t_point3){0, 5, 10}, (t_color){255, 0, 0, 255}, normalize_vec3((t_vec3){-1, 0, 1}), 8, 15);
+	cy->cy = new_cylinder((t_object_cylinder)
+				{
+					NULL,
+					NULL,
+					(t_point3){0, 5, 10},
+					(t_color){255, 0, 0, 255},
+					normalize_vec3((t_vec3){-1, 0, 1}),
+					8,
+					15,
+					NULL,
+					NULL
+				});
 	program->collidables->add_end(&program->collidables, new_collidable_entity(cy, ID_CYLINDER));
 }
 

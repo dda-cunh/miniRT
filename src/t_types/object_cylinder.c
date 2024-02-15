@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:47:35 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:56:51 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static float	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 	return (-1);
 }
 
-static float collide(t_object_cylinder *self, t_ray3 ray)
+static float	collide(t_object_cylinder *self, t_ray3 ray)
 {
 	t_vec3	x;
 	float	abc[3];
@@ -67,25 +67,24 @@ static void	destroy(t_object_cylinder *self)
 	}
 }
 
-t_object_cylinder	*new_cylinder(t_point3 center, t_color color,
-	t_vec3 axis, float diameter, float height)
+t_object_cylinder	*new_cylinder(t_object_cylinder cy)
 {
 	t_object_cylinder	*obj;
 
 	obj = ft_calloc(1, sizeof(t_object_cylinder));
 	if (!obj)
 		return (NULL);
-	*obj = (t_object_cylinder){NULL, NULL, center, color, axis, diameter
-			, height, destroy, collide};
-	obj->disk1 = new_plane(point3_plus_vec3(center,
-				scale_vec3(axis, height / 2)), color, axis);
+	*obj = (t_object_cylinder){NULL, NULL, cy.center, cy.color, cy.axis,
+		cy.diameter, cy.height, destroy, collide};
+	obj->disk1 = new_plane(point3_plus_vec3(cy.center,
+				scale_vec3(cy.axis, cy.height / 2)), cy.color, cy.axis);
 	if (!obj->disk1)
 	{
 		destroy(obj);
 		return (NULL);
 	}
-	obj->disk2 = new_plane(point3_plus_vec3(center,
-				scale_vec3(axis, -height / 2)), color, axis);
+	obj->disk2 = new_plane(point3_plus_vec3(cy.center,
+				scale_vec3(cy.axis, -cy.height / 2)), cy.color, cy.axis);
 	if (!obj->disk2)
 	{
 		destroy(obj);

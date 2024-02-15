@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:48:50 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:57:06 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static float	collide(t_object_plane *self, t_ray3 ray)
 	denom = vec3_dot_product(self->normal, ray.direction);
 	if (denom > EPSILON || denom < -EPSILON)
 		scallar = vec3_dot_product(vec3_sub(self->point, ray.origin),
-			self->normal) / denom;
+				self->normal) / denom;
 	return (scallar);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:07:53 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:34:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:57:47 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	print_exit_msg(t_exit_status exit_code, char *verbose)
 	//
 	ft_putstr_fd(verbose, STD_ERR);
 	ft_putchar_fd('\n', STD_ERR);
-	return;
 }
 
 t_exit_status	__on_exit(t_exit_status exit_code, char *verbose)

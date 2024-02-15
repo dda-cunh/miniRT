@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/19 11:51:15 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/15 17:57:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,3 @@ t_color	sum_colors(t_color color1, t_color color2)
 		+ argb_to_int(color2.alpha, color2.red, color2.blue, color2.blue);
 	return (int_to_color(sum));
 }
-
