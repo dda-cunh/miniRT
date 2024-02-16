@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 16:32:46 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:07:04 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	populate_test(t_prog *program)	//TESTING
 					NULL,
 					NULL,
 					(t_point3){0, 5, 10},
-					(t_color){10, 0, 0, 255},
+					(t_color){10, 10, 50, 124},
 					normalize_vec3((t_vec3){-1, 0, 1}),
 					8,
 					15,
@@ -38,13 +38,26 @@ static void	populate_test(t_prog *program)	//TESTING
 	program->collidables->add_end(&program->collidables, cy);
 }
 
+static void	print_collisions(t_coll_point3 **collisions)	//DEBUG
+{
+	for (int i = 0; i < WINDOW_H; i++)
+	{
+		for (int j = 0; j < WINDOW_W; j++)
+		{
+			printf("Collision on [%d][%d]:\n{\n", i, j);
+			printf("\tcolor: %d\n", color_to_int(collisions[i][j].color));
+			printf("\tcoords: (%f, %f, %f)\n", collisions[i][j].coords.x
+					, collisions[i][j].coords.y, collisions[i][j].coords.z);
+			printf("\tscalar: %f\n}\n", collisions[i][j].scalar);
+		}
+	}
+}
+
 static int	mini_rt(t_prog *program)
 {
-	t_image	buffer;
-
 	populate_test(program);	//TESTING
-	buffer = do_rays(program);
-	dump_image_window(buffer);
+	program->collisions = do_rays(program);
+	print_collisions(program->collisions);	//DEBUG
 	mlx_hook(program->win_ptr, 2, 1L << 0, key_hook, program);
 	mlx_hook(program->win_ptr, 17, 1L << 17, kill_x, program);
 	mlx_loop(program->mlx_ptr);
@@ -52,9 +65,9 @@ static int	mini_rt(t_prog *program)
 }
 
 /*
-	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	!raytrace -> ambient lighting -> direct lighting -> shadows!
-	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	!collisions -> ambient lighting -> direct lighting -> shadows!
+	!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 */
 int	main(int ac, char **av)
 {

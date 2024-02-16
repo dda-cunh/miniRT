@@ -6,13 +6,13 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/22 16:49:19 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:44:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static t_color	trace(int x, int y, t_prog *program)
+static t_coll_point3	do_ray(int x, int y, t_prog *program)
 {
 	t_vec3	ray_direction;
 	float	ndc_xy[2];
@@ -34,25 +34,31 @@ static t_color	trace(int x, int y, t_prog *program)
 			normalize_vec3(ray_direction)}, program));
 }
 
-t_image	do_rays(t_prog *program)
+t_coll_point3	**do_rays(t_prog *program)
 {
-	t_image	buffer;
-	t_color	color;
-	int		curr_y;
-	int		curr_x;
+	t_coll_point3	**collision;
+	t_image			buffer;
+	int				curr_y;
+	int				curr_x;
 
 	curr_y = 0;
+	collision = ft_calloc(WINDOW_H, sizeof(t_coll_point3 *));
+	if (!collision)
+		return (NULL);
 	buffer = new_image(WINDOW_W, WINDOW_H, *program);
 	while (curr_y < WINDOW_H)
 	{
 		curr_x = 0;
+		collision[curr_y] = ft_calloc(WINDOW_W, sizeof(t_coll_point3));
 		while (curr_x < WINDOW_W)
 		{
-			color = trace(curr_x, curr_y, program);
-			set_image_pixel(buffer, curr_x, curr_y, color);
+			collision[curr_y][curr_x] = do_ray(curr_x, curr_y, program);
+			set_image_pixel(buffer, curr_x, curr_y,
+				collision[curr_y][curr_x].color);
 			curr_x++;
 		}
 		curr_y++;
 	}
-	return (buffer);
+	dump_image_window(buffer);
+	return (collision);
 }

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 16:27:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:48:26 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <stdio.h>
 # include <math.h>
 
-# ifndef WINDOW_H
-#  define WINDOW_H	720
-# endif
 # ifndef WINDOW_W
 #  define WINDOW_W	720
+# endif
+# ifndef WINDOW_H
+#  define WINDOW_H	720
 # endif
 
 # ifndef EPSILON
@@ -80,6 +80,13 @@ typedef struct s_ray3
 	t_point3					origin;
 	t_vec3						direction;
 }	t_ray3;
+
+typedef struct s_coll_point3
+{
+	t_point3					coords;
+	t_color						color;
+	float						scalar;
+}	t_coll_point3;
 
 typedef struct s_camera
 {
@@ -154,16 +161,17 @@ typedef union u_collidable_shape
 
 typedef struct s_coll_list
 {
-	t_collidable_shape	*ent;
-	struct s_coll_list	*next;
+	t_collidable_shape			*ent;
+	struct s_coll_list			*next;
 
-	void				(*destroy)(struct s_coll_list *self);
-	void				(*add_end)(struct s_coll_list **head, void *t_object);
+	void						(*destroy)(struct s_coll_list *self);
+	void						(*add_end)(struct s_coll_list **head, void *t_object);
 }	t_coll_shape_list;
 
 typedef struct s_prog
 {
 	t_coll_shape_list			*collidables;
+	t_coll_point3				**collisions;
 	t_camera					camera;
 	t_color						ambient_l;
 	t_list						*lights;
@@ -194,8 +202,8 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 /*                                  RAYTRACE                                  */
 /* ************************************************************************** */
-t_color				do_collisions(t_ray3 ray, t_prog *program);
-t_image				do_rays(t_prog *program);
+t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
+t_coll_point3		**do_rays(t_prog *program);
 
 /* ************************************************************************** */
 /*                                   MATH                                     */
@@ -222,10 +230,12 @@ t_image				new_image(int w, int h, t_prog program);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);
-bool				same_color(t_color a, t_color b);
 void				set_image_pixel(t_image image, int x, int y, t_color color);
+void				free_matrix(void **matrix, size_t lines);
 void				dump_image_window(t_image buffer);
+bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
+
 
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */

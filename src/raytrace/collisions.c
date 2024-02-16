@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 16:08:07 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:06:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static float	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
 	return (-1);
 }
 
-t_color	do_collisions(t_ray3 ray, t_prog *program)
+t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
 	t_coll_shape_list	*curr_node;
-	t_color				min_coll_scalar;
+	t_color				color_min;
 	float				curr_scalar;
 	float				min_scalar;
 
 	curr_node = program->collidables;
-	min_coll_scalar = (t_color){0, 0, 0, 0};
+	color_min = (t_color){0, 0, 0, 0};
 	min_scalar = INFINITY;
 	while (curr_node)
 	{
@@ -59,9 +59,12 @@ t_color	do_collisions(t_ray3 ray, t_prog *program)
 		if (curr_scalar >= EPSILON && curr_scalar < min_scalar)
 		{
 			min_scalar = curr_scalar;
-			min_coll_scalar = get_coll_entity_color(curr_node->ent);
+			color_min = get_coll_entity_color(curr_node->ent);
 		}
 		curr_node = curr_node->next;
 	}
-	return (min_coll_scalar);
+	if (min_scalar == INFINITY)
+		return ((t_coll_point3){(t_point3){0, 0, 0}, color_min, -1});
+	return ((t_coll_point3){point3_plus_vec3(ray.origin,
+			scale_vec3(ray.direction, min_scalar)), color_min, min_scalar});
 }
