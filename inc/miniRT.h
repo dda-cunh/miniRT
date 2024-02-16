@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 17:48:26 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:41:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_light
 {
 	t_point3					coords;
 	t_color						color;
+	float						ratio;
 }	t_light;
 
 typedef enum e_collidable_id
@@ -173,7 +174,7 @@ typedef struct s_prog
 	t_coll_shape_list			*collidables;
 	t_coll_point3				**collisions;
 	t_camera					camera;
-	t_color						ambient_l;
+	t_light						ambient_l;
 	t_list						*lights;
 	void						*mlx_ptr;
 	void						*win_ptr;
@@ -204,11 +205,13 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 t_coll_point3		**do_rays(t_prog *program);
+void				trace(t_prog *program);
 
 /* ************************************************************************** */
 /*                                   MATH                                     */
 /* ************************************************************************** */
 t_point3			point3_plus_vec3(t_point3 point, t_vec3 vector);
+t_vec3				vec3_from_points(t_point3 start, t_point3 end);
 t_vec3				scale_vec3(t_vec3 vector, float scalar);
 t_vec3				vec3_cross_product(t_vec3 a, t_vec3 b);
 t_vec3				normalize_vec3(t_vec3 vector);
@@ -224,9 +227,9 @@ bool				point3_inside_sphere(t_point3 point,
 /*                                   UTILS                                    */
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
-int					argb_to_int(t_byte alpha, t_byte red,
-						t_byte green, t_byte blue);
 t_image				new_image(int w, int h, t_prog program);
+t_color				apply_color(t_color original, float intensity,
+						t_color to_apply);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);

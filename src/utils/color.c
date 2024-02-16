@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:57:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:50:46 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,10 @@ t_color	int_to_color(int packed)
 		});
 }
 
-int	argb_to_int(t_byte alpha, t_byte red, t_byte green, t_byte blue)
-{
-	return ((alpha << 24 | red << 16 | green << 8 | blue));
-}
-
 int	color_to_int(t_color color)
 {
-	return (argb_to_int(color.alpha, color.red, color.green, color.blue));
+	return ((color.alpha << 24 | color.red << 16 | color.green << 8
+				| color.blue));
 }
 
 bool	same_color(t_color a, t_color b)
@@ -38,11 +34,17 @@ bool	same_color(t_color a, t_color b)
 	return (color_to_int(a) == color_to_int(b));
 }
 
-t_color	sum_colors(t_color color1, t_color color2)
+t_color	apply_color(t_color original, float intensity, t_color to_apply)
 {
-	int	sum;
-
-	sum = argb_to_int(color1.alpha, color1.red, color1.blue, color1.blue)
-		+ argb_to_int(color2.alpha, color2.red, color2.blue, color2.blue);
-	return (int_to_color(sum));
+	if (intensity < 0.0f)
+		intensity = 0.0f;
+	if (intensity > 1.0f)
+		intensity = 1.0f;
+	return ((t_color)
+		{
+			original.alpha,
+			original.red + intensity * to_apply.red,
+			original.green + intensity * to_apply.green,
+			original.blue + intensity * to_apply.blue
+		});
 }

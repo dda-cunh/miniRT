@@ -33,7 +33,8 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
 																	events.c) \
 										$(addprefix $(RAY_DIR),		ray.c \
-																	collisions.c) \
+																	collisions.c \
+																	trace.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
 																	utils.c) \
