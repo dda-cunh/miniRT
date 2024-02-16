@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:57:13 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:05:53 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ t_object_sphere	*new_sphere(t_point3 center, t_color color, float diameter)
 	obj = ft_calloc(1, sizeof(t_object_sphere));
 	if (!obj)
 		return (NULL);
-	*obj = (t_object_sphere){center, color, diameter, destroy, collide};
+	*obj = (t_object_sphere){ID_SPHERE, center, color, diameter, destroy,
+			collide};
 	return (obj);
 }

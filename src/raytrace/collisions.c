@@ -6,40 +6,46 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:47:27 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:08:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static t_color	get_coll_entity_color(t_collidable_entity *ent)
+static t_color	get_coll_entity_color(t_collidable_shape *ent)
 {
-	if (ent->id == ID_CYLINDER)
-		return (ent->object->cy->color);
-	else if (ent->id == ID_SPHERE)
-		return (ent->object->sp->color);
-	else if (ent->id == ID_PLANE)
-		return (ent->object->pl->color);
+	t_collidable_id	id;
+
+	id = get_coll_shape_id(ent);
+	if (id == ID_CYLINDER)
+		return (ent->cy->color);
+	else if (id == ID_SPHERE)
+		return (ent->sp->color);
+	else if (id == ID_PLANE)
+		return (ent->pl->color);
 	return ((t_color){0, 0, 0, 0});
 }
 
-static float	coll_func_wrapper(t_ray3 ray, t_collidable_entity *curr_ent)
+static float	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
 {
+	t_collidable_id	id;
+
+	id = get_coll_shape_id(curr_ent);
 	if (curr_ent)
 	{
-		if (curr_ent->id == ID_CYLINDER)
-			return (curr_ent->object->cy->collide(curr_ent->object->cy, ray));
-		else if (curr_ent->id == ID_SPHERE)
-			return (curr_ent->object->sp->collide(curr_ent->object->sp, ray));
-		else if (curr_ent->id == ID_PLANE)
-			return (curr_ent->object->pl->collide(curr_ent->object->pl, ray));
+		if (id == ID_CYLINDER)
+			return (curr_ent->cy->collide(curr_ent->cy, ray));
+		else if (id == ID_SPHERE)
+			return (curr_ent->sp->collide(curr_ent->sp, ray));
+		else if (id == ID_PLANE)
+			return (curr_ent->pl->collide(curr_ent->pl, ray));
 	}
 	return (-1);
 }
 
 t_color	do_collisions(t_ray3 ray, t_prog *program)
 {
-	t_coll_entity_list	*curr_node;
+	t_coll_shape_list	*curr_node;
 	t_color				min_coll_scalar;
 	float				curr_scalar;
 	float				min_scalar;

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:23:48 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:30:36 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	killprogram(int keycode, t_prog *program)
 			mlx_destroy_display(program->mlx_ptr);
 			free(program->mlx_ptr);
 		}
+		free(program);
 	}
 	exit(__on_exit(keycode, NULL));
 }
@@ -43,12 +44,12 @@ static t_prog	*new_program(char *title)
 	mlx_ptr = mlx_init();
 	*program = (t_prog)
 	{
+		NULL,
 		(t_camera){(t_point3){0, 0, 40}, normalize_vec3((t_vec3){0, 0, -1}),
 		(t_vec3){0, 0, 0},
 		(t_vec3){0, 0, 0}, 90, 0},
-		NULL,
-		NULL,
 		(t_color){0, 0, 0, 0},
+		NULL,
 		mlx_ptr,
 		mlx_new_window(mlx_ptr, WINDOW_W, WINDOW_H, title)
 	};

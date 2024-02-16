@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 18:01:04 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:27:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef enum e_collidable_id
 
 typedef struct s_object_plane
 {
+	t_collidable_id				_id;
 	t_point3					point;
 	t_color						color;
 	t_vec3						normal;
@@ -118,6 +119,7 @@ typedef struct s_object_plane
 
 typedef struct s_object_cylinder
 {
+	t_collidable_id				_id;
 	t_object_plane				*disk1;
 	t_object_plane				*disk2;
 	t_point3					center;
@@ -133,6 +135,7 @@ typedef struct s_object_cylinder
 
 typedef struct s_object_sphere
 {
+	t_collidable_id				_id;
 	t_point3					center;
 	t_color						color;
 	float						diameter;
@@ -149,28 +152,21 @@ typedef union u_collidable_shape
 	t_object_plane				*pl;
 }	t_collidable_shape;
 
-typedef struct s_collidable_entity
-{
-	t_collidable_shape	*object;
-	t_collidable_id		id;
-}	t_collidable_entity;
-
 typedef struct s_coll_list
 {
-	t_collidable_entity	*ent;
+	t_collidable_shape	*ent;
 	struct s_coll_list	*next;
 
 	void				(*destroy)(struct s_coll_list *self);
-	void				(*add_end)(struct s_coll_list **head,
-			t_collidable_entity *ent);
-}	t_coll_entity_list;
+	void				(*add_end)(struct s_coll_list **head, void *t_object);
+}	t_coll_shape_list;
 
 typedef struct s_prog
 {
+	t_coll_shape_list			*collidables;
 	t_camera					camera;
-	t_coll_entity_list			*collidables;
-	t_list						*lights;
 	t_color						ambient_l;
+	t_list						*lights;
 	void						*mlx_ptr;
 	void						*win_ptr;
 }	t_prog;
@@ -219,8 +215,6 @@ bool				point3_inside_sphere(t_point3 point,
 /* ************************************************************************** */
 /*                                   UTILS                                    */
 /* ************************************************************************** */
-t_collidable_entity	*new_collidable_entity(t_collidable_shape *shape,
-						t_collidable_id id);
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
 int					argb_to_int(t_byte alpha, t_byte red,
 						t_byte green, t_byte blue);
@@ -228,7 +222,7 @@ t_image				new_image(int w, int h, t_prog program);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);
-t_bool				same_color(t_color a, t_color b);
+bool				same_color(t_color a, t_color b);
 void				set_image_pixel(t_image image, int x, int y, t_color color);
 void				dump_image_window(t_image buffer);
 int					color_to_int(t_color color);
@@ -236,9 +230,11 @@ int					color_to_int(t_color color);
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */
 /* ************************************************************************** */
-t_coll_entity_list	*coll_entity_list_new(t_collidable_entity *ent);
+t_collidable_shape	*new_collidable_shape(void *t_object);
+t_coll_shape_list	*coll_entity_list_new(void *t_object);
 t_object_cylinder	*new_cylinder(t_object_cylinder cy);
-t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
 t_object_sphere		*new_sphere(t_point3 center, t_color color, float diameter);
+t_collidable_id		get_coll_shape_id(t_collidable_shape *ent);
+t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:57:06 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:52:32 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ t_object_plane	*new_plane(t_point3 point, t_color color, t_vec3 normal)
 	obj = ft_calloc(1, sizeof(t_object_plane));
 	if (!obj)
 		return (NULL);
-	*obj = (t_object_plane){point, color, normal, destroy, collide};
+	*obj = (t_object_plane){ID_PLANE, point, color, normal, destroy,
+			collide};
 	return (obj);
 }

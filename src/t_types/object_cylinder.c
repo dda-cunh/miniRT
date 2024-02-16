@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:56:51 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:05:04 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ t_object_cylinder	*new_cylinder(t_object_cylinder cy)
 	obj = ft_calloc(1, sizeof(t_object_cylinder));
 	if (!obj)
 		return (NULL);
-	*obj = (t_object_cylinder){NULL, NULL, cy.center, cy.color, cy.axis,
-		cy.diameter, cy.height, destroy, collide};
+	*obj = (t_object_cylinder){ID_CYLINDER, NULL, NULL, cy.center, cy.color,
+		cy.axis, cy.diameter, cy.height, destroy, collide};
 	obj->disk1 = new_plane(point3_plus_vec3(cy.center,
 				scale_vec3(cy.axis, cy.height / 2)), cy.color, cy.axis);
 	if (!obj->disk1)

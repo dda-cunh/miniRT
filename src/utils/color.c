@@ -33,7 +33,7 @@ int	color_to_int(t_color color)
 	return (argb_to_int(color.alpha, color.red, color.green, color.blue));
 }
 
-t_bool	same_color(t_color a, t_color b)
+bool	same_color(t_color a, t_color b)
 {
 	return (color_to_int(a) == color_to_int(b));
 }

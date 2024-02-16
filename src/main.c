@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:53:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:32:46 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,25 @@ static void	populate_test(t_prog *program)	//TESTING
 	program->collidables = coll_entity_list_new(NULL);
 	for (int i = -7; i <= 7; i++)
 	{
-		t_collidable_shape	*sp = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));
-		sp->sp = new_sphere((t_point3){i * 5, i * 5, 0}, (t_color){255, 210 , 0, 0}, 12);
-		program->collidables->add_end(&program->collidables, new_collidable_entity(sp, ID_SPHERE));
+		t_object_sphere *sp = new_sphere((t_point3){i * 5, i * 5, 0}, (t_color){255, 210 , 0, 0}, 12);
+		program->collidables->add_end(&program->collidables, sp);
 	}
-	t_collidable_shape	*pl = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));
-	pl->pl = new_plane((t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){1 , 1 , 0.5});
-	program->collidables->add_end(&program->collidables, new_collidable_entity(pl, ID_PLANE));
-	t_collidable_shape	*cy = (t_collidable_shape *)malloc(sizeof(t_collidable_shape));
-	cy->cy = new_cylinder((t_object_cylinder)
+	t_object_plane	*pl = new_plane((t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){1 , 1 , 0.5});
+	program->collidables->add_end(&program->collidables, pl);
+	t_object_cylinder	*cy = new_cylinder((t_object_cylinder)
 				{
+					ID_CYLINDER,
 					NULL,
 					NULL,
 					(t_point3){0, 5, 10},
-					(t_color){255, 0, 0, 255},
+					(t_color){10, 0, 0, 255},
 					normalize_vec3((t_vec3){-1, 0, 1}),
 					8,
 					15,
 					NULL,
 					NULL
 				});
-	program->collidables->add_end(&program->collidables, new_collidable_entity(cy, ID_CYLINDER));
+	program->collidables->add_end(&program->collidables, cy);
 }
 
 static int	mini_rt(t_prog *program)

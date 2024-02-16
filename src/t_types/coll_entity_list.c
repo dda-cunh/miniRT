@@ -6,15 +6,15 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 17:08:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:22:56 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:29:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static void	add_end(t_coll_entity_list **head, t_collidable_entity *ent)
+static void	add_end(t_coll_shape_list **head, void *t_object)
 {
-	t_coll_entity_list	*curr_node;
+	t_coll_shape_list	*curr_node;
 
 	if (head)
 	{
@@ -23,36 +23,43 @@ static void	add_end(t_coll_entity_list **head, t_collidable_entity *ent)
 		{
 			while (curr_node->next)
 				curr_node = curr_node->next;
-			curr_node->next = coll_entity_list_new(ent);
+			curr_node->next = coll_entity_list_new(t_object);
 		}
 	}
 }
 
-static void	destroy(t_coll_entity_list *self)
+static void	destroy(t_coll_shape_list *self)
 {
-	if (self)
+	t_coll_shape_list	*next;
+	t_collidable_id		id;
+
+	while (self)
 	{
+		next = self->next;
 		if (self->ent)
 		{
-			if (self->ent->id == ID_CYLINDER)
-				self->ent->object->cy->destroy(self->ent->object->cy);
-			if (self->ent->id == ID_SPHERE)
-				self->ent->object->sp->destroy(self->ent->object->sp);
-			if (self->ent->id == ID_PLANE)
-				self->ent->object->pl->destroy(self->ent->object->pl);
+			id = get_coll_shape_id(self->ent);
+			if (id == ID_CYLINDER)
+				self->ent->cy->destroy(self->ent->cy);
+			if (id == ID_SPHERE)
+				self->ent->sp->destroy(self->ent->sp);
+			if (id == ID_PLANE)
+				self->ent->pl->destroy(self->ent->pl);
+			free(self->ent);
 		}
 		free(self);
+		self = next;
 	}
 }
 
-t_coll_entity_list	*coll_entity_list_new(t_collidable_entity *ent)
+t_coll_shape_list	*coll_entity_list_new(void *t_object)
 {
-	t_coll_entity_list	*node;
+	t_coll_shape_list	*node;
 
-	node = ft_calloc(1, sizeof(t_coll_entity_list));
+	node = ft_calloc(1, sizeof(t_coll_shape_list));
 	if (!node)
 		return (NULL);
-	node->ent = ent;
+	node->ent = new_collidable_shape(t_object);
 	node->next = NULL;
 	node->add_end = add_end;
 	node->destroy = destroy;
