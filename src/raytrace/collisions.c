@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 18:56:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_color	get_coll_entity_color(t_collidable_shape *ent)
 	return ((t_color){0, 0, 0, 0});
 }
 
-static float	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
+static double	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
 {
 	t_collidable_id	id;
 
@@ -47,8 +47,8 @@ t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
 	t_coll_shape_list	*curr_node;
 	t_color				color_min;
-	float				curr_scalar;
-	float				min_scalar;
+	double				curr_scalar;
+	double				min_scalar;
 
 	curr_node = program->collidables;
 	color_min = (t_color){0, 0, 0, 0};

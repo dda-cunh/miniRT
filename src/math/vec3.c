@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:16:45 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_vec3	vec3_cross_product(t_vec3 a, t_vec3 b)
 		});
 }
 
-float	vec3_dot_product(t_vec3 a, t_vec3 b)
+double	vec3_dot_product(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
@@ -37,7 +37,7 @@ t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 		});
 }
 
-t_vec3	scale_vec3(t_vec3 vector, float scalar)
+t_vec3	scale_vec3(t_vec3 vector, double scalar)
 {
 	return ((t_vec3)
 		{
@@ -49,7 +49,7 @@ t_vec3	scale_vec3(t_vec3 vector, float scalar)
 
 t_vec3	normalize_vec3(t_vec3 vector)
 {
-	float	magnitude;
+	double	magnitude;
 
 	magnitude = sqrt(vector.x * vector.x + vector.y * vector.y
 			+ vector.z * vector.z);

@@ -6,17 +6,17 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static float	collide(t_object_sphere *self, t_ray3 ray)
+static double	collide(t_object_sphere *self, t_ray3 ray)
 {
-	float	a;
-	float	b;
-	float	c;
+	double	a;
+	double	b;
+	double	c;
 
 	a = vec3_dot_product(ray.direction, ray.direction);
 	b = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin,
@@ -32,7 +32,7 @@ static void	destroy(t_object_sphere *self)
 		free(self);
 }
 
-t_object_sphere	*new_sphere(t_point3 center, t_color color, float diameter)
+t_object_sphere	*new_sphere(t_point3 center, t_color color, double diameter)
 {
 	t_object_sphere	*obj;
 

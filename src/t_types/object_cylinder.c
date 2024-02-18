@@ -6,16 +6,16 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static float	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
+static double	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 {
-	float			coll1;
-	float			coll2;
+	double			coll1;
+	double			coll2;
 
 	coll1 = cy.disk1->collide(cy.disk1, ray);
 	coll2 = cy.disk2->collide(cy.disk2, ray);
@@ -32,11 +32,11 @@ static float	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 	return (-1);
 }
 
-static float	collide(t_object_cylinder *self, t_ray3 ray)
+static double	collide(t_object_cylinder *self, t_ray3 ray)
 {
 	t_vec3	x;
-	float	abc[3];
-	float	t;
+	double	abc[3];
+	double	t;
 
 	x = vec3_sub(ray.origin, self->center);
 	abc[0] = vec3_dot_product(self->axis, self->axis)

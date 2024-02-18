@@ -6,16 +6,16 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static float	collide(t_object_plane *self, t_ray3 ray)
+static double	collide(t_object_plane *self, t_ray3 ray)
 {
-	float	scallar;
-	float	denom;
+	double	scallar;
+	double	denom;
 
 	scallar = -1;
 	denom = vec3_dot_product(self->normal, ray.direction);

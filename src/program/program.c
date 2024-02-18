@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 18:56:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:51:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_prog	*new_program(char *title)
 	{
 		NULL,
 		NULL,
-		(t_camera){(t_point3){0, 0, 40}, normalize_vec3((t_vec3){0, 0, -1}),
+		(t_camera){(t_point3){0, -40, 40}, normalize_vec3((t_vec3){0, 1, -1}),
 		(t_vec3){0, 0, 0},
 		(t_vec3){0, 0, 0}, 90, 0},
 		(t_light){ORIGIN, COLOR_WHITE, 0.01f},

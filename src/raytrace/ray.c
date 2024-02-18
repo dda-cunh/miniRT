@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 18:42:35 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static t_coll_point3	do_ray(int x, int y, t_prog *program)
 {
 	t_vec3	ray_direction;
-	float	ndc_xy[2];
-	float	view_x;
-	float	view_y;
+	double	ndc_xy[2];
+	double	view_x;
+	double	view_y;
 
 	ndc_xy[0] = (2.0f * x) / WINDOW_W - 1.0f;
 	ndc_xy[1] = 1.0f - (2.0f * y) / WINDOW_H;
-	view_x = ndc_xy[0] * ((float)WINDOW_W / (float)WINDOW_H)
+	view_x = ndc_xy[0] * ((double)WINDOW_W / (double)WINDOW_H)
 		* program->camera.tan_fov;
 	view_y = ndc_xy[1] * program->camera.tan_fov;
 	ray_direction.x = view_x * program->camera.right.x + view_y

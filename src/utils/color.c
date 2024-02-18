@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 18:54:35 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	same_color(t_color a, t_color b)
 	return (color_to_int(a) == color_to_int(b));
 }
 
-t_color	darken_color(t_color original, float intensity)
+t_color	darken_color(t_color original, double intensity)
 {
 	if (intensity < 0.0f)
 		intensity = 0.0f;
@@ -49,7 +49,7 @@ t_color	darken_color(t_color original, float intensity)
 		});
 }
 
-t_color	brightness(t_color original, float intensity)
+t_color	brightness(t_color original, double intensity)
 {
 	int	result[3];
 

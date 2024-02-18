@@ -6,22 +6,22 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:15:44 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-float	pythagorean_theorem(float a, float b)
+double	pythagorean_theorem(double a, double b)
 {
 	return (sqrt(pow(a, 2) + pow(b, 2)));
 }
 
-float	quadratic_smallest_pos(float a, float b, float c)
+double	quadratic_smallest_pos(double a, double b, double c)
 {
-	float	discriminant;
-	float	sol1;
-	float	sol2;
+	double	discriminant;
+	double	sol1;
+	double	sol2;
 
 	discriminant = pow(b, 2) - 4 * a * c;
 	if (discriminant >= 0)

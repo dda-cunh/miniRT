@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:17:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/17 16:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_vec3	vec3_from_points(t_point3 start, t_point3 end)
 	return (vec3_sub(end, start));
 }
 
-float	point3_distance_point3(t_point3 p1, t_point3 p2)
+double	point3_distance_point3(t_point3 p1, t_point3 p2)
 {
 	return (sqrt(pow((p2.x - p1.x), 2) + pow((p2.y - p1.y), 2)
 			+ pow((p2.z - p1.z), 2)));

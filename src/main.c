@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:16:53 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:40:44 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static void	populate_test(t_prog *program)	//TESTING
 		t_object_sphere	*sp;
 		if (i == 0)
 			continue ;
-		sp = new_sphere((t_point3){10, 10, 0}, COLOR_RED, 12);
-
+		if (i % 2 == 0)
+			sp = new_sphere((t_point3){i * 6, i * 6, 0}, COLOR_RED, 12);
+		else
+			sp = new_sphere((t_point3){i * 6, -i * 6, 0}, COLOR_RED, 12);
 		program->collidables->add_end(&program->collidables, sp);
 	}
 	t_object_plane	*pl = new_plane((t_point3){0 , 0 , -5}, (COLOR_GREEN), (t_vec3){0 , 0 , 1});
