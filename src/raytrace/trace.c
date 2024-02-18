@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 16:10:58 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:43:49 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 		ray = (t_ray3){origin.coords,
 			normalize_vec3(vec3_from_points(origin.coords, light->coords))};
 		collision = do_collisions(ray, program);
-		if (collision.scalar > EPSILON && collision.scalar < INFINITY)
-			final_color = darken_color(final_color, SHADOW_RATIO);
+		if (valid_collision(collision.scalar))
+			final_color = blend_colors(final_color, SHADOW_RATIO, COLOR_BLACK);
 		else
-			final_color = brighten_color(final_color, light->ratio);
+			final_color = blend_colors(final_color, light->ratio, COLOR_WHITE);
 		curr_node = curr_node->next;
 	}
 	return (final_color);
@@ -48,7 +48,7 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 void	trace(t_prog *program)
 {
 	t_color	new_color;
-	t_image buffer;
+	t_image	buffer;
 	int		curr_x;
 	int		curr_y;
 
@@ -59,10 +59,10 @@ void	trace(t_prog *program)
 		curr_x = 0;
 		while (curr_x < WINDOW_W)
 		{
-			if (program->collisions[curr_y][curr_x].scalar > EPSILON)
+			if (valid_collision(program->collisions[curr_y][curr_x].scalar))
 			{
 				new_color = ray_to_lights(program->collisions[curr_y][curr_x],
-					program);
+						program);
 				set_image_pixel(buffer, curr_x, curr_y, new_color);
 			}
 			curr_x++;

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 16:02:28 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:43:20 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ typedef struct s_object_cylinder
 	t_vec3						axis;
 	double						diameter;
 	double						height;
+	double						radius;
 
 	void						(*destroy)(struct s_object_cylinder *self);
 	t_coll_point3				(*collide)(struct s_object_cylinder *self,
@@ -218,6 +219,7 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 t_coll_point3		**do_rays(t_prog *program);
+bool				valid_collision(double scalar);
 void				trace(t_prog *program);
 
 /* ************************************************************************** */
@@ -241,10 +243,8 @@ bool				point3_inside_sphere(t_point3 point,
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
 t_image				new_image(int w, int h, t_prog program);
-t_color				apply_color(t_color original, double intensity,
+t_color				blend_colors(t_color original, double intensity,
 						t_color to_apply);
-t_color				brighten_color(t_color original, double intensity);
-t_color				darken_color(t_color original, double intensity);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);

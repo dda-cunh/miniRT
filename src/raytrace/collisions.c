@@ -6,13 +6,14 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 15:23:28 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:39:02 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static t_coll_point3	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
+static t_coll_point3	coll_func_wrapper(t_ray3 ray,
+	t_collidable_shape *curr_ent)
 {
 	t_collidable_id	id;
 
@@ -29,6 +30,11 @@ static t_coll_point3	coll_func_wrapper(t_ray3 ray, t_collidable_shape *curr_ent)
 	return (NO_COLLISION);
 }
 
+bool	valid_collision(double scalar)
+{
+	return (scalar >= EPSILON && scalar < INFINITY);
+}
+
 t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
 	t_coll_shape_list	*curr_node;
@@ -40,8 +46,8 @@ t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 	while (curr_node)
 	{
 		curr_coll = coll_func_wrapper(ray, curr_node->ent);
-		if (curr_coll.scalar >= EPSILON && curr_coll.scalar < INFINITY
-				&& curr_coll.scalar < min_coll.scalar)
+		if (valid_collision(curr_coll.scalar)
+			&& curr_coll.scalar < min_coll.scalar)
 			min_coll = curr_coll;
 		curr_node = curr_node->next;
 	}

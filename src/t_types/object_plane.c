@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 14:40:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:41:29 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ static t_coll_point3	collide(t_object_plane *self, t_ray3 ray)
 	if (denom > EPSILON || denom < -EPSILON)
 		scalar = vec3_dot_product(vec3_sub(self->point, ray.origin),
 				self->normal) / denom;
+	if (!valid_collision(scalar))
+		return (NO_COLLISION);
 	return ((t_coll_point3)
 		{
-			point3_plus_vec3(ray.origin,scale_vec3(ray.direction, scalar)),
+			point3_plus_vec3(ray.origin, scale_vec3(ray.direction, scalar)),
 			self->color,
 			self->normal,
 			scalar
@@ -45,6 +47,6 @@ t_object_plane	*new_plane(t_point3 point, t_color color, t_vec3 normal)
 	if (!obj)
 		return (NULL);
 	*obj = (t_object_plane){ID_PLANE, point, color, normal, destroy,
-			collide};
+		collide};
 	return (obj);
 }
