@@ -6,19 +6,19 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:51:55 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 18:42:16 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:57:26 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-t_collidable_id	get_coll_shape_id(t_collidable_shape *ent)
+t_collidable_id	get_coll_shape_id(t_collidable_shape ent)
 {
 	t_collidable_id	id;
 
 	id = 0;
-	if (ent)
-		ft_memcpy(&id, ent->cy, sizeof(t_collidable_id));
+	if (ent.cy)
+		ft_memcpy(&id, ent.cy, sizeof(t_collidable_id));
 	return (id);
 }
 

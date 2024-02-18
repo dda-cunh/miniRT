@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 17:08:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 16:29:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 19:57:41 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	destroy(t_coll_shape_list *self)
 		next = self->next;
 		if (self->ent)
 		{
-			id = get_coll_shape_id(self->ent);
+			id = get_coll_shape_id(*self->ent);
 			if (id == ID_CYLINDER)
 				self->ent->cy->destroy(self->ent->cy);
 			if (id == ID_SPHERE)
