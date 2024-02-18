@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 19:56:05 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:16:53 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 static void	populate_test(t_prog *program)	//TESTING
 {
 	program->collidables = coll_entity_list_new(NULL);
-	for (int i = -7; i <= 7; i++)
+	for (int i = -4; i <= 4; i++)
 	{
-		t_object_sphere *sp = new_sphere((t_point3){i * 5, i * 5, 0}, (t_color){255, 210 , 0, 0}, 12);
+		t_object_sphere	*sp;
+		if (i == 0)
+			continue ;
+		sp = new_sphere((t_point3){10, 10, 0}, COLOR_RED, 12);
+
 		program->collidables->add_end(&program->collidables, sp);
 	}
-	t_object_plane	*pl = new_plane((t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){1 , 1 , 0.5});
+	t_object_plane	*pl = new_plane((t_point3){0 , 0 , -5}, (COLOR_GREEN), (t_vec3){0 , 0 , 1});
 	program->collidables->add_end(&program->collidables, pl);
 	t_object_cylinder	*cy = new_cylinder((t_object_cylinder)
 				{
@@ -28,7 +32,7 @@ static void	populate_test(t_prog *program)	//TESTING
 					NULL,
 					NULL,
 					(t_point3){0, 5, 10},
-					(t_color){10, 10, 50, 124},
+					COLOR_BLUE,
 					normalize_vec3((t_vec3){-1, 0, 1}),
 					8,
 					15,
@@ -37,7 +41,7 @@ static void	populate_test(t_prog *program)	//TESTING
 				});
 	program->collidables->add_end(&program->collidables, cy);
 	t_light	*light = malloc(sizeof(t_light));
-	*light = (t_light){(t_point3){5, 5, 10}, (t_color){255, 122, 0, 0}, 0.6};
+	*light = (t_light){(t_point3){-5, -5, 30}, COLOR_RED, 0.5f};
 	program->lights = ft_lstnew(light);
 }
 
@@ -63,17 +67,22 @@ static void	ambient(t_prog *program)
 	int		curr_x;
 	int		curr_y;
 
+	if (!program)
+		return ;
 	buffer = new_image(WINDOW_W, WINDOW_H, *program);
-	curr_x = 0;
 	curr_y = 0;
 	while (curr_y < WINDOW_H)
 	{
 		curr_x = 0;
 		while (curr_x < WINDOW_W)
 		{
-			new_color = apply_color(program->collisions[curr_y][curr_x].color,
-					program->ambient_l.ratio, program->ambient_l.color);
-			set_image_pixel(buffer, curr_x, curr_y, new_color);
+			if (program->collisions[curr_y][curr_x].scalar > EPSILON)
+			{
+				new_color = brightness(program->collisions[curr_y][curr_x].color,
+						program->ambient_l.ratio);
+				set_image_pixel(buffer, curr_x, curr_y, new_color);
+				program->collisions[curr_y][curr_x].color = new_color;
+			}
 			curr_x++;
 		}
 		curr_y++;
@@ -83,14 +92,13 @@ static void	ambient(t_prog *program)
 
 static int	mini_rt(t_prog *program)
 {
-	populate_test(program);	//TESTING
 	program->collisions = do_rays(program);
 	ambient(program);
 	trace(program);
 	mlx_hook(program->win_ptr, 2, 1L << 0, key_hook, program);
 	mlx_hook(program->win_ptr, 17, 1L << 17, kill_x, program);
 	mlx_loop(program->mlx_ptr);
-	return (killprogram(0, program));
+	return (killprogram(EXIT_GOOD, program));
 }
 
 /*
@@ -123,5 +131,6 @@ int	main(int ac, char **av)
 			program->camera.forward);
 	program->camera.tan_fov = tanf(program->camera.fov * 0.5f
 			* (M_PI / 180.0f));
+	populate_test(program);	//TESTING
 	return (mini_rt(program));
 }

@@ -1,11 +1,11 @@
 .SILENT:
-NAME		= 	miniRT
+NAME		=	miniRT
 
-CC 			= 	cc
+CC			=	cc
 
-CFLAGS		= 	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address
 
-RM 			= 	rm -rf
+RM			=	rm -rf
 
 INC_DIR		=	inc/
 
@@ -21,7 +21,7 @@ MATH_DIR	=	math/
 
 TYPES_DIR	=	t_types/
 
-UTILS_DIR	= 	utils/
+UTILS_DIR	=	utils/
 
 LFT_DIR		=	libft/
 
@@ -53,11 +53,11 @@ OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(MATH_DIR)) \
 							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
 
-OBJ 		= 	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ		=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 SCENE		=	scenes/empty.rt
 
-GREEN		= 	\033[0;32m
+GREEN		=	\033[0;32m
 
 RED			=	\033[0;31m
 
@@ -84,7 +84,7 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.c | $(OBJ_DIRS)
 $(OBJ_DIRS):
 				mkdir -p $@
 
-all: 			$(NAME)
+all:			$(NAME)
 
 clean:
 				make fclean -C $(LFT_FULL)
@@ -99,8 +99,8 @@ fclean:			clean
 re:				fclean all
 
 compiled:
-				printf "															 	\n"
-				printf "$(GREEN)	$(NAME)							 			$(RESET)\n"
+				printf "																\n"
+				printf "$(GREEN)	$(NAME)										$(RESET)\n"
 				printf "$(GREEN)                             _  _             _ $(RESET)\n"
 				printf "$(GREEN)                            (_)| |           | |$(RESET)\n"
 				printf "$(GREEN)  ____   ___   ____   ____   _ | |  ____   _ | |$(RESET)\n"
@@ -115,4 +115,4 @@ run:			all
 
 rerun:			fclean | run
 
-.PHONY: 		all clean fclean re run rerun
+.PHONY:		all clean fclean re run rerun

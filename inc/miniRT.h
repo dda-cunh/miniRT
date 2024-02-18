@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 19:41:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 12:15:52 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
 # include <math.h>
 
 # ifndef WINDOW_W
-#  define WINDOW_W	720
+#  define WINDOW_W		720
 # endif
 # ifndef WINDOW_H
-#  define WINDOW_H	720
+#  define WINDOW_H		720
 # endif
 
 # ifndef EPSILON
-#  define EPSILON	0.000001f
+#  define EPSILON		0.000001f
 # endif
 
-# define BAD_EXIT	"Error\n"
+# define SHADOW_RATIO	0.2f
 
-typedef unsigned char	t_byte;
+# define BAD_EXIT		"Error\n"
 
 typedef enum exit_status
 {
@@ -50,11 +50,17 @@ typedef enum exit_status
 
 typedef struct s_color
 {
-	t_byte						alpha;
-	t_byte						red;
-	t_byte						green;
-	t_byte						blue;
+	int						alpha;
+	int						red;
+	int						green;
+	int						blue;
 }	t_color;
+
+# define COLOR_WHITE			(t_color){255, 255, 255, 255}
+# define COLOR_BLACK			(t_color){255, 0, 0, 0}
+# define COLOR_GREEN			(t_color){255, 0, 255, 0}
+# define COLOR_BLUE				(t_color){255, 0, 0, 255}
+# define COLOR_RED				(t_color){255, 255, 0, 0}
 
 struct s_vec2
 {
@@ -75,6 +81,8 @@ struct s_vec3
 typedef struct s_vec3	t_point3;
 typedef struct s_vec3	t_vec3;
 
+# define ORIGIN			(t_point3){0, 0, 0}
+
 typedef struct s_ray3
 {
 	t_point3					origin;
@@ -94,7 +102,7 @@ typedef struct s_camera
 	t_vec3						forward;
 	t_vec3						right;
 	t_vec3						up;
-	t_byte						fov;
+	int							fov;
 	float						tan_fov;
 }	t_camera;
 
@@ -228,8 +236,8 @@ bool				point3_inside_sphere(t_point3 point,
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
 t_image				new_image(int w, int h, t_prog program);
-t_color				apply_color(t_color original, float intensity,
-						t_color to_apply);
+t_color				brightness(t_color original, float intensity);
+t_color				darken_color(t_color original, float intensity);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);

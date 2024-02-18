@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:26:35 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/28 15:55:10 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:04:47 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,25 @@ static void	*memset(void *s, int c, size_t n)
 static void	*memmove(void *dest, const void *src, size_t n)
 {
 	unsigned char	*src_bytes;
-	unsigned char	*dest_bytes;
+	unsigned char	*desints;
 	size_t			i;
 
 	if (!src || !dest)
 		return (NULL);
 	src_bytes = (unsigned char *)src;
-	dest_bytes = (unsigned char *)dest;
-	if (dest_bytes >= src_bytes && dest_bytes <= src_bytes + n)
+	desints = (unsigned char *)dest;
+	if (desints >= src_bytes && desints <= src_bytes + n)
 	{
 		if (dest)
 			while (n--)
-				dest_bytes[n] = src_bytes[n];
+				desints[n] = src_bytes[n];
 	}
 	else
 	{
 		i = 0;
 		while (i < n)
 		{
-			dest_bytes[i] = src_bytes[i];
+			desints[i] = src_bytes[i];
 			i++;
 		}
 	}

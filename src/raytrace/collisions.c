@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/16 18:06:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:56:21 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 		curr_node = curr_node->next;
 	}
 	if (min_scalar == INFINITY)
-		return ((t_coll_point3){(t_point3){0, 0, 0}, color_min, -1});
+		return ((t_coll_point3){ORIGIN, color_min, -1});
 	return ((t_coll_point3){point3_plus_vec3(ray.origin,
 			scale_vec3(ray.direction, min_scalar)), color_min, min_scalar});
 }
