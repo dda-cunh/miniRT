@@ -6,33 +6,53 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:07:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static double	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
+static t_coll_point3	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 {
-	double			coll1;
-	double			coll2;
+	t_coll_point3	coll1;
+	t_coll_point3	coll2;
 
 	coll1 = cy.disk1->collide(cy.disk1, ray);
 	coll2 = cy.disk2->collide(cy.disk2, ray);
-	if (coll1 > EPSILON && coll1 < coll2)
+	if (coll1.scalar > EPSILON && coll1.scalar < coll2.scalar)
 		if (point3_distance_point3(point3_plus_vec3(ray.origin,
-					scale_vec3(ray.direction, coll1)), cy.center)
+					scale_vec3(ray.direction, coll1.scalar)), cy.center)
 			< pythagorean_theorem(cy.height / 2, cy.diameter / 2))
 			return (coll1);
-	if (coll2 > EPSILON)
+	if (coll2.scalar > EPSILON)
 		if (point3_distance_point3(point3_plus_vec3(ray.origin,
-					scale_vec3(ray.direction, coll2)), cy.center)
+					scale_vec3(ray.direction, coll2.scalar)), cy.center)
 			< pythagorean_theorem(cy.height / 2, cy.diameter / 2))
 			return (coll2);
-	return (-1);
+	return (NO_COLLISION);
 }
 
-static double	collide(t_object_cylinder *self, t_ray3 ray)
+static t_coll_point3	get_side_normal(t_object_cylinder *self, t_ray3 ray,
+		double scalar)
+{
+	t_point3	coll_coords;
+	t_vec3		center_to_coll;
+	t_vec3		normal;
+
+	coll_coords = point3_plus_vec3(ray.origin,
+			scale_vec3(ray.direction, scalar));
+	center_to_coll = vec3_from_points(self->center, coll_coords);
+	normal = vec3_sub(center_to_coll, self->axis);
+	return ((t_coll_point3)
+		{
+			coll_coords,
+			self->color,
+			normal,
+			scalar
+		});
+}
+
+static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 {
 	t_vec3	x;
 	double	abc[3];
@@ -51,7 +71,7 @@ static double	collide(t_object_cylinder *self, t_ray3 ray)
 		if (point3_distance_point3(point3_plus_vec3(ray.origin,
 					scale_vec3(ray.direction, t)), self->center)
 			< pythagorean_theorem(self->height / 2, self->diameter / 2))
-			return (t);
+			return (get_side_normal(self, ray, t));
 	return (coll_cylinder_planes(ray, *self));
 }
 

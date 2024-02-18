@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:52:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:02:28 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,19 @@
 # include <math.h>
 
 # ifndef WINDOW_W
-#  define WINDOW_W		720
+#  define WINDOW_W		1920
 # endif
 # ifndef WINDOW_H
-#  define WINDOW_H		720
+#  define WINDOW_H		1080
 # endif
 
 # ifndef EPSILON
-#  define EPSILON		0.000001f
+#  define EPSILON		0.00000000000001
 # endif
 
-# define SHADOW_RATIO	0.5f
+# define SHADOW_BIAS	0.001
+
+# define SHADOW_RATIO	0.1f
 
 # define BAD_EXIT		"Error\n"
 
@@ -81,7 +83,7 @@ struct s_vec3
 typedef struct s_vec3	t_point3;
 typedef struct s_vec3	t_vec3;
 
-# define ORIGIN			(t_point3){0, 0, 0}
+# define ORIGIN					(t_point3){0, 0, 0}
 
 typedef struct s_ray3
 {
@@ -93,8 +95,11 @@ typedef struct s_coll_point3
 {
 	t_point3					coords;
 	t_color						color;
+	t_vec3						normal;
 	double						scalar;
 }	t_coll_point3;
+
+# define NO_COLLISION			(t_coll_point3){ORIGIN, COLOR_BLACK, ORIGIN, INFINITY}
 
 typedef struct s_camera
 {
@@ -129,7 +134,7 @@ typedef struct s_object_plane
 	t_vec3						normal;
 
 	void						(*destroy)(struct s_object_plane *self);
-	double						(*collide)(struct s_object_plane *self,
+	t_coll_point3				(*collide)(struct s_object_plane *self,
 			t_ray3 ray);
 }	t_object_plane;
 
@@ -145,7 +150,7 @@ typedef struct s_object_cylinder
 	double						height;
 
 	void						(*destroy)(struct s_object_cylinder *self);
-	double						(*collide)(struct s_object_cylinder *self,
+	t_coll_point3				(*collide)(struct s_object_cylinder *self,
 			t_ray3 ray);
 }	t_object_cylinder;
 
@@ -157,7 +162,7 @@ typedef struct s_object_sphere
 	double						diameter;
 
 	void						(*destroy)(struct s_object_sphere *self);
-	double						(*collide)(struct s_object_sphere *self,
+	t_coll_point3				(*collide)(struct s_object_sphere *self,
 			t_ray3 ray);
 }	t_object_sphere;
 
@@ -236,7 +241,9 @@ bool				point3_inside_sphere(t_point3 point,
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
 t_image				new_image(int w, int h, t_prog program);
-t_color				brightness(t_color original, double intensity);
+t_color				apply_color(t_color original, double intensity,
+						t_color to_apply);
+t_color				brighten_color(t_color original, double intensity);
 t_color				darken_color(t_color original, double intensity);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);

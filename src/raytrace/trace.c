@@ -6,11 +6,18 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:52:36 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:10:58 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+static	void	apply_bias(t_coll_point3 *point)
+{
+	point->coords.x = point->normal.x * SHADOW_BIAS + point->coords.x;
+	point->coords.y = point->normal.y * SHADOW_BIAS + point->coords.y;
+	point->coords.z = point->normal.z * SHADOW_BIAS + point->coords.z;
+}
 
 static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 {
@@ -22,16 +29,17 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 
 	curr_node = program->lights;
 	final_color = origin.color;
+	apply_bias(&origin);
 	while (curr_node)
 	{
 		light = curr_node->content;
 		ray = (t_ray3){origin.coords,
 			normalize_vec3(vec3_from_points(origin.coords, light->coords))};
 		collision = do_collisions(ray, program);
-		if (collision.scalar > EPSILON)
+		if (collision.scalar > EPSILON && collision.scalar < INFINITY)
 			final_color = darken_color(final_color, SHADOW_RATIO);
-		// else
-		// 	final_color = brightness(final_color, light->ratio);
+		else
+			final_color = brighten_color(final_color, light->ratio);
 		curr_node = curr_node->next;
 	}
 	return (final_color);

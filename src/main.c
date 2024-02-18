@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:40:44 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 16:13:13 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,13 @@ static void	populate_test(t_prog *program)	//TESTING
 				});
 	program->collidables->add_end(&program->collidables, cy);
 	t_light	*light = malloc(sizeof(t_light));
-	*light = (t_light){(t_point3){-5, -5, 30}, COLOR_RED, 0.5f};
+	*light = (t_light){(t_point3){10, -5, 30}, COLOR_RED, 0.2f};
 	program->lights = ft_lstnew(light);
-}
+	t_light	*light2 = malloc(sizeof(t_light));
+	*light2 = (t_light){(t_point3){-10, -5, 30}, COLOR_RED, 0.2f};
+	program->lights = ft_lstnew(light2);
 
-// static void	print_collisions(t_coll_point3 **collisions)	//DEBUG
-// {
-// 	for (int i = 0; i < WINDOW_H; i++)
-// 	{
-// 		for (int j = 0; j < WINDOW_W; j++)
-// 		{
-// 			printf("Collision on [%d][%d]:\n{\n", i, j);
-// 			printf("\tcolor: %d\n", color_to_int(collisions[i][j].color));
-// 			printf("\tcoords: (%f, %f, %f)\n", collisions[i][j].coords.x
-// 					, collisions[i][j].coords.y, collisions[i][j].coords.z);
-// 			printf("\tscalar: %f\n}\n", collisions[i][j].scalar);
-// 		}
-// 	}
-// }
+}
 
 static void	ambient(t_prog *program)
 {
@@ -80,8 +69,8 @@ static void	ambient(t_prog *program)
 		{
 			if (program->collisions[curr_y][curr_x].scalar > EPSILON)
 			{
-				new_color = brightness(program->collisions[curr_y][curr_x].color,
-						program->ambient_l.ratio);
+				new_color = apply_color(program->collisions[curr_y][curr_x].color,
+						program->ambient_l.ratio, program->ambient_l.color);
 				set_image_pixel(buffer, curr_x, curr_y, new_color);
 				program->collisions[curr_y][curr_x].color = new_color;
 			}
@@ -128,7 +117,7 @@ int	main(int ac, char **av)
 		return (killprogram(EXIT_MLX, program));
 	program->camera.right = normalize_vec3(vec3_cross_product(
 				program->camera.forward,
-				(t_vec3){0.0f, 1.0f, 0.0f}));
+				(t_vec3){EPSILON, 1.0f, EPSILON}));
 	program->camera.up = vec3_cross_product(program->camera.right,
 			program->camera.forward);
 	program->camera.tan_fov = tanf(program->camera.fov * 0.5f

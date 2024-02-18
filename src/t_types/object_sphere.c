@@ -6,24 +6,35 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/18 14:48:13 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static double	collide(t_object_sphere *self, t_ray3 ray)
+static t_coll_point3	collide(t_object_sphere *self, t_ray3 ray)
 {
-	double	a;
-	double	b;
-	double	c;
+	t_point3	coll_coords;
+	double		scalar;
+	double		a;
+	double		b;
+	double		c;
 
 	a = vec3_dot_product(ray.direction, ray.direction);
 	b = 2 * vec3_dot_product(ray.direction, vec3_sub(ray.origin,
 				self->center));
 	c = vec3_dot_product(vec3_sub(ray.origin, self->center),
-			vec3_sub(ray.origin, self->center)) - pow(self->diameter / 2, 2);
-	return (quadratic_smallest_pos(a, b, c));
+			vec3_sub(ray.origin, self->center)) - powf(self->diameter / 2, 2);
+	scalar = quadratic_smallest_pos(a, b, c);
+	coll_coords = point3_plus_vec3(ray.origin,
+			scale_vec3(ray.direction, scalar));
+	return ((t_coll_point3)
+		{
+			coll_coords,
+			self->color,
+			normalize_vec3(vec3_from_points(self->center, coll_coords)),
+			scalar
+		});
 }
 
 static void	destroy(t_object_sphere *self)
