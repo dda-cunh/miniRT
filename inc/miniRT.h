@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 20:29:13 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:31:10 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <math.h>
 
 # ifndef WINDOW_W
-#  define WINDOW_W		1920
+#  define WINDOW_W		720
 # endif
 # ifndef WINDOW_H
-#  define WINDOW_H		1080
+#  define WINDOW_H		720
 # endif
 
 # ifndef EPSILON
@@ -174,18 +174,17 @@ typedef union u_collidable_shape
 	t_object_plane				*pl;
 }	t_collidable_shape;
 
-typedef struct s_coll_list
+typedef struct s_coll_arr
 {
-	t_collidable_shape			*ent;
-	struct s_coll_list			*next;
+	t_collidable_shape			**ent;
+	int							length;
 
-	void						(*destroy)(struct s_coll_list *self);
-	void						(*add_end)(struct s_coll_list **head, void *t_object);
-}	t_coll_shape_list;
+	void						(*destroy)(struct s_coll_arr *self);
+}	t_coll_shape_arr;
 
 typedef struct s_prog
 {
-	t_coll_shape_list			*collidables;
+	t_coll_shape_arr			*collidables;
 	t_coll_point3				**collisions;
 	t_camera					camera;
 	t_light						ambient_l;
@@ -254,12 +253,11 @@ void				dump_image_window(t_image buffer);
 bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
 
-
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */
 /* ************************************************************************** */
 t_collidable_shape	*new_collidable_shape(void *t_object);
-t_coll_shape_list	*coll_entity_list_new(void *t_object);
+t_coll_shape_arr	*coll_shape_arr_new(int length);
 t_object_cylinder	*new_cylinder(t_object_cylinder cy);
 t_object_sphere		*new_sphere(t_point3 center, t_color color, double diameter);
 t_collidable_id		get_coll_shape_id(t_collidable_shape ent);

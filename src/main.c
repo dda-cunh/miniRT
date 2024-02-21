@@ -6,15 +6,18 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 20:11:01 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:33:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/miniRT.h"
 
+
+#define N	10
 static void	populate_test(t_prog *program)	//TESTING
 {
-	program->collidables = coll_entity_list_new(NULL);
+	int	coll_i	= 0;
+	program->collidables = coll_shape_arr_new(N);
 	for (int i = -4; i <= 4; i++)
 	{
 		t_object_sphere	*sp;
@@ -24,10 +27,10 @@ static void	populate_test(t_prog *program)	//TESTING
 			sp = new_sphere((t_point3){i * 6, i * 6, 0}, COLOR_RED, 15);
 		else
 			sp = new_sphere((t_point3){i * 6, -i * 6, 0}, COLOR_RED, 15);
-		program->collidables->add_end(&program->collidables, sp);
+		program->collidables->ent[coll_i++] = new_collidable_shape(sp);
 	}
 	t_object_plane	*pl = new_plane((t_point3){0 , 0 , 0}, COLOR_GREEN, (t_vec3){0 , 0 , 1});
-	program->collidables->add_end(&program->collidables, pl);
+	program->collidables->ent[coll_i++] = new_collidable_shape(pl);
 	t_object_cylinder	*cy = new_cylinder((t_object_cylinder)
 				{
 					ID_CYLINDER,
@@ -42,7 +45,7 @@ static void	populate_test(t_prog *program)	//TESTING
 					NULL,
 					NULL
 				});
-	program->collidables->add_end(&program->collidables, cy);
+	program->collidables->ent[coll_i++] = new_collidable_shape(cy);
 	t_light	*light = malloc(sizeof(t_light));
 	*light = (t_light){(t_point3){10, -5, 40}, COLOR_RED, 0.2f};
 	program->lights = ft_lstnew(light);

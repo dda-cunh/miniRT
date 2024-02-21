@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 20:11:55 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:32:21 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,20 @@ bool	valid_collision(double scalar)
 
 t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
-	t_coll_shape_list	*curr_node;
+	t_collidable_shape	*collidable;
 	t_coll_point3		curr_coll;
 	t_coll_point3		min_coll;
+	int					i;
 
 	min_coll = NO_COLLISION;
-	curr_node = program->collidables;
-	while (curr_node)
+	i = -1;
+	while (++i < program->collidables->length)
 	{
-		curr_coll = coll_func_wrapper(ray, curr_node->ent);
+		collidable = program->collidables->ent[i];
+		curr_coll = coll_func_wrapper(ray, collidable);
 		if (valid_collision(curr_coll.scalar)
 			&& curr_coll.scalar < min_coll.scalar)
 			min_coll = curr_coll;
-		curr_node = curr_node->next;
 	}
 	return (min_coll);
 }
