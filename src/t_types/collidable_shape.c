@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:51:55 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 19:57:26 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:30:18 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ t_collidable_id	get_coll_shape_id(t_collidable_shape ent)
 	if (ent.cy)
 		ft_memcpy(&id, ent.cy, sizeof(t_collidable_id));
 	return (id);
+}
+
+void	destroy_collidable_shape(void *shape)
+{
+	t_collidable_shape	*obj;
+	int					id;
+
+	obj = shape;
+	if (obj)
+	{
+		id = get_coll_shape_id(*obj);
+		if (id == ID_CYLINDER)
+			return (obj->cy->destroy(obj->cy));
+		else if (id == ID_SPHERE)
+			return (obj->sp->destroy(obj->sp));
+		else if (id == ID_PLANE)
+			return (obj->pl->destroy(obj->pl));
+		free(obj);
+	}
 }
 
 t_collidable_shape	*new_collidable_shape(void *t_object)

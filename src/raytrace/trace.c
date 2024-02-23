@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 18:43:49 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:42:32 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,26 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 {
 	t_coll_point3	collision;
 	t_color			final_color;
-	t_light			*light;
-	t_list			*curr_node;
+	t_light			*curr_light;
 	t_ray3			ray;
+	size_t			i;
 
-	curr_node = program->lights;
 	final_color = origin.color;
 	apply_bias(&origin);
-	while (curr_node)
+	i = 0;
+	while (i < program->lights->length)
 	{
-		light = curr_node->content;
+		curr_light = (t_light *)program->lights->get(program->lights, i);
 		ray = (t_ray3){origin.coords,
-			normalize_vec3(vec3_from_points(origin.coords, light->coords))};
+			normalize_vec3(vec3_from_points(origin.coords,
+				curr_light->coords))};
 		collision = do_collisions(ray, program);
 		if (valid_collision(collision.scalar))
 			final_color = blend_colors(final_color, SHADOW_RATIO, COLOR_BLACK);
 		else
-			final_color = blend_colors(final_color, light->ratio, COLOR_WHITE);
-		curr_node = curr_node->next;
+			final_color = blend_colors(final_color,
+				curr_light->ratio, COLOR_WHITE);
+		i++;
 	}
 	return (final_color);
 }

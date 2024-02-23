@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/21 15:31:10 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:37:31 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@
 # define SHADOW_RATIO	0.1f
 
 # define BAD_EXIT		"Error\n"
+
+# define CVECTOR_INIT_CAP	16
+# define CVECTOR_SCALE		2
+
+typedef struct	s_cvector
+{
+	unsigned char		*array;
+	size_t				type_size;
+	size_t				capacity;
+	size_t				length;
+
+	unsigned char		*(*get)(struct s_cvector *self, size_t index);
+	void				(*set)(struct s_cvector *self, size_t index, void *content);
+	void				(*add)(struct s_cvector *self, void *content);
+	void				(*destroy)(struct s_cvector *self);
+	void				(*elem_destroy)(void *element);
+}	t_cvector;
 
 typedef enum exit_status
 {
@@ -184,11 +201,11 @@ typedef struct s_coll_arr
 
 typedef struct s_prog
 {
-	t_coll_shape_arr			*collidables;
 	t_coll_point3				**collisions;
+	t_cvector					*collidables;
+	t_cvector					*lights;
 	t_camera					camera;
 	t_light						ambient_l;
-	t_list						*lights;
 	void						*mlx_ptr;
 	void						*win_ptr;
 }	t_prog;
@@ -262,5 +279,8 @@ t_object_cylinder	*new_cylinder(t_object_cylinder cy);
 t_object_sphere		*new_sphere(t_point3 center, t_color color, double diameter);
 t_collidable_id		get_coll_shape_id(t_collidable_shape ent);
 t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
+t_cvector			*cvector_new(size_t type_size,
+						void (*elem_destroy)(void *));
+void				destroy_collidable_shape(void *shape);
 
 #endif
