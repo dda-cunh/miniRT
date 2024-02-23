@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 15:36:18 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:24:52 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ static void	_add(t_cvector *self, void *content)
 
 	if (!self || !content)
 		return ;
-	if (self->length + 1 >= self->capacity)
-		self->array = ft_realloc(self->array, self->capacity * CVECTOR_SCALE);
+	if (self->length >= self->capacity)
+	{
+		self->capacity *= CVECTOR_SCALE;
+		self->array = ft_realloc(self->array, self->capacity
+				* self->type_size);
+	}
 	content_bytes = (unsigned char *)content;
 	ft_memmove(self->array + (self->length * self->type_size),
 			content_bytes, self->type_size);
-	self->length += 1;
+	self->length++;
 }
 
 static void	_set(t_cvector *self, size_t index, void *content)
@@ -68,7 +72,7 @@ static void	_destroy(t_cvector *self)
 
 t_cvector	*cvector_new(size_t type_size, void (*elem_destroy)(void *))
 {
-	t_cvector   *vector;
+	t_cvector	*vector;
 
 	vector = malloc(sizeof(t_cvector));
 	if (!vector)
