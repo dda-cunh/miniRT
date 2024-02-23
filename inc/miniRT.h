@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 15:37:31 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:57:50 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 
 # define CVECTOR_INIT_CAP	16
 # define CVECTOR_SCALE		2
+
+# define OBJ_TO_COLL_SHAPE	&(t_collidable_shape){(t_object_cylinder *)
 
 typedef struct	s_cvector
 {
