@@ -44,7 +44,6 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(TYPES_DIR),	object_cylinder.c \
 																	object_sphere.c \
 																	object_plane.c \
-																	coll_shape_arr.c \
 																	collidable_shape.c \
 																	cvector.c))
 

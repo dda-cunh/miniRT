@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 18:27:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:49:14 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,13 +193,6 @@ typedef union u_collidable_shape
 	t_object_plane				*pl;
 }	t_collidable_shape;
 
-typedef struct s_coll_arr
-{
-	t_collidable_shape			**ent;
-	int							length;
-
-	void						(*destroy)(struct s_coll_arr *self);
-}	t_coll_shape_arr;
 
 typedef struct s_prog
 {
@@ -276,7 +269,6 @@ int					color_to_int(t_color color);
 /*                                 T_TYPES                                    */
 /* ************************************************************************** */
 t_collidable_shape	*new_collidable_shape(void *t_object);
-t_coll_shape_arr	*coll_shape_arr_new(int length);
 t_object_cylinder	*new_cylinder(t_object_cylinder cy);
 t_object_sphere		*new_sphere(t_point3 center, t_color color, double diameter);
 t_collidable_id		get_coll_shape_id(t_collidable_shape ent);
