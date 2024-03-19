@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:18:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:39:16 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	i = 0;
 	while (i < program->lights->length)
 	{
-		curr_light = (t_light *)program->lights->get(program->lights, i);
+		curr_light = program->lights->get(program->lights, i);
 		ray = (t_ray3){origin.coords,
 			normalize_vec3(vec3_from_points(origin.coords,
 					curr_light->coords))};

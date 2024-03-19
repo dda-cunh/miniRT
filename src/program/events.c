@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:33:58 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/06 14:54:36 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:32:50 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	key_hook(int keycode, t_prog *program)
 {
-	if (keycode == 65307)
+	if (keycode == KEY_ESC)
 		return (killprogram(0, program));
 	return (0);
 }

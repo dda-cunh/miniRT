@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:16:57 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:36:56 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 		free(content);
 }
 
-static unsigned char	*_get(t_cvector *self, size_t index)
+static void	*_get(t_cvector *self, size_t index)
 {
 	if (!self || index >= self->capacity)
 		return (NULL);

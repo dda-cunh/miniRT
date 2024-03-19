@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:45:24 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:36:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@
 
 # define BAD_EXIT		"Error\n"
 
+# define KEY_ARROW_RIGHT	65363
+# define KEY_ARROW_LEFT		65361
+# define KEY_ARROW_DOWN		65364
+# define KEY_ARROW_UP		65362
+# define KEY_ESC			65307
+
 # define CVECTOR_INIT_CAP	9
 # define CVECTOR_SCALE		2
 
@@ -49,7 +55,7 @@ typedef struct	s_cvector
 	size_t				capacity;
 	size_t				length;
 
-	unsigned char		*(*get)(struct s_cvector *self, size_t index);
+	void				*(*get)(struct s_cvector *self, size_t index);
 	void				(*set)(struct s_cvector *self, size_t index, void *content, bool del_heap);
 	void				(*add)(struct s_cvector *self, void *content, bool del_heap);
 	void				(*destroy)(struct s_cvector *self);
