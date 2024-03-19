@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 18:26:39 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:34:00 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ static void	populate_test(t_prog *program)	//TESTING
 		if (i == 0)
 			continue ;
 		if (i % 2 == 0)
-			sp = new_sphere((t_point3){i * 6, i * 6, 0}, COLOR_RED, 15);
+			sp = new_sphere((t_point3){i * 6, i * 6, 0}, (t_color){255, 255, 0, 0}, 15);
 		else
-			sp = new_sphere((t_point3){i * 6, -i * 6, 0}, COLOR_RED, 15);
-		program->collidables->add(program->collidables, OBJ_TO_COLL_SHAPE sp});
+			sp = new_sphere((t_point3){i * 6, -i * 6, 0}, (t_color){255, 255, 0, 0}, 15);
+		program->collidables->add(program->collidables, new_collidable_shape(sp), true);
 	}
-	t_object_plane	*pl = new_plane((t_point3){0 , 0 , 0}, COLOR_GREEN, (t_vec3){0 , 0 , 1});
-	program->collidables->add(program->collidables, OBJ_TO_COLL_SHAPE pl});
+	t_object_plane	*pl = new_plane((t_point3){0 , 0 , 0}, (t_color){255, 0, 255, 0}, (t_vec3){0 , 0 , 1});
+	program->collidables->add(program->collidables, new_collidable_shape(pl), true);
 	t_object_cylinder	*cy = new_cylinder((t_object_cylinder)
 				{
 					ID_CYLINDER,
 					NULL,
 					NULL,
 					(t_point3){0, 5, 20},
-					COLOR_BLUE,
+					(t_color){255, 0, 0, 255},
 					normalize_vec3((t_vec3){-1, 0, 1}),
 					15,
 					25,
@@ -43,9 +43,9 @@ static void	populate_test(t_prog *program)	//TESTING
 					NULL,
 					NULL
 				});
-	program->collidables->add(program->collidables, OBJ_TO_COLL_SHAPE cy});
+	program->collidables->add(program->collidables, new_collidable_shape(cy), true);
 	program->lights = cvector_new(sizeof(t_light), NULL);
-	program->lights->add(program->lights, &(t_light){(t_point3){10, -5, 40}, COLOR_RED, 0.2f});
+	program->lights->add(program->lights, &(t_light){(t_point3){10, -5, 40}, (t_color){255, 255, 0, 0}, 0.2f}, false);
 }
 
 static void	ambient(t_prog *program)

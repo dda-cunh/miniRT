@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 15:42:32 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:33:32 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 				curr_light->coords))};
 		collision = do_collisions(ray, program);
 		if (valid_collision(collision.scalar))
-			final_color = blend_colors(final_color, SHADOW_RATIO, COLOR_BLACK);
+			final_color = blend_colors(final_color, SHADOW_RATIO, (t_color){255, 0, 0, 0});
 		else
 			final_color = blend_colors(final_color,
-				curr_light->ratio, COLOR_WHITE);
+				curr_light->ratio, (t_color){255, 255, 255, 255});
 		i++;
 	}
 	return (final_color);

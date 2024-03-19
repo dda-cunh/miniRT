@@ -6,13 +6,13 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 18:24:52 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:02:56 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static void	_add(t_cvector *self, void *content)
+static void	_add(t_cvector *self, void *content, bool del_heap)
 {
 	unsigned char	*content_bytes;
 
@@ -20,17 +20,19 @@ static void	_add(t_cvector *self, void *content)
 		return ;
 	if (self->length >= self->capacity)
 	{
+		self->array = ft_realloc(self->array, self->capacity * self->type_size,
+				self->capacity * self->type_size * CVECTOR_SCALE);
 		self->capacity *= CVECTOR_SCALE;
-		self->array = ft_realloc(self->array, self->capacity
-				* self->type_size);
 	}
 	content_bytes = (unsigned char *)content;
 	ft_memmove(self->array + (self->length * self->type_size),
 			content_bytes, self->type_size);
+	if (del_heap)
+		free(content);
 	self->length++;
 }
 
-static void	_set(t_cvector *self, size_t index, void *content)
+static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 {
 	unsigned char	*content_bytes;
 
@@ -41,6 +43,8 @@ static void	_set(t_cvector *self, size_t index, void *content)
 	content_bytes = (unsigned char *)content;
 	ft_memmove(self->array + (index * self->type_size),
 			content_bytes, self->type_size);
+	if (del_heap)
+		free(content);
 }
 
 static unsigned char	*_get(t_cvector *self, size_t index)

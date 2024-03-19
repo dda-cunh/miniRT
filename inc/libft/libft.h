@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 13:46:17 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:01:29 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 char			*ft_strdup(const char *s);
 void			*ft_calloc(size_t nmemb, size_t size);
-void			*ft_realloc(void *ptr, size_t size);
+void			*ft_realloc(void *ptr, size_t prev_size, size_t size);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strdup_tail(const char *s, size_t tail);
 char			*ft_strjoin(char const *s1, char const *s2);

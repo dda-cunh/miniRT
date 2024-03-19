@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 18:41:39 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_coll_point3	collide(t_object_sphere *self, t_ray3 ray)
 			vec3_sub(ray.origin, self->center)) - powf(self->diameter / 2, 2);
 	scalar = quadratic_smallest_pos(a, b, c);
 	if (!valid_collision(scalar))
-		return (NO_COLLISION);
+		return (get_no_collision());
 	coll_coords = point3_plus_vec3(ray.origin,
 			scale_vec3(ray.direction, scalar));
 	return ((t_coll_point3)

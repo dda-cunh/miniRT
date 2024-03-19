@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:51:55 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 15:30:18 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:20:09 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	destroy_collidable_shape(void *shape)
 			return (obj->sp->destroy(obj->sp));
 		else if (id == ID_PLANE)
 			return (obj->pl->destroy(obj->pl));
-		free(obj);
+		free(shape);
 	}
 }
 

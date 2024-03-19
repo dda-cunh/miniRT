@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 18:41:29 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_coll_point3	collide(t_object_plane *self, t_ray3 ray)
 		scalar = vec3_dot_product(vec3_sub(self->point, ray.origin),
 				self->normal) / denom;
 	if (!valid_collision(scalar))
-		return (NO_COLLISION);
+		return (get_no_collision());
 	return ((t_coll_point3)
 		{
 			point3_plus_vec3(ray.origin, scale_vec3(ray.direction, scalar)),

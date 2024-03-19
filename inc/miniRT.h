@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/18 14:49:14 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:45:24 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # define CVECTOR_INIT_CAP	9
 # define CVECTOR_SCALE		2
 
-# define OBJ_TO_COLL_SHAPE	&(t_collidable_shape){(t_object_cylinder *)
-
 typedef struct	s_cvector
 {
 	unsigned char		*array;
@@ -52,8 +50,8 @@ typedef struct	s_cvector
 	size_t				length;
 
 	unsigned char		*(*get)(struct s_cvector *self, size_t index);
-	void				(*set)(struct s_cvector *self, size_t index, void *content);
-	void				(*add)(struct s_cvector *self, void *content);
+	void				(*set)(struct s_cvector *self, size_t index, void *content, bool del_heap);
+	void				(*add)(struct s_cvector *self, void *content, bool del_heap);
 	void				(*destroy)(struct s_cvector *self);
 	void				(*elem_destroy)(void *element);
 }	t_cvector;
@@ -77,12 +75,6 @@ typedef struct s_color
 	int						blue;
 }	t_color;
 
-# define COLOR_WHITE			(t_color){255, 255, 255, 255}
-# define COLOR_BLACK			(t_color){255, 0, 0, 0}
-# define COLOR_GREEN			(t_color){255, 0, 255, 0}
-# define COLOR_BLUE				(t_color){255, 0, 0, 255}
-# define COLOR_RED				(t_color){255, 255, 0, 0}
-
 struct s_vec2
 {
 	double						x;
@@ -102,8 +94,6 @@ struct s_vec3
 typedef struct s_vec3	t_point3;
 typedef struct s_vec3	t_vec3;
 
-# define ORIGIN					(t_point3){0, 0, 0}
-
 typedef struct s_ray3
 {
 	t_point3					origin;
@@ -117,8 +107,6 @@ typedef struct s_coll_point3
 	t_vec3						normal;
 	double						scalar;
 }	t_coll_point3;
-
-# define NO_COLLISION			(t_coll_point3){ORIGIN, COLOR_BLACK, ORIGIN, INFINITY}
 
 typedef struct s_camera
 {
@@ -230,8 +218,10 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 t_coll_point3		**do_rays(t_prog *program);
+t_coll_point3		get_no_collision(void);
 bool				valid_collision(double scalar);
 void				trace(t_prog *program);
+
 
 /* ************************************************************************** */
 /*                                   MATH                                     */

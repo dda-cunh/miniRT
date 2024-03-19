@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 18:41:06 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_coll_point3	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 					scale_vec3(ray.direction, coll2.scalar)), cy.center)
 			<= cy.radius)
 			return (coll2);
-	return (NO_COLLISION);
+	return (get_no_collision());
 }
 
 static t_vec3	get_side_normal(t_object_cylinder *self, t_point3 coll_coords)

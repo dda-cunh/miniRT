@@ -6,30 +6,27 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 18:03:53 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/21 18:04:58 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:10:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_realloc(void *ptr, size_t size)
+void	*ft_realloc(void *ptr, size_t prev_size, size_t new_size)
 {
 	unsigned char	*bytes;
 
+	if (new_size <= prev_size)
+		return (ptr);
+	bytes = malloc(new_size);
 	if (!ptr)
-		return (malloc(size));
-	if (size == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	bytes = malloc(size);
+		return (bytes);
 	if (!bytes)
 	{
 		free(ptr);
 		return (NULL);
 	}
-	ft_memmove(bytes, ptr, size);
+	ft_memmove(bytes, ptr, prev_size);
 	free(ptr);
 	return (bytes);
 }

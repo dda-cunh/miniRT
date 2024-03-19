@@ -6,11 +6,19 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/23 15:09:04 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+t_coll_point3	get_no_collision(void)
+{
+	static t_coll_point3	no_coll = (t_coll_point3){(t_point3){0, 0, 0},
+		(t_color){255, 0, 0, 0}, (t_point3){0, 0, 0}, INFINITY};
+
+	return (no_coll);
+}
 
 static t_coll_point3	coll_func_wrapper(t_ray3 ray,
 	t_collidable_shape *curr_ent)
@@ -27,7 +35,7 @@ static t_coll_point3	coll_func_wrapper(t_ray3 ray,
 		else if (id == ID_PLANE)
 			return (curr_ent->pl->collide(curr_ent->pl, ray));
 	}
-	return (NO_COLLISION);
+	return (get_no_collision());
 }
 
 bool	valid_collision(double scalar)
@@ -42,7 +50,7 @@ t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 	t_coll_point3		min_coll;
 	size_t				i;
 
-	min_coll = NO_COLLISION;
+	min_coll = get_no_collision();
 	i = 0;
 	while (i < program->collidables->length)
 	{
