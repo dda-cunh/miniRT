@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:17:40 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 	i = 0;
 	while (i < program->collidables->length)
 	{
-		collidable = (t_collidable_shape *) program->collidables->
-						get(program->collidables, i);
+		collidable = (t_collidable_shape *) program->collidables
+			->get(program->collidables, i);
 		curr_coll = coll_func_wrapper(ray, collidable);
 		if (valid_collision(curr_coll.scalar)
 			&& curr_coll.scalar < min_coll.scalar)

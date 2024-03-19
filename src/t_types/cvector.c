@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:02:56 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/19 12:16:57 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	_add(t_cvector *self, void *content, bool del_heap)
 	}
 	content_bytes = (unsigned char *)content;
 	ft_memmove(self->array + (self->length * self->type_size),
-			content_bytes, self->type_size);
+		content_bytes, self->type_size);
 	if (del_heap)
 		free(content);
 	self->length++;
@@ -42,7 +42,7 @@ static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 		return ;
 	content_bytes = (unsigned char *)content;
 	ft_memmove(self->array + (index * self->type_size),
-			content_bytes, self->type_size);
+		content_bytes, self->type_size);
 	if (del_heap)
 		free(content);
 }
