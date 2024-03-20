@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:34:00 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/20 08:59:21 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ static void	populate_test(t_prog *program)	//TESTING
 					NULL
 				});
 	program->collidables->add(program->collidables, new_collidable_shape(cy), true);
-	program->lights = cvector_new(sizeof(t_light), NULL);
-	program->lights->add(program->lights, &(t_light){(t_point3){10, -5, 40}, (t_color){255, 255, 0, 0}, 0.2f}, false);
+	program->light = (t_light){(t_point3){10, -5, 40}, (t_color){255, 255, 0, 0}, 0.2f};
 }
 
 static void	ambient(t_prog *program)

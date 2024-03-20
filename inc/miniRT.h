@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:36:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/20 08:58:41 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ typedef struct s_prog
 {
 	t_coll_point3				**collisions;
 	t_cvector					*collidables;
-	t_cvector					*lights;
+	t_light						light;
 	t_camera					camera;
 	t_light						ambient_l;
 	void						*mlx_ptr;

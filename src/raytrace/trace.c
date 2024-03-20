@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:39:16 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/20 08:58:58 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,21 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 {
 	t_coll_point3	collision;
 	t_color			final_color;
-	t_light			*curr_light;
 	t_ray3			ray;
-	size_t			i;
 
 	final_color = origin.color;
 	apply_bias(&origin);
-	i = 0;
-	while (i < program->lights->length)
-	{
-		curr_light = program->lights->get(program->lights, i);
-		ray = (t_ray3){origin.coords,
-			normalize_vec3(vec3_from_points(origin.coords,
-					curr_light->coords))};
-		collision = do_collisions(ray, program);
-		if (valid_collision(collision.scalar))
-			final_color = blend_colors(final_color, SHADOW_RATIO,
-					(t_color){255, 0, 0, 0});
-		else
-			final_color = blend_colors(final_color,
-					curr_light->ratio, (t_color){255, 255, 255, 255});
-		i++;
-	}
+
+	ray = (t_ray3){origin.coords,
+		normalize_vec3(vec3_from_points(origin.coords,
+				program->light.coords))};
+	collision = do_collisions(ray, program);
+	if (valid_collision(collision.scalar))
+		final_color = blend_colors(final_color, SHADOW_RATIO,
+				(t_color){255, 0, 0, 0});
+	else
+		final_color = blend_colors(final_color,
+				program->light.ratio, (t_color){255, 255, 255, 255});
 	return (final_color);
 }
 
