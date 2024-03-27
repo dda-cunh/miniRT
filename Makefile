@@ -3,7 +3,7 @@ NAME		=	miniRT
 
 CC			=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address
 
 RM			=	rm -rf
 
@@ -23,6 +23,8 @@ TYPES_DIR	=	t_types/
 
 UTILS_DIR	=	utils/
 
+PARSER		=	parser/
+
 LFT_DIR		=	libft/
 
 LFT_FULL	=	$(addprefix $(INC_DIR), $(LFT_DIR))
@@ -37,7 +39,9 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	trace.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
-																	utils.c) \
+																	utils.c \
+																	utils2.c \
+																	conversion.c) \
 										$(addprefix $(MATH_DIR),	common.c \
 																	point3.c \
 																	vec3.c) \
@@ -45,13 +49,24 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	object_sphere.c \
 																	object_plane.c \
 																	collidable_shape.c \
-																	cvector.c))
+																	cvector.c) \
+										$(addprefix $(PARSER), 		analizer.c \
+																	camera.c \
+																	checker.c \
+																	checker2.c \
+																	collidables.c \
+																	cylinder.c \
+																	light.c \
+																	parser.c \
+																	plane.c \
+																	sphere.c))
 
 OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(RAY_DIR)) \
 							$(addprefix $(OBJ_DIR), $(UTILS_DIR)) \
 							$(addprefix $(OBJ_DIR), $(MATH_DIR)) \
-							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
+							$(addprefix $(OBJ_DIR), $(TYPES_DIR)) \
+							$(addprefix $(OBJ_DIR), $(PARSER))
 
 OBJ		=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
