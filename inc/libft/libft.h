@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:01:29 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:19:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
-
+# include <math.h>
 # include "get_next_line.h"
 
 # define STD_OUT	1
@@ -47,7 +47,9 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *h, const char *n, size_t l);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+double			ft_atof(const char *nptr);
 int				ft_atoi(const char *nptr);
+int				ft_isspace(int c);
 int				ft_isdigit(int c);
 int				ft_isalpha(int c);
 int				ft_isalnum(int c);

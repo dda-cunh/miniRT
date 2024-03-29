@@ -20,9 +20,11 @@ SRC		= 	ft_memset.c \
 			ft_strncmp.c \
 			ft_strreplace.c \
 			ft_atoi.c \
+			ft_atof.c \
 			ft_isalpha.c \
 			ft_isdigit.c \
 			ft_isalnum.c \
+			ft_isspace.c \
 			ft_isascii.c \
 			ft_isprint.c \
 			ft_toupper.c \
