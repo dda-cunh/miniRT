@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/20 08:58:41 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/29 19:40:24 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ typedef struct s__img
 /* ************************************************************************** */
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
+t_prog				*get_program(void);
 t_prog				*init_program(int scene_fd);
 int					killprogram(int keycode, t_prog *program);
 int					key_hook(int keycode, t_prog *window);
@@ -227,7 +228,6 @@ t_coll_point3		**do_rays(t_prog *program);
 t_coll_point3		get_no_collision(void);
 bool				valid_collision(double scalar);
 void				trace(t_prog *program);
-
 
 /* ************************************************************************** */
 /*                                   MATH                                     */
