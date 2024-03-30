@@ -15,6 +15,8 @@ OBJ_DIR		=	temp/
 
 PROG_DIR	=	program/
 
+PARSER_DIR	=	parser/
+
 RAY_DIR		=	raytrace/
 
 MATH_DIR	=	math/
@@ -37,6 +39,7 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	trace.c) \
 										$(addprefix $(UTILS_DIR),	color.c \
 																	image.c \
+																	utils2.c \
 																	utils.c) \
 										$(addprefix $(MATH_DIR),	common.c \
 																	point3.c \
@@ -45,12 +48,23 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	object_sphere.c \
 																	object_plane.c \
 																	collidable_shape.c \
-																	cvector.c))
+																	cvector.c) \
+										$(addprefix $(PARSER_DIR),	analizer.c \
+																	camera.c \
+																	checker.c \
+																	checker2.c \
+																	collidables.c \
+																	cylinder.c \
+																	light.c \
+																	parser.c \
+																	plane.c \
+																	sphere.c))
 
 OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(RAY_DIR)) \
 							$(addprefix $(OBJ_DIR), $(UTILS_DIR)) \
 							$(addprefix $(OBJ_DIR), $(MATH_DIR)) \
+							$(addprefix $(OBJ_DIR), $(PARSER_DIR)) \
 							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
 
 OBJ		=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

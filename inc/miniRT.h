@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/29 19:40:24 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 10:58:43 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@
 # define CVECTOR_INIT_CAP	9
 # define CVECTOR_SCALE		2
 
+# define MAX_RATIO 1.0
+# define MIN_RATIO 0.0
+# define FOV_MAX 180
+# define FOV_MIN 0 
+# define MAX_VECT 1.0
+# define MIN_VECT -1.0
+
 typedef struct	s_cvector
 {
 	unsigned char		*array;
@@ -70,7 +77,22 @@ typedef enum exit_status
 	EXIT_FILE_EXTENSION,
 	EXIT_OPENING_SCENE,
 	EXIT_SCENE,
-	EXIT_MLX
+	EXIT_MLX,
+	CHECK_FAILURE,
+	CHECK_SUCCESS,
+	INVALID_OBJECT,
+	OBJECT_ALREADY_IN_USE,
+	WRONG_INFO_AMOUNT,
+	BAD_RGB_FORMAT,
+	BAD_COORDS_FORMAT,
+	BAD_RATIO_RANGE,
+	EXIT_CLOSE,
+	FOV_OUT_OF_RANGE,
+	VEC_OUT_OF_RANGE,
+	INVALID_SPHERE_DIAMETER,
+	INVALID_CYLINDER_DIAMETER,
+	INVALID_CYLINDER_HEIGHT,
+	INVALID_RATIO_FORMAT
 }	t_exit_status;
 
 typedef struct s_color
@@ -122,6 +144,7 @@ typedef struct s_camera
 	t_vec3						up;
 	int							fov;
 	double						tan_fov;
+	bool						is_already_in_use;
 }	t_camera;
 
 typedef struct s_light
@@ -129,6 +152,7 @@ typedef struct s_light
 	t_point3					coords;
 	t_color						color;
 	double						ratio;
+	bool						is_already_in_use;
 }	t_light;
 
 typedef enum e_collidable_id
@@ -215,7 +239,6 @@ typedef struct s__img
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
 t_prog				*get_program(void);
-t_prog				*init_program(int scene_fd);
 int					killprogram(int keycode, t_prog *program);
 int					key_hook(int keycode, t_prog *window);
 int					kill_x(void *program);
@@ -224,7 +247,7 @@ int					kill_x(void *program);
 /*                                  RAYTRACE                                  */
 /* ************************************************************************** */
 t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
-t_coll_point3		**do_rays(t_prog *program);
+void				do_rays(t_prog *program);
 t_coll_point3		get_no_collision(void);
 bool				valid_collision(double scalar);
 void				trace(t_prog *program);
@@ -258,19 +281,47 @@ t_color				int_to_color(int packed);
 void				set_image_pixel(t_image image, int x, int y, t_color color);
 void				free_matrix(void **matrix, size_t lines);
 void				dump_image_window(t_image buffer);
+size_t				array_len(char **array);
 bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
+void				check_msg(t_exit_status code);
+
 
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */
 /* ************************************************************************** */
 t_collidable_shape	*new_collidable_shape(void *t_object);
 t_object_cylinder	*new_cylinder(t_object_cylinder cy);
-t_object_sphere		*new_sphere(t_point3 center, t_color color, double diameter);
+t_object_sphere		*new_sphere(t_point3 center, t_color color,
+						double diameter);
 t_collidable_id		get_coll_shape_id(t_collidable_shape ent);
 t_object_plane		*new_plane(t_point3 point, t_color color, t_vec3 normal);
 t_cvector			*cvector_new(size_t type_size,
 						void (*elem_destroy)(void *));
 void				destroy_collidable_shape(void *shape);
+
+/* ************************************************************************** */
+/*                                 PARSER                                     */
+/* ************************************************************************** */
+bool				is_file_extension_valid(char *file);
+void				parser(char *file);
+bool				check_double_var(char *str);
+bool				only_digits(char *str);
+bool				check_rgb_format(char **rgb);
+bool				is_file_extension_valid(char *file);
+bool				validate_fractional_value(char *coord);
+bool				check_coordinates(char **coords);
+t_exit_status		check_coords_rgb(char **rgb, char **coords);
+t_exit_status		check_coords_vec_rgb(char **coords,
+						char **vec, char **rgb);
+t_exit_status		object_analizer(char *line);
+t_exit_status		check_vec_orientation(char **vec_orien);
+t_exit_status		build_ambient_light(char **array);
+t_exit_status		build_camera(char **array);
+t_exit_status		build_light(char **array);
+t_exit_status		build_sphere(char **array);
+t_exit_status		build_plane(char **array);
+t_exit_status		build_cylinder(char **array);
+t_exit_status		set_collidable(char **array);
 
 #endif
