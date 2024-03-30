@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:08:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:03:45 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 /// @brief This function checks if the given file has a valid extension.
 /// @param file 

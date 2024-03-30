@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 22:02:12 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:14:40 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:24:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 t_exit_status	check_cylinder_diameter_height(char *diameter, char *height)
 {
@@ -37,23 +37,20 @@ t_exit_status	set_cylinder(char **array, char **coords,
 				char **vec, char **rgb)
 {
 	t_object_cylinder	cy;
-	t_point3			center;
-	t_color				colors;
-	t_vec3				axis;
 
 	cy._id = ID_CYLINDER;
 	cy.disk1 = NULL;
 	cy.disk2 = NULL;
-	center.x = ft_atof(coords[0]);
-	center.y = ft_atof(coords[1]);
-	center.z = ft_atof(coords[2]);
-	colors.alpha = 0;
-	colors.red = ft_atoi(rgb[0]);
-	colors.green = ft_atoi(rgb[1]);
-	colors.blue = ft_atoi(rgb[2]);
-	axis.x = ft_atof(vec[0]);
-	axis.y = ft_atof(vec[1]);
-	axis.z = ft_atof(vec[2]);
+	cy.center.x = ft_atof(coords[0]);
+	cy.center.y = ft_atof(coords[1]);
+	cy.center.z = ft_atof(coords[2]);
+	cy.color.alpha = 255;
+	cy.color.red = ft_atoi(rgb[0]);
+	cy.color.green = ft_atoi(rgb[1]);
+	cy.color.blue = ft_atoi(rgb[2]);
+	cy.axis.x = ft_atof(vec[0]);
+	cy.axis.y = ft_atof(vec[1]);
+	cy.axis.z = ft_atof(vec[2]);
 	cy.diameter = ft_atof(array[3]);
 	cy.height = ft_atof(array[4]);
 	cy.radius = cy.diameter / 2;

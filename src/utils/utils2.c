@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:39:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:24:57 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 /// @brief This function counts how many elements are in the array.
 /// @param array 

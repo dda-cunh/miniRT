@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:09:07 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 /// @brief This function checks the camera's field of view.
 /// @param fov 

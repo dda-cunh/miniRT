@@ -6,19 +6,22 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:41:58 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:13:20 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:27:55 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 t_exit_status	set_collidable(char **array)
 {
-	if (!get_program()->collidables)
+	t_prog	*program;
+
+	program = get_program();
+	if (!program->collidables)
 	{
-		get_program()->collidables = cvector_new(sizeof(t_collidable_shape),
-		&destroy_collidable_shape);
-		if (!get_program()->collidables)
+		program->collidables = cvector_new(sizeof(t_collidable_shape),
+				destroy_collidable_shape);
+		if (!program->collidables)
 			return (EXIT_MALLOC);
 	}
 	if (!ft_strncmp(array[0], "sp", 3))

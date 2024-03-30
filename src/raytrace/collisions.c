@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:38:11 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:08:46 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 t_coll_point3	get_no_collision(void)
 {
-	static t_coll_point3	no_coll = (t_coll_point3){(t_point3){0, 0, 0},
-		(t_color){255, 0, 0, 0}, (t_point3){0, 0, 0}, INFINITY};
-
-	return (no_coll);
+	return ((t_coll_point3){(t_point3){0, 0, 0},
+		(t_color){255, 0, 0, 0}, (t_point3){0, 0, 0}, INFINITY});
 }
 
 static t_coll_point3	coll_func_wrapper(t_ray3 ray,

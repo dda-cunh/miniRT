@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:25:19 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:02:37 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:28:33 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 t_exit_status	object_analizer(char *line)
 {

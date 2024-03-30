@@ -6,24 +6,24 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:11:46 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:22:06 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:20:49 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 static t_exit_status	set_sphere(char *diameter,
 							char **coords, char **rgb)
 {
 	t_object_sphere	*sp;
-	t_point3	center;
-	t_color		colors;
-	double		diam;
+	t_point3		center;
+	t_color			colors;
+	double			diam;
 
 	center.x = ft_atof(coords[0]);
 	center.y = ft_atof(coords[1]);
 	center.z = ft_atof(coords[2]);
-	colors.alpha = 0;
+	colors.alpha = 255;
 	colors.red = ft_atoi(rgb[0]);
 	colors.green = ft_atoi(rgb[1]);
 	colors.blue = ft_atoi(rgb[2]);
@@ -33,7 +33,7 @@ static t_exit_status	set_sphere(char *diameter,
 		return (EXIT_MALLOC);
 	sp->_id = ID_SPHERE;
 	get_program()->collidables->add(get_program()->collidables,
-		new_collidable_shape(sp), true); /// NEW_COLLIDABLE_SHAPE ALLOCATES MEMORY, CHECK FOR NULL!
+		new_collidable_shape(sp), true);
 	return (CHECK_SUCCESS);
 }
 

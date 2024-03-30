@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:42:28 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:04:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:45:01 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 /// @brief This function checks if the light ratio is
 /// between the min and the max given values.
@@ -77,8 +77,8 @@ static t_exit_status	generic_light_builder(t_light *light, char *ratio,
 /// @return 
 t_exit_status	build_ambient_light(char **array)
 {
-	char	**rgb;
 	t_exit_status	res;
+	char			**rgb;
 
 	if (get_program()->ambient_l.is_already_in_use)
 		return (OBJECT_ALREADY_IN_USE);
@@ -92,7 +92,8 @@ t_exit_status	build_ambient_light(char **array)
 		free_matrix((void **)rgb, array_len(rgb));
 		return (BAD_RGB_FORMAT);
 	}
-	res = generic_light_builder(&get_program()->ambient_l, array[1], rgb, NULL);	
+	res = generic_light_builder(&get_program()->ambient_l,
+			array[1], rgb, NULL);
 	free_matrix((void **)rgb, array_len(rgb));
 	return (res);
 }

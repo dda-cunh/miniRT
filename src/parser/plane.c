@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 21:10:15 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 11:20:44 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:16:37 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 t_exit_status	check_coords_vec_rgb(char **coords, char **vec, char **rgb)
 {
@@ -36,7 +36,7 @@ t_exit_status	set_plane(char **coords, char **vec, char **rgb)
 	point.x = ft_atof(coords[0]);
 	point.y = ft_atof(coords[1]);
 	point.z = ft_atof(coords[2]);
-	colors.alpha = 0;
+	colors.alpha = 255;
 	colors.red = ft_atoi(rgb[0]);
 	colors.green = ft_atoi(rgb[1]);
 	colors.blue = ft_atoi(rgb[2]);
@@ -48,7 +48,7 @@ t_exit_status	set_plane(char **coords, char **vec, char **rgb)
 		return (EXIT_MALLOC);
 	pl->_id = ID_PLANE;
 	get_program()->collidables->add(get_program()->collidables,
-		new_collidable_shape(pl), true); /// NEW_COLLIDABLE_SHAPE ALLOCATES MEMORY, CHECK FOR NULL!
+		new_collidable_shape(pl), true);
 	return (CHECK_SUCCESS);
 }
 

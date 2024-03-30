@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "../../inc/miniRT.h"
 
 /// @brief This function trys to open the given file and returns
 /// the file descriptor if the opening succeed, else exit the
