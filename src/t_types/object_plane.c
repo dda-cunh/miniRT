@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:54:17 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:29:53 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static t_coll_point3	collide(t_object_plane *self, t_ray3 ray)
 		{
 			point3_plus_vec3(ray.origin, scale_vec3(ray.direction, scalar)),
 			self->color,
+			(t_color){255, 0, 0, 0},
 			self->normal,
 			scalar
 		});

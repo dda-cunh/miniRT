@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:38:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 		if (point3_distance_point3(coll_coords, self->center) <= self->radius)
 			return ((t_coll_point3)
 				{
-					coll_coords, 
+					coll_coords,
 					self->color,
-					get_side_normal(self, coll_coords), 
+					(t_color){255, 0, 0, 0},
+					get_side_normal(self, coll_coords),
 					t
 				});
 	return (coll_cylinder_planes(ray, *self));

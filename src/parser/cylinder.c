@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 22:02:12 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 14:24:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:51:29 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_exit_status	set_cylinder(char **array, char **coords,
 	t_object_cylinder	cy;
 
 	cy._id = ID_CYLINDER;
-	cy.disk1 = NULL;
-	cy.disk2 = NULL;
 	cy.center.x = ft_atof(coords[0]);
 	cy.center.y = ft_atof(coords[1]);
 	cy.center.z = ft_atof(coords[2]);
@@ -53,9 +51,6 @@ t_exit_status	set_cylinder(char **array, char **coords,
 	cy.axis.z = ft_atof(vec[2]);
 	cy.diameter = ft_atof(array[3]);
 	cy.height = ft_atof(array[4]);
-	cy.radius = cy.diameter / 2;
-	cy.destroy = NULL;
-	cy.collide = NULL;
 	return (create_cylinder(cy));
 }
 

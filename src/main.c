@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/30 10:58:15 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:20:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,11 @@
 static void	ambient(t_prog *program)
 {
 	t_coll_point3	*coll;
-	t_image			buffer;
 	int				curr_x;
 	int				curr_y;
 
 	if (!program)
 		return ;
-	buffer = new_image(WINDOW_W, WINDOW_H, *program);
 	curr_y = -1;
 	while (++curr_y < WINDOW_H)
 	{
@@ -65,14 +63,10 @@ static void	ambient(t_prog *program)
 		{
 			coll = &program->collisions[curr_y][curr_x];
 			if (valid_collision(coll->scalar))
-			{
-				coll->color = blend_colors(coll->color,
+				coll->visible_color = append_colors(coll->visible_color,
 						program->ambient_l.ratio, program->ambient_l.color);
-				set_image_pixel(buffer, curr_x, curr_y, coll->color);
-			}
 		}
 	}
-	dump_image_window(buffer);
 }
 
 static int	mini_rt(t_prog *program)

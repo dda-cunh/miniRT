@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:04:18 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:45:54 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:29:39 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static t_coll_point3	collide(t_object_sphere *self, t_ray3 ray)
 		{
 			coll_coords,
 			self->color,
+			(t_color){255, 0, 0, 0},
 			normalize_vec3(vec3_from_points(self->center, coll_coords)),
 			scalar
 		});

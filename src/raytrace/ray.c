@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/30 13:03:27 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:26:36 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static t_coll_point3	do_ray(int x, int y, t_prog *program)
 
 void	do_rays(t_prog *prog)
 {
-	t_image			buffer;
 	int				curr_y;
 	int				curr_x;
 
@@ -44,7 +43,6 @@ void	do_rays(t_prog *prog)
 	prog->collisions = ft_calloc(WINDOW_H, sizeof(t_coll_point3 *));
 	if (!prog->collisions)
 		return ;
-	buffer = new_image(WINDOW_W, WINDOW_H, *prog);
 	while (curr_y < WINDOW_H)
 	{
 		curr_x = 0;
@@ -52,11 +50,8 @@ void	do_rays(t_prog *prog)
 		while (curr_x < WINDOW_W)
 		{
 			prog->collisions[curr_y][curr_x] = do_ray(curr_x, curr_y, prog);
-			set_image_pixel(buffer, curr_x, curr_y,
-				prog->collisions[curr_y][curr_x].color);
 			curr_x++;
 		}
 		curr_y++;
 	}
-	dump_image_window(buffer);
 }

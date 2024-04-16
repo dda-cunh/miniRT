@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/20 08:58:58 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:26:18 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,16 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	t_color			final_color;
 	t_ray3			ray;
 
-	final_color = origin.color;
 	apply_bias(&origin);
-
+	final_color = blend_colors(origin.visible_color, program->ambient_l.ratio,
+			origin.coll_color);
 	ray = (t_ray3){origin.coords,
 		normalize_vec3(vec3_from_points(origin.coords,
 				program->light.coords))};
 	collision = do_collisions(ray, program);
-	if (valid_collision(collision.scalar))
-		final_color = blend_colors(final_color, SHADOW_RATIO,
-				(t_color){255, 0, 0, 0});
-	else
+	if (!valid_collision(collision.scalar))
 		final_color = blend_colors(final_color,
-				program->light.ratio, (t_color){255, 255, 255, 255});
+				program->light.ratio, program->light.color);
 	return (final_color);
 }
 

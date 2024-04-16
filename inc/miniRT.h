@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/30 10:58:43 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:36:05 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <math.h>
 
 # ifndef WINDOW_W
-#  define WINDOW_W		720
+#  define WINDOW_W		1080
 # endif
 # ifndef WINDOW_H
 #  define WINDOW_H		720
@@ -131,7 +131,8 @@ typedef struct s_ray3
 typedef struct s_coll_point3
 {
 	t_point3					coords;
-	t_color						color;
+	t_color						coll_color;
+	t_color						visible_color;
 	t_vec3						normal;
 	double						scalar;
 }	t_coll_point3;
@@ -285,7 +286,7 @@ size_t				array_len(char **array);
 bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
 void				check_msg(t_exit_status code);
-
+t_color				append_colors(t_color a, double b_intensity, t_color b);
 
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */
