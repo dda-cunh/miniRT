@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 14:26:18 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:40:45 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	t_ray3			ray;
 
 	apply_bias(&origin);
-	final_color = blend_colors(origin.visible_color, program->ambient_l.ratio,
-			origin.coll_color);
+	final_color = origin.visible_color;
 	ray = (t_ray3){origin.coords,
 		normalize_vec3(vec3_from_points(origin.coords,
 				program->light.coords))};
@@ -35,15 +34,26 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	if (!valid_collision(collision.scalar))
 		final_color = blend_colors(final_color,
 				program->light.ratio, program->light.color);
+	else
+		final_color = blend_colors(final_color, 0.6, (t_color){255, 0, 0, 0});
 	return (final_color);
+}
+
+static void	apply_ambient(t_coll_point3	*coll, t_light ambient_l)
+{
+		coll->visible_color = blend_colors(coll->visible_color,
+			ambient_l.ratio, ambient_l.color);
+		coll->visible_color = blend_colors(coll->visible_color,
+			ambient_l.ratio, coll->coll_color);
 }
 
 void	trace(t_prog *program)
 {
-	t_color	new_color;
-	t_image	buffer;
-	int		curr_x;
-	int		curr_y;
+	t_coll_point3	*coll;
+	t_color			new_color;
+	t_image			buffer;
+	int				curr_x;
+	int				curr_y;
 
 	buffer = new_image(WINDOW_W, WINDOW_H, *program);
 	curr_y = 0;
@@ -52,10 +62,11 @@ void	trace(t_prog *program)
 		curr_x = 0;
 		while (curr_x < WINDOW_W)
 		{
-			if (valid_collision(program->collisions[curr_y][curr_x].scalar))
+			coll = &program->collisions[curr_y][curr_x];
+			if (valid_collision(coll->scalar))
 			{
-				new_color = ray_to_lights(program->collisions[curr_y][curr_x],
-						program);
+				apply_ambient(coll, program->ambient_l);
+				new_color = ray_to_lights(*coll, program);
 				set_image_pixel(buffer, curr_x, curr_y, new_color);
 			}
 			curr_x++;

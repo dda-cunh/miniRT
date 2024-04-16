@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 14:36:05 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:31:42 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@
 # endif
 
 # ifndef EPSILON
-#  define EPSILON		0.00000000000001
+#  define EPSILON		0.000001
 # endif
 
-# define SHADOW_BIAS	0.001
-
-# define SHADOW_RATIO	0.1f
+# define SHADOW_BIAS	0.0001
 
 # define BAD_EXIT		"Error\n"
 
