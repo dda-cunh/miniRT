@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 16:31:42 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:59:15 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef enum exit_status
 	EXIT_OPENING_SCENE,
 	EXIT_SCENE,
 	EXIT_MLX,
+	EXIT_MISSING_OBJ,
 	CHECK_FAILURE,
 	CHECK_SUCCESS,
 	INVALID_OBJECT,

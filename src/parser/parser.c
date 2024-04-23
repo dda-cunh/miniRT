@@ -93,4 +93,7 @@ void	parser(char *file)
 		killprogram(EXIT_CLOSE, get_program());
 	if (should_exit)
 		killprogram(EXIT_SCENE, get_program());
+	if (!get_program()->ambient_l.is_already_in_use || !get_program()->camera.is_already_in_use
+		|| !get_program()->light.is_already_in_use)
+		killprogram(EXIT_MISSING_OBJ, get_program());
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:07:53 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 15:28:25 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:59:56 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ static void	print_exit_msg(t_exit_status exit_code, char *verbose)
 	else if (exit_code == EXIT_SCENE)
 		ft_putstr_fd("Bad Scene", STD_ERR);
 	else if (exit_code == EXIT_MLX)
-		ft_putstr_fd("MLX failed", STD_ERR);
+		ft_putstr_fd("MLX failed:\t", STD_OUT);
+	else if (exit_code == EXIT_MISSING_OBJ)
+		ft_putstr_fd("Missing object:\t", STD_OUT);
 	else if (exit_code == EXIT_GOOD)
 		ft_putstr_fd("Clean exit", STD_ERR);
 	else
