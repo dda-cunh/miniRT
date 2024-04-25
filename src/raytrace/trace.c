@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 16:40:45 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:44:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,21 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	t_coll_point3	collision;
 	t_color			final_color;
 	t_ray3			ray;
+	double			max_dist;
+	bool			valid_coll;
 
 	apply_bias(&origin);
 	final_color = origin.visible_color;
+	max_dist = point3_distance_point3(origin.coords, program->light.coords);
 	ray = (t_ray3){origin.coords,
 		normalize_vec3(vec3_from_points(origin.coords,
 				program->light.coords))};
 	collision = do_collisions(ray, program);
-	if (!valid_collision(collision.scalar))
+	valid_coll = valid_collision(collision.scalar)
+					&& collision.scalar <= max_dist;
+	if (!valid_coll)
 		final_color = blend_colors(final_color,
 				program->light.ratio, program->light.color);
-	else
-		final_color = blend_colors(final_color, 0.6, (t_color){255, 0, 0, 0});
 	return (final_color);
 }
 
