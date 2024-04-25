@@ -6,11 +6,22 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 16:46:06 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/25 20:53:18 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+static t_color	clamp_color(t_color c)
+{
+	return ((t_color)
+		{
+			fmax(0, fmin(255, c.alpha)),
+			fmax(0, fmin(255, c.red)),
+			fmax(0, fmin(255, c.green)),
+			fmax(0, fmin(255, c.blue))
+		});
+}
 
 t_color	int_to_color(int packed)
 {
@@ -47,11 +58,11 @@ t_color	blend_colors(t_color original, double intensity, t_color to_apply)
 	channels[0] = original.red * intensity_orig + to_apply.red * intensity;
 	channels[1] = original.green * intensity_orig + to_apply.green * intensity;
 	channels[2] = original.blue * intensity_orig + to_apply.blue * intensity;
-	return ((t_color)
+	return (clamp_color((t_color)
 		{
 			original.alpha,
-			fmin(255, channels[0]),
-			fmin(255, channels[1]),
-			fmin(255, channels[2])
-		});
+			channels[0],
+			channels[1],
+			channels[2]
+		}));
 }
