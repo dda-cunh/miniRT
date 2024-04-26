@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/25 16:44:03 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:16:20 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,11 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	valid_coll = valid_collision(collision.scalar)
 					&& collision.scalar <= max_dist;
 	if (!valid_coll)
-		final_color = blend_colors(final_color,
-				program->light.ratio, program->light.color);
+		final_color = lighting(origin, ray.direction, program->light,
+					program->ambient_l);
 	return (final_color);
 }
 
-static void	apply_ambient(t_coll_point3	*coll, t_light ambient_l)
-{
-		coll->visible_color = blend_colors(coll->visible_color,
-			ambient_l.ratio, ambient_l.color);
-		coll->visible_color = blend_colors(coll->visible_color,
-			ambient_l.ratio, coll->coll_color);
-}
 
 void	trace(t_prog *program)
 {
@@ -68,7 +61,6 @@ void	trace(t_prog *program)
 			coll = &program->collisions[curr_y][curr_x];
 			if (valid_collision(coll->scalar))
 			{
-				apply_ambient(coll, program->ambient_l);
 				new_color = ray_to_lights(*coll, program);
 				set_image_pixel(buffer, curr_x, curr_y, new_color);
 			}

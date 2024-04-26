@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:42:28 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:45:01 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:17:16 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ static bool	check_light_ratio(char *str, double min, double max)
 static void	set_light(t_light *light, char *ratio, char **rgb, char **coords)
 {
 	light->color.alpha = 0;
-	light->color.red = ft_atoi(rgb[0]);
-	light->color.green = ft_atoi(rgb[1]);
-	light->color.blue = ft_atoi(rgb[2]);
-	light->is_already_in_use = true;
 	light->ratio = ft_atof(ratio);
+	light->color.red = ft_atoi(rgb[0]) * light->ratio;
+	light->color.green = ft_atoi(rgb[1]) * light->ratio;
+	light->color.blue = ft_atoi(rgb[2]) * light->ratio;
+	light->is_already_in_use = true;
 	if (coords)
 	{
 		light->coords.x = ft_atof(coords[0]);

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/30 15:38:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/26 23:24:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static t_vec3	get_side_normal(t_object_cylinder *self, t_point3 coll_coords)
 	t_vec3		center_to_coll;
 
 	center_to_coll = vec3_from_points(self->center, coll_coords);
-	return (vec3_sub(center_to_coll, self->axis));
+	return (normalize_vec3(vec3_sub(center_to_coll,
+			scale_vec3(self->axis,
+			vec3_dot_product(self->axis, center_to_coll)))));
 }
 
 static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)

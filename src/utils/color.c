@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/25 20:53:18 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:16:22 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,36 @@ bool	same_color(t_color a, t_color b)
 	return (color_to_int(a) == color_to_int(b));
 }
 
-t_color	blend_colors(t_color original, double intensity, t_color to_apply)
+t_color	lighting(t_coll_point3 coll, t_vec3 to_light, t_light light,
+				t_light ambient)
 {
-	double	intensity_orig;
-	short	channels[3];
+	double	norm_color[3];
+	double	sum;
+	double	specular;
+	double	diffuse;
+	t_vec3	h;
 
-	if (intensity < 0.0f)
-		intensity = 0.0f;
-	if (intensity > 1.0f)
-		intensity = 1.0f;
-	intensity_orig = 1 - intensity;
-	channels[0] = original.red * intensity_orig + to_apply.red * intensity;
-	channels[1] = original.green * intensity_orig + to_apply.green * intensity;
-	channels[2] = original.blue * intensity_orig + to_apply.blue * intensity;
+	ft_bzero(norm_color, 3 * sizeof(double));
+	h = vec3_sub(scale_vec3(coll.normal, 2 * vec3_dot_product(coll.normal, to_light)), to_light);
+	diffuse = fmax(0, vec3_dot_product(coll.normal, to_light));
+	specular = pow(vec3_dot_product(normalize_vec3(vec3_from_points(coll.coords,
+				get_program()->camera.coords)), h), GLOSSINESS);
+	sum = coll.coll_color.red + coll.coll_color.green + coll.coll_color.blue;
+	if (sum > 0)
+	{
+		norm_color[0] = coll.coll_color.red / sum;
+		norm_color[1] = coll.coll_color.green / sum;
+		norm_color[2] = coll.coll_color.blue / sum;
+	}
 	return (clamp_color((t_color)
 		{
-			original.alpha,
-			channels[0],
-			channels[1],
-			channels[2]
+			coll.coll_color.alpha,
+			norm_color[0] * (ambient.color.red + diffuse)
+					+ light.color.red * specular,
+			norm_color[1] * (ambient.color.green + diffuse)
+					+ light.color.green * specular,
+			norm_color[2] * (ambient.color.blue + diffuse)
+					+ light.color.blue * specular
 		}));
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/23 20:59:15 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/04/26 22:57:00 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,21 @@
 # include <math.h>
 
 # ifndef WINDOW_W
-#  define WINDOW_W		1080
+#  define WINDOW_W			1080
 # endif
 # ifndef WINDOW_H
-#  define WINDOW_H		720
+#  define WINDOW_H			720
 # endif
 
 # ifndef EPSILON
-#  define EPSILON		0.000001
+#  define EPSILON			0.000001
 # endif
 
-# define SHADOW_BIAS	0.0001
+# define SHADOW_BIAS		0.001
 
-# define BAD_EXIT		"Error\n"
+# define GLOSSINESS			48
+
+# define BAD_EXIT			"Error\n"
 
 # define KEY_ARROW_RIGHT	65363
 # define KEY_ARROW_LEFT		65361
@@ -273,8 +275,8 @@ bool				point3_inside_sphere(t_point3 point,
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
 t_image				new_image(int w, int h, t_prog program);
-t_color				blend_colors(t_color original, double intensity,
-						t_color to_apply);
+t_color				lighting(t_coll_point3 coll, t_vec3 to_light,
+						t_light light, t_light ambient);
 t_color				get_image_pixel(t_image image, int x, int y);
 t_color				sum_colors(t_color color1, t_color color2);
 t_color				int_to_color(int packed);
