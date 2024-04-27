@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:16:45 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/02/18 12:47:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:25:04 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ t_vec3	normalize_vec3(t_vec3 vector)
 {
 	double	magnitude;
 
-	magnitude = sqrt(vector.x * vector.x + vector.y * vector.y
-			+ vector.z * vector.z);
+	magnitude = sqrt(pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2));
+	if (magnitude == 0)
+		return ((t_vec3){0, 0, 0});
 	return ((t_vec3)
 		{
 			vector.x / magnitude,
