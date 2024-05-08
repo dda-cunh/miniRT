@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:08:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:05:28 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,31 @@ bool	is_file_extension_valid(char *file)
 /// @return 
 bool	check_double_var(char *str)
 {
-	int	dot_counter;
+	int		dot_counter;
+	bool	digit_before_dot;
+	bool	digit_after_dot;
+	bool	is_dot;
 
 	dot_counter = 0;
+	digit_after_dot = false;
+	digit_before_dot = false;
+	is_dot = false;
 	while (str && (ft_isdigit(*str) || *str == '.'))
 	{
 		if (*str == '.')
+		{
+			is_dot = true;
 			dot_counter++;
+		}
 		if (dot_counter > 1)
 			return (false);
+		if (!dot_counter)
+			digit_before_dot = true;
+		else if (dot_counter && digit_before_dot && ft_isdigit(*str))
+			digit_after_dot = true;
 		str++;
 	}
-	return (str && !*str);
+	return (str && !*str && digit_before_dot && (digit_after_dot == is_dot));
 }
 
 /// @brief This function checks if the given string

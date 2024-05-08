@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:11:46 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 19:26:27 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:02:19 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static t_exit_status	set_sphere(char *diameter,
 bool	check_sphere_diameter(char *diameter)
 {
 	double	diam;
-
 	if (!check_double_var(diameter))
 		return (false);
 	diam = ft_atof(diameter);

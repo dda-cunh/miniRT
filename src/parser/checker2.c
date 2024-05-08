@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:43:18 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 20:01:50 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ bool	validate_fractional_value(char *coord)
 {
 	if (*coord != '-' && !ft_isdigit(*coord))
 		return (false);
-	coord++;
+	if (*coord == '-')
+		coord++;
 	return (check_double_var(coord));	
 }
 
