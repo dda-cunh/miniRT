@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 22:02:12 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/04/23 20:59:33 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:24:53 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ t_exit_status	build_cylinder(char **array)
 
 	if (array_len(array) != 6)
 		return (WRONG_INFO_AMOUNT);
+	if (!check_rgb_string_format(array[5], 0))
+		return (BAD_RGB_FORMAT);
 	coords = ft_split(array[1], ',');
 	vec = ft_split(array[2], ',');
 	rgb = ft_split(array[5], ',');

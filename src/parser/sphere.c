@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:11:46 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 14:20:49 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:26:27 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ t_exit_status	build_sphere(char **array)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_sphere_diameter(array[2]))
 		return (INVALID_SPHERE_DIAMETER);
+	if (!check_rgb_string_format(array[3], 0))
+		return (BAD_RGB_FORMAT);
 	coords = ft_split(array[1], ',');
 	if (!coords)
 		return (EXIT_MALLOC);

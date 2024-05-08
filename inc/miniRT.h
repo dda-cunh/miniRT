@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/26 22:57:00 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:38:50 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,6 +288,7 @@ bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
 void				check_msg(t_exit_status code);
 t_color				append_colors(t_color a, double b_intensity, t_color b);
+bool				check_rgb_string_format(char *rgb, int nums_counter);
 
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */

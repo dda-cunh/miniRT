@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 21:10:15 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 14:16:37 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:24:22 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_exit_status	build_plane(char **array)
 
 	if (array_len(array) != 4)
 		return (WRONG_INFO_AMOUNT);
+	if (!check_rgb_string_format(array[3], 0))
+		return (BAD_RGB_FORMAT);
 	coords = ft_split(array[1], ',');
 	vec = ft_split(array[2], ',');
 	rgb = ft_split(array[3], ',');

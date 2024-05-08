@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:42:28 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/04/26 22:17:16 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:38:39 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ t_exit_status	build_ambient_light(char **array)
 		return (OBJECT_ALREADY_IN_USE);
 	if (array_len(array) != 3)
 		return (WRONG_INFO_AMOUNT);
+	if (!check_rgb_string_format(array[2], 0))
+		return (BAD_RGB_FORMAT);
 	rgb = ft_split(array[2], ',');
 	if (!rgb)
 		return (EXIT_MALLOC);
@@ -112,6 +114,8 @@ t_exit_status	build_light(char **array)
 		return (OBJECT_ALREADY_IN_USE);
 	if (array_len(array) != 4)
 		return (WRONG_INFO_AMOUNT);
+	if (!check_rgb_string_format(array[3], 0))
+		return (BAD_RGB_FORMAT);
 	coords = ft_split(array[1], ',');
 	if (!coords)
 		return (EXIT_MALLOC);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:39:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/04/16 15:27:22 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/08 19:35:55 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,21 @@ void	check_msg(t_exit_status code)
 		ft_putstr_fd("Invalid cylinder height", STD_ERR);
 	else if (code == INVALID_RATIO_FORMAT)
 		ft_putstr_fd("Invalid ratio format", STD_ERR);
+}
+
+bool	check_rgb_string_format(char *rgb, int nums_counter)
+{
+	int	counter;
+
+	counter = 0;
+	while (rgb && *rgb >= '0' && *rgb <= '9')
+	{
+		rgb++;
+		counter++;
+	}
+	if (rgb && *rgb && *rgb == ',' && counter <= 3 && nums_counter != 2)
+		return (check_rgb_string_format(++rgb, ++nums_counter));
+	else if (rgb && !*rgb && counter <= 3 && nums_counter == 2)
+		return (true);
+	return (false);
 }
