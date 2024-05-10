@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 17:18:24 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/09 13:07:53 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:46:14 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ bool	same_color(t_color a, t_color b)
 	return (color_to_int(a) == color_to_int(b));
 }
 
-t_color	lighting(t_coll_point3 coll, t_vec3 to_light, t_light light,
-				t_light ambient)
+t_color	lighting(t_coll_point3 coll, t_vec3 to_light, t_light light)
 {
 	double	channels[3];
 	double	specular;
@@ -56,12 +55,12 @@ t_color	lighting(t_coll_point3 coll, t_vec3 to_light, t_light light,
 	diffuse = fmax(0.0, vec3_dot_product(coll.normal, to_light));
 	h = normalize_vec3(point3_plus_vec3(to_light, scale_vec3(coll.normal, -1)));
 	specular = pow(fmax(0.0, vec3_dot_product(h, coll.normal)), GLOSSINESS);
-	channels[0] = (ambient.color.red * (coll.coll_color.red / 255.0))
-			+ light.color.red * (diffuse + specular);
-	channels[1] = (ambient.color.green * (coll.coll_color.green / 255.0))
-			+ light.color.green * (diffuse + specular);
-	channels[2] = (ambient.color.blue * (coll.coll_color.blue / 255.0))
-			+ light.color.blue * (diffuse + specular);
+	channels[0] = coll.visible_color.red
+		+ light.color.red * (diffuse + specular);
+	channels[1] = coll.visible_color.green
+		+ light.color.green * (diffuse + specular);
+	channels[2] = coll.visible_color.blue
+		+ light.color.blue * (diffuse + specular);
 	return (clamp_color((t_color)
 		{
 			coll.coll_color.alpha,

@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/30 15:26:36 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/10 20:44:47 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,29 @@ static t_coll_point3	do_ray(int x, int y, t_prog *program)
 
 void	do_rays(t_prog *prog)
 {
+	t_coll_point3	*coll;
 	int				curr_y;
 	int				curr_x;
 
-	curr_y = 0;
 	prog->collisions = ft_calloc(WINDOW_H, sizeof(t_coll_point3 *));
 	if (!prog->collisions)
 		return ;
-	while (curr_y < WINDOW_H)
+	curr_y = -1;
+	while (++curr_y < WINDOW_H)
 	{
-		curr_x = 0;
+		curr_x = -1;
 		prog->collisions[curr_y] = ft_calloc(WINDOW_W, sizeof(t_coll_point3));
-		while (curr_x < WINDOW_W)
+		while (++curr_x < WINDOW_W)
 		{
-			prog->collisions[curr_y][curr_x] = do_ray(curr_x, curr_y, prog);
-			curr_x++;
+			coll = &(prog->collisions[curr_y][curr_x]);
+			*coll = do_ray(curr_x, curr_y, prog);
+			if (valid_collision(coll->scalar))
+				coll->visible_color = (t_color){coll->coll_color.alpha,
+					prog->ambient_l.color.red * (coll->coll_color.red / 255.0),
+					prog->ambient_l.color.green
+					* (coll->coll_color.green / 255.0),
+					prog->ambient_l.color.blue
+					* (coll->coll_color.blue / 255.0)};
 		}
-		curr_y++;
 	}
 }
