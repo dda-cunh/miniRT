@@ -6,11 +6,25 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/10 20:44:47 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/10 22:02:26 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+
+static void	ambient(t_coll_point3 *coll, t_light ambient)
+{
+	coll->visible_color = (t_color)
+		{
+			coll->coll_color.alpha,
+			ambient.color.red
+			* (coll->coll_color.red / 255.0),
+			ambient.color.green
+			* (coll->coll_color.green / 255.0),
+			ambient.color.blue
+			* (coll->coll_color.blue / 255.0)
+		};
+}
 
 static t_coll_point3	do_ray(int x, int y, t_prog *program)
 {
@@ -36,13 +50,14 @@ static t_coll_point3	do_ray(int x, int y, t_prog *program)
 
 void	do_rays(t_prog *prog)
 {
-	t_coll_point3	*coll;
+	t_image			buffer;
 	int				curr_y;
 	int				curr_x;
 
 	prog->collisions = ft_calloc(WINDOW_H, sizeof(t_coll_point3 *));
 	if (!prog->collisions)
 		return ;
+	buffer = new_image(WINDOW_W, WINDOW_H, *prog);
 	curr_y = -1;
 	while (++curr_y < WINDOW_H)
 	{
@@ -50,15 +65,14 @@ void	do_rays(t_prog *prog)
 		prog->collisions[curr_y] = ft_calloc(WINDOW_W, sizeof(t_coll_point3));
 		while (++curr_x < WINDOW_W)
 		{
-			coll = &(prog->collisions[curr_y][curr_x]);
-			*coll = do_ray(curr_x, curr_y, prog);
-			if (valid_collision(coll->scalar))
-				coll->visible_color = (t_color){coll->coll_color.alpha,
-					prog->ambient_l.color.red * (coll->coll_color.red / 255.0),
-					prog->ambient_l.color.green
-					* (coll->coll_color.green / 255.0),
-					prog->ambient_l.color.blue
-					* (coll->coll_color.blue / 255.0)};
+			prog->collisions[curr_y][curr_x] = do_ray(curr_x, curr_y, prog);
+			if (valid_collision(prog->collisions[curr_y][curr_x].scalar))
+			{
+				ambient(&prog->collisions[curr_y][curr_x], prog->ambient_l);
+				set_image_pixel(buffer, curr_x, curr_y,
+					prog->collisions[curr_y][curr_x].visible_color);
+			}
 		}
 	}
+	dump_image_window(buffer);
 }
