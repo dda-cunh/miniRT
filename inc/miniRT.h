@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/10 20:46:30 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:27:53 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,7 @@ t_vec3				vec3_cross_product(t_vec3 a, t_vec3 b);
 t_vec3				normalize_vec3(t_vec3 vector);
 t_vec3				vec3_sub(t_vec3 a, t_vec3 b);
 double				quadratic_smallest_pos(double a, double b, double c);
+double				clamp_value(double value, double min, double max);
 double				point3_distance_point3(t_point3 p1, t_point3 p2);
 double				pythagorean_theorem(double a, double b);
 double				vec3_dot_product(t_vec3 a, t_vec3 b);

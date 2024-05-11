@@ -6,12 +6,18 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 14:51:55 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 11:20:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:51:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * Retrieves the ID of a collidable shape.
+ *
+ * @param ent	The collidable shape entity.
+ * @return		The ID of the collidable shape.
+ */
 t_collidable_id	get_coll_shape_id(t_collidable_shape ent)
 {
 	t_collidable_id	id;
@@ -22,6 +28,11 @@ t_collidable_id	get_coll_shape_id(t_collidable_shape ent)
 	return (id);
 }
 
+/**
+ * Destroys a Heap allocated collidable shape object.
+ *
+ * @param shape	The collidable shape object to destroy.
+ */
 void	destroy_collidable_shape(void *shape)
 {
 	t_collidable_shape	*obj;
@@ -41,6 +52,13 @@ void	destroy_collidable_shape(void *shape)
 	}
 }
 
+/**
+ * Creates a new collidable shape object.
+ *
+ * @param t_object	The object used to create the collidable shape.
+ * @return			A pointer to the newly created collidable shape object,
+ 						or NULL if creation fails.
+ */
 t_collidable_shape	*new_collidable_shape(void *t_object)
 {
 	t_collidable_shape	*instance;

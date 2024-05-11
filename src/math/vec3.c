@@ -6,12 +6,19 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:16:45 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/27 11:25:04 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:07:57 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * Calculates the cross product of two 3D vectors.
+ *
+ * @param a	The first vector.
+ * @param b	The second vector.
+ * @return	The cross product of the two vectors.
+ */
 t_vec3	vec3_cross_product(t_vec3 a, t_vec3 b)
 {
 	return ((t_vec3)
@@ -22,11 +29,25 @@ t_vec3	vec3_cross_product(t_vec3 a, t_vec3 b)
 		});
 }
 
+/**
+ * Calculates the dot product of two 3D vectors.
+ *
+ * @param a	The first vector.
+ * @param b	The second vector.
+ * @return	The dot product of the two vectors.
+ */
 double	vec3_dot_product(t_vec3 a, t_vec3 b)
 {
 	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 
+/**
+ * Subtracts two 3D vectors.
+ *
+ * @param a	The first vector.
+ * @param b	The second vector.
+ * @return	The result of the subctration.
+ */
 t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 {
 	return ((t_vec3)
@@ -37,6 +58,13 @@ t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 		});
 }
 
+/**
+ * Scales a 3D vector by a scalar value.
+ *
+ * @param vector	The vector to scale.
+ * @param scalar	The scalar value to multiply the vector by.
+ * @return			The scaled vector.
+ */
 t_vec3	scale_vec3(t_vec3 vector, double scalar)
 {
 	return ((t_vec3)
@@ -47,6 +75,12 @@ t_vec3	scale_vec3(t_vec3 vector, double scalar)
 		});
 }
 
+/**
+ * Normalizes a 3D vector.
+ *
+ * @param vector	The vector to normalize.
+ * @return			The normalized vector.
+ */
 t_vec3	normalize_vec3(t_vec3 vector)
 {
 	double	magnitude;

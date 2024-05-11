@@ -6,19 +6,36 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/16 15:17:40 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:28:43 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * Returns a collision point structure representing no collision.
+ * 
+ * @return	The collision point structure with default values.
+ */
 t_coll_point3	get_no_collision(void)
 {
-	return ((t_coll_point3){(t_point3){0, 0, 0},
-		(t_color){255, 0, 0, 0}, (t_color){255, 0, 0, 0},(t_point3){0, 0, 0},
-			INFINITY});
+	return ((t_coll_point3)
+		{
+			(t_point3){0, 0, 0}, (t_color){0, 0, 0, 0},
+			(t_color){0, 0, 0, 0},
+			(t_point3){0, 0, 0},
+			INFINITY
+		});
 }
 
+/**
+ * Wrapper function to call the appropriate collision function
+ 	based on the collidable shape type.
+ * 
+ * @param ray		The ray to check for collision.
+ * @param curr_ent	The current collidable shape.
+ * @return			The collision point structure representing the collision.
+ */
 static t_coll_point3	coll_func_wrapper(t_ray3 ray,
 	t_collidable_shape *curr_ent)
 {
@@ -37,11 +54,24 @@ static t_coll_point3	coll_func_wrapper(t_ray3 ray,
 	return (get_no_collision());
 }
 
+/**
+ * Checks if a collision scalar value is considered valid.
+ * 
+ * @param scalar	The collision scalar value to check.
+ * @return			True if the scalar is valid, false otherwise.
+ */
 bool	valid_collision(double scalar)
 {
 	return (scalar >= EPSILON && scalar < INFINITY);
 }
 
+/**
+ * Performs collision detection for a ray with a list of collidable shapes.
+ * 
+ * @param ray		The ray to check for collision.
+ * @param program	The program containing the list of collidable shapes.
+ * @return			The collision point structure representing the closest collision.
+ */
 t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
 	t_collidable_shape	*collidable;

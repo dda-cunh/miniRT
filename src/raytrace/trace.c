@@ -6,19 +6,31 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/10 20:51:36 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:45:51 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
-static	void	apply_bias(t_coll_point3 *point)
+/**
+ * Applies a bias to the collision point coordinates.
+ *
+ * @param point	The collision point to apply the bias to.
+ */
+static void	apply_bias(t_coll_point3 *point)
 {
 	point->coords.x = point->normal.x * SHADOW_BIAS + point->coords.x;
 	point->coords.y = point->normal.y * SHADOW_BIAS + point->coords.y;
 	point->coords.z = point->normal.z * SHADOW_BIAS + point->coords.z;
 }
 
+/**
+ * Calculates the shading of a pixel considering the lights.
+ *
+ * @param origin	The collision point visible in the scene.
+ * @param program	The program containing the light source and colidables.
+ * @return			The final color the pixel should have.
+ */
 static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 {
 	t_coll_point3	collision;
@@ -31,8 +43,8 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	final_color = origin.visible_color;
 	max_dist = point3_distance_point3(origin.coords, program->light.coords);
 	ray = (t_ray3){origin.coords,
-		normalize_vec3(vec3_from_points(origin.coords,
-				program->light.coords))};
+			normalize_vec3(vec3_from_points(origin.coords,
+							program->light.coords))};
 	collision = do_collisions(ray, program);
 	valid_coll = valid_collision(collision.scalar)
 					&& collision.scalar <= max_dist;
@@ -41,6 +53,12 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 	return (final_color);
 }
 
+/**
+ * Traces rays and calculates the visible colors for each pixel in
+ 	the program's collision grid.
+ *
+ * @param program	The program containing the collision grid and other data.
+ */
 void	trace(t_prog *program)
 {
 	t_coll_point3	*coll;

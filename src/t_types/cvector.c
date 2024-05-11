@@ -6,12 +6,19 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/03/19 12:36:56 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 12:59:32 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * @brief Adds an element to the dynamic array.
+ *
+ * @param self		The dynamic array.
+ * @param content	The content to be added.
+ * @param del_heap	Whether to free the memory of the content after adding.
+ */
 static void	_add(t_cvector *self, void *content, bool del_heap)
 {
 	unsigned char	*content_bytes;
@@ -32,6 +39,14 @@ static void	_add(t_cvector *self, void *content, bool del_heap)
 	self->length++;
 }
 
+/**
+ * @brief Sets the value of an element at a specific index in the dynamic array.
+ *
+ * @param self		The dynamic array.
+ * @param index		The index of the element to be set.
+ * @param content	The content to be set.
+ * @param del_heap	Whether to free the memory of the content after setting.
+ */
 static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 {
 	unsigned char	*content_bytes;
@@ -47,6 +62,15 @@ static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 		free(content);
 }
 
+/**
+ * @brief Retrieves the value of an element at a specific index in the
+ 			dynamic array.
+ *
+ * @param self	The dynamic array.
+ * @param index	The index of the element to be retrieved.
+ * @return		The value of the element at the specified index,
+ 					or NULL if the index is out of bounds.
+ */
 static void	*_get(t_cvector *self, size_t index)
 {
 	if (!self || index >= self->capacity)
@@ -54,6 +78,11 @@ static void	*_get(t_cvector *self, size_t index)
 	return (self->array + (index * self->type_size));
 }
 
+/**
+ * @brief Destroys the dynamic array and frees the associated memory.
+ *
+ * @param self	The dynamic array to be destroyed.
+ */
 static void	_destroy(t_cvector *self)
 {
 	size_t	i;
@@ -74,6 +103,15 @@ static void	_destroy(t_cvector *self)
 	}
 }
 
+/**
+ * @brief Creates a new dynamic type dinamic sized array.
+ *
+ * @param type_size		The size of each element in the dynamic array.
+ * @param elem_destroy	A function pointer to a custom element
+ 							destruction function.
+ * @return				A pointer to the newly created dynamic array,
+ 							or NULL if memory allocation fails.
+ */
 t_cvector	*cvector_new(size_t type_size, void (*elem_destroy)(void *))
 {
 	t_cvector	*vector;

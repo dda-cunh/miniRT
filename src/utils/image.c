@@ -6,12 +6,20 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 14:22:10 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/22 16:25:06 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:36:34 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * Creates a new image with the specified width and height.
+ *
+ * @param w			The width of the image.
+ * @param h			The height of the image.
+ * @param program	The program associated with the image.
+ * @return			The newly created image.
+ */
 t_image	new_image(int w, int h, t_prog program)
 {
 	t_image	image;
@@ -25,6 +33,14 @@ t_image	new_image(int w, int h, t_prog program)
 	return (image);
 }
 
+/**
+ * Sets the color of a pixel at the specified coordinates in the image.
+ *
+ * @param image	The image to set the pixel color in.
+ * @param x		The x-coordinate of the pixel.
+ * @param y		The y-coordinate of the pixel.
+ * @param color	The color to set the pixel to.
+ */
 void	set_image_pixel(t_image image, int x, int y, t_color color)
 {
 	char	*pixel_addr;
@@ -48,6 +64,14 @@ void	set_image_pixel(t_image image, int x, int y, t_color color)
 	return ;
 }
 
+/**
+ * Retrieves the color of a pixel at the specified coordinates in the image.
+ *
+ * @param image	The image to get the pixel color from.
+ * @param x		The x-coordinate of the pixel.
+ * @param y		The y-coordinate of the pixel.
+ * @return		The color of the pixel at the specified coordinates.
+ */
 t_color	get_image_pixel(t_image image, int x, int y)
 {
 	char	*pixel_addr;
@@ -60,6 +84,11 @@ t_color	get_image_pixel(t_image image, int x, int y)
 	return (int_to_color(color));
 }
 
+/**
+ * Destroys the image after puting it onto the associated window.
+ *
+ * @param buffer	The image to dump onto the window.
+ */
 void	dump_image_window(t_image buffer)
 {
 	if (!buffer.win.mlx_ptr || !buffer.win.mlx_ptr)

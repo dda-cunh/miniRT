@@ -6,12 +6,20 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/04/26 23:33:27 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/11 13:08:47 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/**
+ * Calculates the collision point between a ray and the planes of
+ 	a cylinder object.
+ *
+ * @param ray	The ray to collide with the cylinder.
+ * @param cy	The cylinder object to collide with.
+ * @return		The collision point structure.
+ */
 static t_coll_point3	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 {
 	t_coll_point3	coll1;
@@ -32,16 +40,31 @@ static t_coll_point3	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
 	return (get_no_collision());
 }
 
+/**
+ * Calculates the normal vector of a collision point on the "side"
+ 	of a cylinder object.
+ *
+ * @param self			The cylinder object.
+ * @param coll_coords	The collision coordinates.
+ * @return				The normal vector at the collision point.
+ */
 static t_vec3	get_side_normal(t_object_cylinder *self, t_point3 coll_coords)
 {
 	t_vec3		center_to_coll;
 
 	center_to_coll = vec3_from_points(self->center, coll_coords);
 	return (normalize_vec3(vec3_sub(center_to_coll,
-			scale_vec3(self->axis,
-			vec3_dot_product(self->axis, center_to_coll)))));
+				scale_vec3(self->axis,
+					vec3_dot_product(self->axis, center_to_coll)))));
 }
 
+/**
+ * Calculates the collision point between a ray and a cylinder object.
+ *
+ * @param self	The cylinder object to collide with.
+ * @param ray	The ray to collide with the cylinder.
+ * @return		The collision point structure.
+ */
 static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 {
 	t_point3	coll_coords;
@@ -51,12 +74,12 @@ static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 
 	x = vec3_sub(ray.origin, self->center);
 	abc[0] = vec3_dot_product(self->axis, self->axis)
-		- powf(vec3_dot_product(ray.direction, self->axis), 2);
+		- pow(vec3_dot_product(ray.direction, self->axis), 2);
 	abc[1] = 2 * (vec3_dot_product(ray.direction, x)
 			- (vec3_dot_product(ray.direction, self->axis)
 				* vec3_dot_product(x, self->axis)));
-	abc[2] = vec3_dot_product(x, x) - powf(vec3_dot_product(x, self->axis), 2)
-		- powf(self->diameter / 2, 2);
+	abc[2] = vec3_dot_product(x, x) - pow(vec3_dot_product(x, self->axis), 2)
+		- pow(self->diameter / 2, 2);
 	t = quadratic_smallest_pos(abc[0], abc[1], abc[2]);
 	coll_coords = point3_plus_vec3(ray.origin, scale_vec3(ray.direction, t));
 	if (valid_collision(t))
@@ -72,6 +95,11 @@ static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 	return (coll_cylinder_planes(ray, *self));
 }
 
+/**
+ * Destroys a cylinder object and frees the memory.
+ *
+ * @param self	The cylinder object to destroy.
+ */
 static void	destroy(t_object_cylinder *self)
 {
 	if (self)
@@ -84,6 +112,12 @@ static void	destroy(t_object_cylinder *self)
 	}
 }
 
+/**
+ * Creates a new cylinder object with the given parameters.
+ *
+ * @param cy	The parameters of the cylinder object.
+ * @return		A pointer to the newly created cylinder object.
+ */
 t_object_cylinder	*new_cylinder(t_object_cylinder cy)
 {
 	t_object_cylinder	*obj;
