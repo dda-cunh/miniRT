@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 12:45:51 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/14 20:54:03 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 							program->light.coords))};
 	collision = do_collisions(ray, program);
 	valid_coll = valid_collision(collision.scalar)
-					&& collision.scalar <= max_dist;
+					&& collision.scalar <= (max_dist - 0.0001) /* Resolver o pigmento preto chamado de shadow acne resolvido por pedro mota <3*/;
 	if (!valid_coll)
 		final_color = lighting(origin, ray.direction, program->light);
 	return (final_color);
