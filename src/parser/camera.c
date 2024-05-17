@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:28:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:11:33 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static bool	check_fov(char *fov, int min, int max)
 {
 	int	i_fov;
 
+	if (!only_digits(fov))
+		return (false);
 	i_fov = ft_atoi(fov);
 	if (ft_strlen(fov) > 3 || i_fov < min || i_fov > max)
 		return (false);
