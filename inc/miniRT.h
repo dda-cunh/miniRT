@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/17 21:58:36 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:53:32 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ typedef enum exit_status
 	INVALID_CYLINDER_DIAMETER,
 	INVALID_CYLINDER_HEIGHT,
 	INVALID_RATIO_FORMAT,
-	BAD_VEC_FORMAT
+	BAD_VEC_FORMAT,
+	NOTHING_TO_RENDER
 }	t_exit_status;
 
 typedef struct s_color

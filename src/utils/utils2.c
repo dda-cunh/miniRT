@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:39:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 22:49:31 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:55:02 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	check_msg2(t_exit_status code)
 		ft_putstr_fd("Invalid ratio format", STD_ERR);
 	else if (code == BAD_VEC_FORMAT)
 		ft_putstr_fd("Invalid vector format", STD_ERR);
+	else if (code == NOTHING_TO_RENDER)
+		ft_putstr_fd("There's nothing to render", STD_ERR);
 }
 
 /// @brief This function checks if the string, which represents
@@ -99,14 +101,16 @@ bool	check_rgb_string_format(char *rgb, int nums_counter)
 /// @return 
 bool	check_vec_string_format(char *vec, int nums_counter)
 {
-	int		counter;
+	int	counter;
 
 	counter = 0;
 	if (vec && *vec == '-' && ft_isdigit(*(vec + 1)))
 		vec++;
 	while (vec && (ft_isdigit(*vec) || *vec == '.'))
+	{
 		vec++;
 		counter++;
+	}
 	if (vec && *vec && *vec == ',' && counter <= 3 && nums_counter != 2)
 		return (check_vec_string_format(++vec, ++nums_counter));
 	else if (vec && !*vec && counter <= 3 && nums_counter == 2)

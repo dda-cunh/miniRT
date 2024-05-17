@@ -96,4 +96,6 @@ void	parser(char *file)
 	if (!get_program()->ambient_l.is_already_in_use || !get_program()->camera.is_already_in_use
 		|| !get_program()->light.is_already_in_use)
 		killprogram(EXIT_MISSING_OBJ, get_program());
+	if (!get_program()->collidables)
+		killprogram(NOTHING_TO_RENDER, get_program());
 }
