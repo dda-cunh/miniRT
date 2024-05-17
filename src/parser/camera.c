@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 21:11:33 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:27:54 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ static t_exit_status	generic_camera_builder(char *fov, char **coords,
 {
 	t_exit_status	res;
 
+	if (!fov || !coords || !vec_orien)
+		return (EXIT_MALLOC);
 	if (!check_fov(fov, FOV_MIN, FOV_MAX))
 		return (FOV_OUT_OF_RANGE);
 	if (!check_coordinates(coords))
@@ -96,15 +98,10 @@ t_exit_status	build_camera(char **array)
 		return (OBJECT_ALREADY_IN_USE);
 	if (array_len(array) != 4)
 		return (WRONG_INFO_AMOUNT);
+	if (!check_vec_string_format(array[2], 0))
+		return (BAD_VEC_FORMAT);
 	coords = ft_split(array[1], ',');
-	if (!coords)
-		return (EXIT_MALLOC);
 	vector_orientations = ft_split(array[2], ',');
-	if (!vector_orientations)
-	{
-		free_matrix((void **)coords, array_len(coords));
-		return (EXIT_MALLOC);
-	}
 	res = generic_camera_builder(array[3], coords, vector_orientations);
 	free_matrix((void **)coords, array_len(coords));
 	free_matrix((void **)vector_orientations, array_len(vector_orientations));

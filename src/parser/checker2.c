@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:43:18 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 20:01:50 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:43:45 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 /// @return 
 bool	validate_fractional_value(char *coord)
 {
-	if (*coord != '-' && !ft_isdigit(*coord))
+	if (coord && *coord != '-' && !ft_isdigit(*coord))
 		return (false);
-	if (*coord == '-')
+	if (coord && *coord == '-')
 		coord++;
 	return (check_double_var(coord));	
 }
@@ -47,8 +47,10 @@ t_exit_status	check_vec_orientation(char **vec_orien)
 	i = 0;
 	if (array_len(vec_orien) != 3)
 		return (WRONG_INFO_AMOUNT);
-	while (vec_orien[i] && validate_fractional_value(vec_orien[i]))
+	while (vec_orien[i])
 	{
+		if (!validate_fractional_value(vec_orien[i]))
+			return (BAD_VEC_FORMAT);
 		orientation = ft_atof(vec_orien[i]);
 		if (orientation < MIN_VECT || orientation > MAX_VECT)
 			return (VEC_OUT_OF_RANGE);

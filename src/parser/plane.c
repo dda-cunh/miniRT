@@ -6,7 +6,7 @@
 /*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 21:10:15 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 19:24:22 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:21:31 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 t_exit_status	check_coords_vec_rgb(char **coords, char **vec, char **rgb)
 {
-	t_exit_status	res;
-
 	if (!coords || !vec || !rgb)
 		return (EXIT_MALLOC);
 	if (!check_coordinates(coords))
 		return (BAD_COORDS_FORMAT);
 	if (!check_rgb_format(rgb))
 		return (BAD_RGB_FORMAT);
-	res = check_vec_orientation(vec);
-	return (res);
+	return (check_vec_orientation(vec));
 }
 
 t_exit_status	set_plane(char **coords, char **vec, char **rgb)
@@ -63,6 +60,8 @@ t_exit_status	build_plane(char **array)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_rgb_string_format(array[3], 0))
 		return (BAD_RGB_FORMAT);
+	if (!check_vec_string_format(array[2], 0))
+		return (BAD_VEC_FORMAT);
 	coords = ft_split(array[1], ',');
 	vec = ft_split(array[2], ',');
 	rgb = ft_split(array[3], ',');

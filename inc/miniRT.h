@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 13:27:53 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/17 21:58:36 by arabelo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ typedef enum exit_status
 	INVALID_SPHERE_DIAMETER,
 	INVALID_CYLINDER_DIAMETER,
 	INVALID_CYLINDER_HEIGHT,
-	INVALID_RATIO_FORMAT
+	INVALID_RATIO_FORMAT,
+	BAD_VEC_FORMAT
 }	t_exit_status;
 
 typedef struct s_color
@@ -288,8 +289,10 @@ size_t				array_len(char **array);
 bool				same_color(t_color a, t_color b);
 int					color_to_int(t_color color);
 void				check_msg(t_exit_status code);
+void				check_msg2(t_exit_status code);
 t_color				append_colors(t_color a, double b_intensity, t_color b);
 bool				check_rgb_string_format(char *rgb, int nums_counter);
+bool				check_vec_string_format(char *vec, int nums_counter);
 
 /* ************************************************************************** */
 /*                                 T_TYPES                                    */
