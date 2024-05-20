@@ -29,7 +29,11 @@ LFT_DIR		=	libft/
 
 LFT_FULL	=	$(addprefix $(INC_DIR), $(LFT_DIR))
 
-LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -Linc/minilibx-linux -lmlx
+MLX_PATH	=	minilibx-linux/
+
+MLX_FULL	=	$(addprefix $(INC_DIR), $(MLX_PATH))
+
+LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -L$(MLX_FULL) -lmlx
 
 SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
@@ -91,6 +95,7 @@ $(NAME):		$(OBJ) | $(SRC)
 $(OBJ_DIR)%.o:	$(SRC_DIR)%.c | $(OBJ_DIRS)
 				make -C $(LFT_FULL)
 				make bonus -C $(LFT_FULL)
+				make -C $(MLX_FULL)
 				printf '$(HAMMER)\t'
 				printf "$(GREEN)Compiling $(NAME) objects... $(RED)%-33.33s\r" $(notdir $@)
 				$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
@@ -102,6 +107,7 @@ all:			$(NAME)
 
 clean:
 				make fclean -C $(LFT_FULL)
+				make clean -C $(MLX_FULL)
 				if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi
 				if [ -d $(DEBUG_DIR) ]; then $(RM) $(DEBUG_DIR); fi
 
