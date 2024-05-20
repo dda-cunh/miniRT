@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   program.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/17 20:14:03 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:23:19 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,20 @@
  */
 int	killprogram(int keycode, t_prog *program)
 {
-	if (program && program->collidables)
-		program->collidables->destroy(program->collidables);
-	if (program && program->collisions)
-		free_matrix((void **)program->collisions, WINDOW_H);
-	if (program && program->win_ptr)
-		mlx_destroy_window(program->mlx_ptr, program->win_ptr);
-	if (program && program->mlx_ptr)
+	if (program)
 	{
-		mlx_loop_end(program->mlx_ptr);
-		mlx_destroy_display(program->mlx_ptr);
-		free(program->mlx_ptr);
+		if (program->collidables)
+			program->collidables->destroy(program->collidables);
+		if (program->collisions)
+			free_matrix((void **)program->collisions, WINDOW_H);
+		if (program->win_ptr)
+			mlx_destroy_window(program->mlx_ptr, program->win_ptr);
+		if (program->mlx_ptr)
+		{
+			mlx_loop_end(program->mlx_ptr);
+			mlx_destroy_display(program->mlx_ptr);
+			free(program->mlx_ptr);
+		}
 	}
 	exit(__on_exit(keycode, NULL));
 }

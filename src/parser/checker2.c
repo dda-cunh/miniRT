@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:43:18 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 22:43:45 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:51:10 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	validate_fractional_value(char *coord)
 		return (false);
 	if (coord && *coord == '-')
 		coord++;
-	return (check_double_var(coord));	
+	return (check_double_var(coord));
 }
 
 /// @brief This function checks if the rgb and the coordinates

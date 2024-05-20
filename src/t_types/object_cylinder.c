@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 13:08:47 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:48:21 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,24 @@ static t_coll_point3	coll_cylinder_planes(t_ray3 ray, t_object_cylinder cy)
  * @param coll_coords	The collision coordinates.
  * @return				The normal vector at the collision point.
  */
-static t_vec3	get_side_normal(t_object_cylinder *self, t_point3 coll_coords)
+static t_coll_point3	get_side_coll(t_object_cylinder *self,
+		t_point3 coll_coords, double t)
 {
 	t_vec3		center_to_coll;
+	t_vec3		side_normal;
 
 	center_to_coll = vec3_from_points(self->center, coll_coords);
-	return (normalize_vec3(vec3_sub(center_to_coll,
+	side_normal = normalize_vec3(vec3_sub(center_to_coll,
 				scale_vec3(self->axis,
-					vec3_dot_product(self->axis, center_to_coll)))));
+					vec3_dot_product(self->axis, center_to_coll))));
+	return ((t_coll_point3)
+		{
+			coll_coords,
+			self->color,
+			(t_color){255, 0, 0, 0},
+		side_normal,
+		t
+	});
 }
 
 /**
@@ -84,14 +94,7 @@ static t_coll_point3	collide(t_object_cylinder *self, t_ray3 ray)
 	coll_coords = point3_plus_vec3(ray.origin, scale_vec3(ray.direction, t));
 	if (valid_collision(t))
 		if (point3_distance_point3(coll_coords, self->center) <= self->radius)
-			return ((t_coll_point3)
-				{
-					coll_coords,
-					self->color,
-					(t_color){255, 0, 0, 0},
-					get_side_normal(self, coll_coords),
-					t
-				});
+			return (get_side_coll(self, coll_coords, t));
 	return (coll_cylinder_planes(ray, *self));
 }
 

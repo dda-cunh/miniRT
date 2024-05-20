@@ -17,9 +17,9 @@
 /// program in a clean way.
 /// @param file 
 /// @return 
-int    handle_file_open(char *file)
+int	handle_file_open(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -30,7 +30,7 @@ int    handle_file_open(char *file)
 /// @brief This function takes a string and replaces
 /// each white-space for a single space.
 /// @param str 
-void    replace_white_spaces(char *str)
+void	replace_white_spaces(char *str)
 {
 	while (str && *str)
 	{
@@ -51,7 +51,7 @@ static bool	jump_white_space_line(char *line)
 	return (true);
 }
 
-static bool    read_file(int fd)
+static bool	read_file(int fd)
 {
 	char			*line;
 	t_exit_status	res;
@@ -93,7 +93,8 @@ void	parser(char *file)
 		killprogram(EXIT_CLOSE, get_program());
 	if (should_exit)
 		killprogram(EXIT_SCENE, get_program());
-	if (!get_program()->ambient_l.is_already_in_use || !get_program()->camera.is_already_in_use
+	if (!get_program()->ambient_l.is_already_in_use
+		|| !get_program()->camera.is_already_in_use
 		|| !get_program()->light.is_already_in_use)
 		killprogram(EXIT_MISSING_OBJ, get_program());
 	if (!get_program()->collidables)

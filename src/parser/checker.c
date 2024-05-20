@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:08:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 20:05:28 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:50:28 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ bool	check_rgb_format(char **rgb)
 		rgb_value = ft_atoi(rgb[i]);
 		if (ft_strlen(rgb[i]) > 3 || !only_digits(rgb[i])
 			|| rgb_value < 0 || rgb_value > 255)
-				return (false);
+			return (false);
 		i++;
 	}
 	return (true);

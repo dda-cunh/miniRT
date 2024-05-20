@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   trace.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/14 20:54:03 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:30:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ static t_color	ray_to_lights(t_coll_point3 origin, t_prog *program)
 
 	apply_bias(&origin);
 	final_color = origin.visible_color;
-	max_dist = point3_distance_point3(origin.coords, program->light.coords);
+	max_dist = point3_distance_point3(origin.coords, program->light.coords)
+		- SHADOW_BIAS;
 	ray = (t_ray3){origin.coords,
-			normalize_vec3(vec3_from_points(origin.coords,
-							program->light.coords))};
+		normalize_vec3(vec3_from_points(origin.coords,
+				program->light.coords))};
 	collision = do_collisions(ray, program);
 	valid_coll = valid_collision(collision.scalar)
-					&& collision.scalar <= (max_dist - 0.0001) /* Resolver o pigmento preto chamado de shadow acne resolvido por pedro mota <3*/;
+		&& collision.scalar <= max_dist;
 	if (!valid_coll)
 		final_color = lighting(origin, ray.direction, program->light);
 	return (final_color);

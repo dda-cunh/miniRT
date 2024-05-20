@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 22:02:12 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 22:48:52 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:53:56 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ t_exit_status	check_cylinder_diameter_height(char *diameter, char *height)
 t_exit_status	create_cylinder(t_object_cylinder cy)
 {
 	t_object_cylinder	*cy_ptr;
+	t_cvector			*collidables;
 
 	cy_ptr = new_cylinder(cy);
 	if (!cy_ptr)
 		return (EXIT_MALLOC);
-	get_program()->collidables->add(get_program()->collidables,
-		new_collidable_shape(cy_ptr), true);
+	collidables = get_program()->collidables;
+	collidables->add(collidables, new_collidable_shape(cy_ptr), true);
 	return (CHECK_SUCCESS);
 }
 

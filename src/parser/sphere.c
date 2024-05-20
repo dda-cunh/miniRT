@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:11:46 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 20:02:19 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:58:12 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static t_exit_status	set_sphere(char *diameter,
 							char **coords, char **rgb)
 {
 	t_object_sphere	*sp;
+	t_cvector		*collidables;
 	t_point3		center;
 	t_color			colors;
 	double			diam;
@@ -32,8 +33,8 @@ static t_exit_status	set_sphere(char *diameter,
 	if (!sp)
 		return (EXIT_MALLOC);
 	sp->_id = ID_SPHERE;
-	get_program()->collidables->add(get_program()->collidables,
-		new_collidable_shape(sp), true);
+	collidables = get_program()->collidables;
+	collidables->add(collidables, new_collidable_shape(sp), true);
 	return (CHECK_SUCCESS);
 }
 
@@ -43,6 +44,7 @@ static t_exit_status	set_sphere(char *diameter,
 bool	check_sphere_diameter(char *diameter)
 {
 	double	diam;
+
 	if (!check_double_var(diameter))
 		return (false);
 	diam = ft_atof(diameter);

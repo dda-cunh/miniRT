@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 21:10:15 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 22:21:31 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:57:09 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_exit_status	check_coords_vec_rgb(char **coords, char **vec, char **rgb)
 t_exit_status	set_plane(char **coords, char **vec, char **rgb)
 {
 	t_object_plane	*pl;
+	t_cvector		*collidables;
 	t_point3		point;
 	t_color			colors;
 	t_vec3			normal;
@@ -44,8 +45,8 @@ t_exit_status	set_plane(char **coords, char **vec, char **rgb)
 	if (!pl)
 		return (EXIT_MALLOC);
 	pl->_id = ID_PLANE;
-	get_program()->collidables->add(get_program()->collidables,
-		new_collidable_shape(pl), true);
+	collidables = get_program()->collidables;
+	collidables->add(collidables, new_collidable_shape(pl), true);
 	return (CHECK_SUCCESS);
 }
 

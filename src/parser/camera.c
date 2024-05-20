@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/17 22:27:54 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:50:13 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,11 @@ static void	set_camera(t_camera *cam, char *fov, char **coords,
 	cam->coords.z = ft_atof(coords[2]);
 	cam->forward = normalize_vec3(array_to_vec3(vec_orien));
 	cam->right = normalize_vec3(vec3_cross_product(cam->forward,
-		(t_vec3){0.0f, 1.0f, 0.0f}));
+				(t_vec3){0.0f, 1.0f, 0.0f}));
 	cam->up = normalize_vec3(vec3_cross_product(cam->right, cam->forward));
 	cam->tan_fov = tanf(cam->fov * 0.5f * (M_PI / 180.0f));
 }
+
 /// @brief This function checks if the camera informations
 /// are well formated and if so it set.
 /// @param fov 

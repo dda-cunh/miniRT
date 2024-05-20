@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/17 22:53:32 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:15:40 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define MAX_VECT 1.0
 # define MIN_VECT -1.0
 
-typedef struct	s_cvector
+typedef struct s_cvector
 {
 	unsigned char		*array;
 	size_t				type_size;
@@ -63,8 +63,10 @@ typedef struct	s_cvector
 	size_t				length;
 
 	void				*(*get)(struct s_cvector *self, size_t index);
-	void				(*set)(struct s_cvector *self, size_t index, void *content, bool del_heap);
-	void				(*add)(struct s_cvector *self, void *content, bool del_heap);
+	void				(*set)(struct s_cvector *self, size_t index,
+			void *content, bool del_heap);
+	void				(*add)(struct s_cvector *self, void *content,
+			bool del_heap);
 	void				(*destroy)(struct s_cvector *self);
 	void				(*elem_destroy)(void *element);
 }	t_cvector;
@@ -100,16 +102,16 @@ typedef enum exit_status
 
 typedef struct s_color
 {
-	int						alpha;
-	int						red;
-	int						green;
-	int						blue;
+	int	alpha;
+	int	red;
+	int	green;
+	int	blue;
 }	t_color;
 
 struct s_vec2
 {
-	double						x;
-	double						y;
+	double	x;
+	double	y;
 };
 
 typedef struct s_vec2	t_point2;
@@ -117,9 +119,9 @@ typedef struct s_vec2	t_vec2;
 
 struct s_vec3
 {
-	double						x;
-	double						y;
-	double						z;
+	double	x;
+	double	y;
+	double	z;
 };
 
 typedef struct s_vec3	t_point3;
@@ -127,36 +129,36 @@ typedef struct s_vec3	t_vec3;
 
 typedef struct s_ray3
 {
-	t_point3					origin;
-	t_vec3						direction;
+	t_point3	origin;
+	t_vec3		direction;
 }	t_ray3;
 
 typedef struct s_coll_point3
 {
-	t_point3					coords;
-	t_color						coll_color;
-	t_color						visible_color;
-	t_vec3						normal;
-	double						scalar;
+	t_point3	coords;
+	t_color		coll_color;
+	t_color		visible_color;
+	t_vec3		normal;
+	double		scalar;
 }	t_coll_point3;
 
 typedef struct s_camera
 {
-	t_point3					coords;
-	t_vec3						forward;
-	t_vec3						right;
-	t_vec3						up;
-	int							fov;
-	double						tan_fov;
-	bool						is_already_in_use;
+	t_point3	coords;
+	t_vec3		forward;
+	t_vec3		right;
+	t_vec3		up;
+	int			fov;
+	double		tan_fov;
+	bool		is_already_in_use;
 }	t_camera;
 
 typedef struct s_light
 {
-	t_point3					coords;
-	t_color						color;
-	double						ratio;
-	bool						is_already_in_use;
+	t_point3	coords;
+	t_color		color;
+	double		ratio;
+	bool		is_already_in_use;
 }	t_light;
 
 typedef enum e_collidable_id
@@ -169,62 +171,58 @@ typedef enum e_collidable_id
 
 typedef struct s_object_plane
 {
-	t_collidable_id				_id;
-	t_point3					point;
-	t_color						color;
-	t_vec3						normal;
+	t_collidable_id	_id;
+	t_point3		point;
+	t_color			color;
+	t_vec3			normal;
 
-	void						(*destroy)(struct s_object_plane *self);
-	t_coll_point3				(*collide)(struct s_object_plane *self,
-		t_ray3 ray);
+	void			(*destroy)(struct s_object_plane *self);
+	t_coll_point3	(*collide)(struct s_object_plane * self, t_ray3 ray);
 }	t_object_plane;
 
 typedef struct s_object_cylinder
 {
-	t_collidable_id				_id;
-	t_object_plane				*disk1;
-	t_object_plane				*disk2;
-	t_point3					center;
-	t_color						color;
-	t_vec3						axis;
-	double						diameter;
-	double						height;
-	double						radius;
+	t_collidable_id	_id;
+	t_object_plane	*disk1;
+	t_object_plane	*disk2;
+	t_point3		center;
+	t_color			color;
+	t_vec3			axis;
+	double			diameter;
+	double			height;
+	double			radius;
 
-	void						(*destroy)(struct s_object_cylinder *self);
-	t_coll_point3				(*collide)(struct s_object_cylinder *self,
-			t_ray3 ray);
+	void			(*destroy)(struct s_object_cylinder *self);
+	t_coll_point3	(*collide)(struct s_object_cylinder * self, t_ray3 ray);
 }	t_object_cylinder;
 
 typedef struct s_object_sphere
 {
-	t_collidable_id				_id;
-	t_point3					center;
-	t_color						color;
-	double						diameter;
+	t_collidable_id	_id;
+	t_point3		center;
+	t_color			color;
+	double			diameter;
 
-	void						(*destroy)(struct s_object_sphere *self);
-	t_coll_point3				(*collide)(struct s_object_sphere *self,
-			t_ray3 ray);
+	void			(*destroy)(struct s_object_sphere *self);
+	t_coll_point3	(*collide)(struct s_object_sphere * self, t_ray3 ray);
 }	t_object_sphere;
 
 typedef union u_collidable_shape
 {
-	t_object_cylinder			*cy;
-	t_object_sphere				*sp;
-	t_object_plane				*pl;
+	t_object_cylinder	*cy;
+	t_object_sphere		*sp;
+	t_object_plane		*pl;
 }	t_collidable_shape;
-
 
 typedef struct s_prog
 {
-	t_coll_point3				**collisions;
-	t_cvector					*collidables;
-	t_light						light;
-	t_camera					camera;
-	t_light						ambient_l;
-	void						*mlx_ptr;
-	void						*win_ptr;
+	t_coll_point3	**collisions;
+	t_cvector		*collidables;
+	t_light			light;
+	t_camera		camera;
+	t_light			ambient_l;
+	void			*mlx_ptr;
+	void			*win_ptr;
 }	t_prog;
 
 typedef struct s__img

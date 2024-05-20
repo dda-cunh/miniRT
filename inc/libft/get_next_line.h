@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 21:04:20 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/01/07 17:55:36 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:01:07 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef enum e_bool
 }	t_bool;
 
 # ifndef BUFFER_SIZE
-#  define   BUFFER_SIZE 4096
+#  define BUFFER_SIZE 4096
 # endif
 
 char		*line_join(char *line, char *buff);
