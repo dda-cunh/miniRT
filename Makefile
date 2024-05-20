@@ -67,7 +67,7 @@ OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(PARSER_DIR)) \
 							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
 
-OBJ		=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ			=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 SCENE		=	scenes/empty.rt
 

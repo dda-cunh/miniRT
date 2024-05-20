@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 14:50:13 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/20 16:21:57 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	set_camera(t_camera *cam, char *fov, char **coords,
 	cam->right = normalize_vec3(vec3_cross_product(cam->forward,
 				(t_vec3){0.0f, 1.0f, 0.0f}));
 	cam->up = normalize_vec3(vec3_cross_product(cam->right, cam->forward));
-	cam->tan_fov = tanf(cam->fov * 0.5f * (M_PI / 180.0f));
+	cam->tan_fov = tanf(cam->fov * 0.5f * (M_PI / (180.0f + 0.001f)));
 }
 
 /// @brief This function checks if the camera informations
