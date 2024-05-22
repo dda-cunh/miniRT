@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 18:26:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/20 14:30:38 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:35:20 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,39 @@ static void	apply_bias(t_coll_point3 *point)
 	point->coords.x = point->normal.x * SHADOW_BIAS + point->coords.x;
 	point->coords.y = point->normal.y * SHADOW_BIAS + point->coords.y;
 	point->coords.z = point->normal.z * SHADOW_BIAS + point->coords.z;
+}
+
+/**
+ * @brief Calculates the shading at a collision point.
+ * 
+ * @param coll		The collision point.
+ * @param to_light	The vector from the collision point to the light source.
+ * @param light		The light source.
+ * @return			The shading at the collision point.
+ */
+t_color	lighting(t_coll_point3 coll, t_vec3 to_light, t_light light)
+{
+	double	channels[3];
+	double	specular;
+	double	diffuse;
+	t_vec3	h;
+
+	diffuse = fmax(0.0, vec3_dot_product(coll.normal, to_light));
+	h = normalize_vec3(point3_plus_vec3(to_light, scale_vec3(coll.normal, -1)));
+	specular = pow(fmax(0.0, vec3_dot_product(h, coll.normal)), GLOSSINESS);
+	channels[0] = coll.visible_color.red
+		+ light.color.red * (diffuse + specular);
+	channels[1] = coll.visible_color.green
+		+ light.color.green * (diffuse + specular);
+	channels[2] = coll.visible_color.blue
+		+ light.color.blue * (diffuse + specular);
+	return (clamp_color((t_color)
+			{
+				coll.coll_color.alpha,
+				channels[0],
+				channels[1],
+				channels[2]
+			}));
 }
 
 /**
@@ -67,7 +100,7 @@ void	trace(t_prog *program)
 	int				curr_x;
 	int				curr_y;
 
-	buffer = new_image(WINDOW_W, WINDOW_H, *program);
+	buffer = new_image(WINDOW_W, WINDOW_H, program->win);
 	curr_y = 0;
 	while (curr_y < WINDOW_H)
 	{

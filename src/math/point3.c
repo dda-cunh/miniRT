@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:17:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 12:03:40 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:39:10 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "../../inc/ft_math.h"
 
 /**
  * Adds a vector to a point and returns the resulting point.
@@ -27,20 +27,6 @@ t_point3	point3_plus_vec3(t_point3 point, t_vec3 vector)
 			point.y + vector.y,
 			point.z + vector.z
 		});
-}
-
-/**
- * Checks if a point is inside a sphere.
- *
- * @param point		The point to check.
- * @param sphere	The sphere to check against.
- * @return			True if the point is inside the sphere, false otherwise.
- */
-bool	point3_inside_sphere(t_point3 point, t_object_sphere sphere)
-{
-	return (sqrt(pow(point.x - sphere.center.x, 2)
-			+ pow(point.y - sphere.center.y, 2)
-			+ pow(point.z - sphere.center.z, 2)) <= (sphere.diameter / 2));
 }
 
 /**

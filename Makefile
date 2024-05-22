@@ -1,49 +1,50 @@
 .SILENT:
-NAME		=	miniRT
+NAME			=	miniRT
 
-CC			=	cc
+CC				=	cc
 
-CFLAGS		=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror -g #-fsanitize=address
 
-RM			=	rm -rf
+RM				=	rm -rf
 
-INC_DIR		=	inc/
+INC_DIR			=	inc/
 
-SRC_DIR		=	src/
+SRC_DIR			=	src/
 
-OBJ_DIR		=	temp/
+OBJ_DIR			=	temp/
 
-PROG_DIR	=	program/
+PROG_DIR		=	program/
 
-PARSER_DIR	=	parser/
+PARSER_DIR		=	parser/
 
-RAY_DIR		=	raytrace/
+RAY_DIR			=	raytrace/
 
-MATH_DIR	=	math/
+MATH_DIR		=	math/
 
-TYPES_DIR	=	t_types/
+TYPES_DIR		=	t_types/
 
-UTILS_DIR	=	utils/
+UTILS_DIR		=	utils/
 
-LFT_DIR		=	libft/
+DISPLAY_DIR		=	display/
 
-LFT_FULL	=	$(addprefix $(INC_DIR), $(LFT_DIR))
+LIBS_DIR		=	lib/
 
-MLX_PATH	=	minilibx-linux/
+LFT_PATH		=	$(addprefix $(LIBS_DIR), libft/)
 
-MLX_FULL	=	$(addprefix $(INC_DIR), $(MLX_PATH))
+CVEC_PATH		=	$(addprefix $(LIBS_DIR), cvector/)
 
-LINKS		=	-L$(LFT_FULL) -lft -lXext -lX11 -lm -L$(MLX_FULL) -lmlx
+MLX_PATH		=	$(addprefix $(LIBS_DIR), minilibx-linux/)
 
-SRC			=	$(addprefix $(SRC_DIR),	main.c \
+LINKS			=	-lm -lXext -lX11 -L$(MLX_PATH) -lmlx -L$(LFT_PATH) -lft \
+					-L$(CVEC_PATH) -lcvector
+
+SRC				=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
 																	events.c) \
 										$(addprefix $(RAY_DIR),		ray.c \
 																	collisions.c \
 																	trace.c) \
-										$(addprefix $(UTILS_DIR),	color.c \
-																	image.c \
-																	utils2.c \
+										$(addprefix $(UTILS_DIR),	utils2.c \
 																	utils.c) \
 										$(addprefix $(MATH_DIR),	common.c \
 																	point3.c \
@@ -51,8 +52,7 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(TYPES_DIR),	object_cylinder.c \
 																	object_sphere.c \
 																	object_plane.c \
-																	collidable_shape.c \
-																	cvector.c) \
+																	collidable_shape.c) \
 										$(addprefix $(PARSER_DIR),	analizer.c \
 																	camera.c \
 																	checker.c \
@@ -62,77 +62,84 @@ SRC			=	$(addprefix $(SRC_DIR),	main.c \
 																	light.c \
 																	parser.c \
 																	plane.c \
-																	sphere.c))
+																	sphere.c)\
+										$(addprefix $(DISPLAY_DIR),	image.c \
+																	color.c))
 
-OBJ_DIRS	=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
+OBJ_DIRS		=	$(OBJ_DIR)	$(addprefix $(OBJ_DIR), $(PROG_DIR)) \
 							$(addprefix $(OBJ_DIR), $(RAY_DIR)) \
 							$(addprefix $(OBJ_DIR), $(UTILS_DIR)) \
 							$(addprefix $(OBJ_DIR), $(MATH_DIR)) \
 							$(addprefix $(OBJ_DIR), $(PARSER_DIR)) \
-							$(addprefix $(OBJ_DIR), $(TYPES_DIR))
+							$(addprefix $(OBJ_DIR), $(TYPES_DIR)) \
+							$(addprefix $(OBJ_DIR), $(DISPLAY_DIR))
 
-OBJ			=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ				=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
-SCENE		=	scenes/empty.rt
+SCENE			=	scenes/empty.rt
 
-GREEN		=	\033[0;32m
+GREEN			=	\033[0;32m
 
-RED			=	\033[0;31m
+RED				=	\033[0;31m
 
-RESET		=	\033[0m
+RESET			=	\033[0m
 
-SUS			=	\U00000D9E
+SUS				=	\U00000D9E
 
-HAMMER		=	\U0001F528
+HAMMER			=	\U0001F528
 
-BROOM		=	\U0001F9F9
+BROOM			=	\U0001F9F9
 
-$(NAME):		$(OBJ) | $(SRC)
-				printf '$(HAMMER)\t$(GREEN)Compiling $(NAME)$(RESET)\n'
-				$(CC) $(CFLAGS) $^ -o $@ -I $(INC_DIR) $(LINKS)
-				make compiled
+$(NAME):			$(OBJ) | $(SRC)
+					printf '$(HAMMER)\t$(GREEN)Compiling $(NAME)$(RESET)\n'
+					$(CC) $(CFLAGS) $^ -o $@ -I $(INC_DIR) $(LINKS)
+					make compiled
 
-$(OBJ_DIR)%.o:	$(SRC_DIR)%.c | $(OBJ_DIRS)
-				make -C $(LFT_FULL)
-				make bonus -C $(LFT_FULL)
-				make -C $(MLX_FULL)
-				printf '$(HAMMER)\t'
-				printf "$(GREEN)Compiling $(NAME) objects... $(RED)%-33.33s\r" $(notdir $@)
-				$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
+$(OBJ_DIR)%.o:		$(SRC_DIR)%.c | $(OBJ_DIRS)
+					make dependecies
+					printf '$(HAMMER)\t\n'
+					printf "$(GREEN)Compiling $(NAME) objects... $(RED)%-33.33s\r" $(notdir $@)
+					$(CC) $(CFLAGS) -c $< -o $@ -I $(INC_DIR)
 
 $(OBJ_DIRS):
-				mkdir -p $@
+					mkdir -p $@
 
-all:			$(NAME)
+all:				$(NAME)
+
+dependecies:
+					make -C $(MLX_PATH)
+					make -C $(CVEC_PATH)
+					make -C $(LFT_PATH)
 
 clean:
-				make fclean -C $(LFT_FULL)
-				make clean -C $(MLX_FULL)
-				if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi
-				if [ -d $(DEBUG_DIR) ]; then $(RM) $(DEBUG_DIR); fi
+					make clean -C $(LFT_PATH)
+					make clean -C $(CVEC_PATH)
+					make clean -C $(MLX_PATH)
+					if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi
+					if [ -d $(DEBUG_DIR) ]; then $(RM) $(DEBUG_DIR); fi
 
-fclean:			clean
-				printf '$(BROOM)\n$(BROOM)\t$(GREEN)Cleaning project$(RESET)\n'
-				$(RM) $(NAME)
-				printf '$(BROOM)\t\t\t$(SUS)\n'
+fclean:				clean
+					printf '$(BROOM)\n$(BROOM)\t$(GREEN)Cleaning project$(RESET)\n'
+					$(RM) $(NAME)
+					printf '$(BROOM)\t\t\t$(SUS)\n'
 
-re:				fclean all
+re:					fclean all
 
 compiled:
-				printf "																\n"
-				printf "$(GREEN)	$(NAME)										$(RESET)\n"
-				printf "$(GREEN)                             _  _             _ $(RESET)\n"
-				printf "$(GREEN)                            (_)| |           | |$(RESET)\n"
-				printf "$(GREEN)  ____   ___   ____   ____   _ | |  ____   _ | |$(RESET)\n"
-				printf "$(GREEN) / ___) / _ \ |    \ |  _ \ | || | / _  ) / || |$(RESET)\n"
-				printf "$(GREEN)( (___ | |_| || | | || | | || || |( (/ / ( (_| |$(RESET)\n"
-				printf "$(GREEN) \____) \___/ |_|_|_|| ||_/ |_||_| \____) \____|$(RESET)\n"
-				printf "$(GREEN)                     |_|                        $(RESET)\n"
-				printf "																\n"
+					printf "																\n"
+					printf "$(GREEN)	$(NAME)										$(RESET)\n"
+					printf "$(GREEN)                             _  _             _ $(RESET)\n"
+					printf "$(GREEN)                            (_)| |           | |$(RESET)\n"
+					printf "$(GREEN)  ____   ___   ____   ____   _ | |  ____   _ | |$(RESET)\n"
+					printf "$(GREEN) / ___) / _ \ |    \ |  _ \ | || | / _  ) / || |$(RESET)\n"
+					printf "$(GREEN)( (___ | |_| || | | || | | || || |( (/ / ( (_| |$(RESET)\n"
+					printf "$(GREEN) \____) \___/ |_|_|_|| ||_/ |_||_| \____) \____|$(RESET)\n"
+					printf "$(GREEN)                     |_|                        $(RESET)\n"
+					printf "																\n"
 
-run:			all
-				./$(NAME) $(SCENE)
+run:				all
+					./$(NAME) $(SCENE)
 
-rerun:			fclean | run
+rerun:				fclean | run
 
-.PHONY:		all clean fclean re run rerun
+.PHONY:				all clean fclean re run rerun

@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/23 13:44:36 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 12:59:32 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 18:45:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "cvector.h"
 
 /**
  * @brief Adds an element to the dynamic array.
@@ -19,7 +19,7 @@
  * @param content	The content to be added.
  * @param del_heap	Whether to free the memory of the content after adding.
  */
-static void	_add(t_cvector *self, void *content, bool del_heap)
+static void	_add(t_cvector *self, void *content, int del_heap)
 {
 	unsigned char	*content_bytes;
 
@@ -27,12 +27,12 @@ static void	_add(t_cvector *self, void *content, bool del_heap)
 		return ;
 	if (self->length >= self->capacity)
 	{
-		self->array = ft_realloc(self->array, self->capacity * self->type_size,
+		self->array = _realloc(self->array, self->capacity * self->type_size,
 				self->capacity * self->type_size * CVECTOR_SCALE);
 		self->capacity *= CVECTOR_SCALE;
 	}
 	content_bytes = (unsigned char *)content;
-	ft_memmove(self->array + (self->length * self->type_size),
+	_memmove(self->array + (self->length * self->type_size),
 		content_bytes, self->type_size);
 	if (del_heap)
 		free(content);
@@ -47,7 +47,7 @@ static void	_add(t_cvector *self, void *content, bool del_heap)
  * @param content	The content to be set.
  * @param del_heap	Whether to free the memory of the content after setting.
  */
-static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
+static void	_set(t_cvector *self, size_t index, void *content, int del_heap)
 {
 	unsigned char	*content_bytes;
 
@@ -56,7 +56,7 @@ static void	_set(t_cvector *self, size_t index, void *content, bool del_heap)
 	if (index >= self->capacity)
 		return ;
 	content_bytes = (unsigned char *)content;
-	ft_memmove(self->array + (index * self->type_size),
+	_memmove(self->array + (index * self->type_size),
 		content_bytes, self->type_size);
 	if (del_heap)
 		free(content);

@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:15:44 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 13:31:35 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:39:16 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "../../inc/ft_math.h"
 
 /**
  * Clamps a value between a minimum and maximum range.

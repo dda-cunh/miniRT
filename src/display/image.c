@@ -6,26 +6,26 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 14:22:10 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 13:36:34 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:24:12 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "../../inc/display.h"
 
 /**
  * Creates a new image with the specified width and height.
  *
  * @param w			The width of the image.
  * @param h			The height of the image.
- * @param program	The program associated with the image.
+ * @param window	The window associated with the image.
  * @return			The newly created image.
  */
-t_image	new_image(int w, int h, t_prog program)
+t_image	new_image(int w, int h, t_window window)
 {
 	t_image	image;
 
-	image.win = program;
-	image.ptr = mlx_new_image(program.mlx_ptr, w, h);
+	image.win = window;
+	image.ptr = mlx_new_image(image.win.mlx_ptr, w, h);
 	image.addr = mlx_get_data_addr(image.ptr, &(image.bpp),
 			&(image.line_len), &(image.endian));
 	image.w = w;

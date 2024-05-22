@@ -6,11 +6,11 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:16:45 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/11 12:07:57 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:39:28 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/miniRT.h"
+#include "../../inc/ft_math.h"
 
 /**
  * Calculates the cross product of two 3D vectors.
