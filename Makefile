@@ -112,9 +112,6 @@ dependecies:
 					make -C $(LFT_PATH)
 
 clean:
-					make clean -C $(LFT_PATH)
-					make clean -C $(CVEC_PATH)
-					make clean -C $(MLX_PATH)
 					if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi
 					if [ -d $(DEBUG_DIR) ]; then $(RM) $(DEBUG_DIR); fi
 
@@ -122,6 +119,9 @@ fclean:				clean
 					printf '$(BROOM)\n$(BROOM)\t$(GREEN)Cleaning project$(RESET)\n'
 					$(RM) $(NAME)
 					printf '$(BROOM)\t\t\t$(SUS)\n'
+					make fclean -C $(LFT_PATH)
+					make fclean -C $(CVEC_PATH)
+					make clean -C $(MLX_PATH)
 
 re:					fclean all
 
