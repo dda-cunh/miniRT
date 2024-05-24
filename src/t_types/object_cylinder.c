@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:44:43 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/20 14:48:21 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/24 02:34:38 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,14 @@ t_object_cylinder	*new_cylinder(t_object_cylinder cy)
 		normalize_vec3(cy.axis), cy.diameter, cy.height, 0, destroy, collide};
 	obj->radius = pythagorean_theorem(cy.height / 2, cy.diameter / 2);
 	obj->disk1 = new_plane(point3_plus_vec3(cy.center,
-				scale_vec3(cy.axis, cy.height / 2)), cy.color, cy.axis);
+				scale_vec3(obj->axis, cy.height / 2)), cy.color, obj->axis);
 	if (!obj->disk1)
 	{
 		destroy(obj);
 		return (NULL);
 	}
 	obj->disk2 = new_plane(point3_plus_vec3(cy.center,
-				scale_vec3(cy.axis, -cy.height / 2)), cy.color, cy.axis);
+				scale_vec3(obj->axis, -cy.height / 2)), cy.color, obj->axis);
 	if (!obj->disk2)
 	{
 		destroy(obj);
