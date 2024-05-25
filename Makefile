@@ -110,6 +110,7 @@ dependecies:
 					make -C $(MLX_PATH)
 					make -C $(CVEC_PATH)
 					make -C $(LFT_PATH)
+					make bonus -C $(LFT_PATH)
 
 clean:
 					if [ -d $(OBJ_DIR) ]; then $(RM) $(OBJ_DIR); fi

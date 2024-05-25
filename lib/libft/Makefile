@@ -52,7 +52,9 @@ SRC		= 	ft_memset.c \
 			get_next_line.c \
 			get_next_line_utils.c \
 			ft_abs.c \
-			ft_realloc.c
+			ft_realloc.c \
+			ft_get_all_lines.c \
+			ft_read_file.c \
 
 SRCB	=	ft_lstnew.c \
 			ft_lstadd_front.c \

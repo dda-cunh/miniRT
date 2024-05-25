@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
+#include <stddef.h>
 
 /// @brief This function trys to open the given file and returns
 /// the file descriptor if the opening succeed, else exit the
@@ -53,30 +54,29 @@ static bool	jump_white_space_line(char *line)
 
 static bool	read_file(int fd)
 {
-	char			*line;
 	t_exit_status	res;
 	bool			empty_file;
+	char			**lines;
+	int				i;
 
 	empty_file = true;
-	while (1)
+	lines = ft_get_all_lines(fd);
+	if (!lines)
+		return (true);
+	i = -1;
+	while (lines[++i])
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (line[ft_strlen(line) - 1] == '\n')
-			line[ft_strlen(line) - 1] = '\0';
-		if (jump_white_space_line(line))
+		if (!jump_white_space_line(lines[i]))
 		{
-			free(line);
-			continue ;
+			replace_white_spaces(lines[i]);
+			res = object_analizer(lines[i]);
+			empty_file = false;
 		}
-		replace_white_spaces(line);
-		res = object_analizer(line);
-		empty_file = false;
-		free(line);
+		free(lines[i]);
 		if (res != CHECK_SUCCESS)
 			killprogram(res, get_program());
 	}
+	free(lines);
 	return (empty_file);
 }
 
