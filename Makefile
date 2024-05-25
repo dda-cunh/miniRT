@@ -44,8 +44,7 @@ SRC				=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(RAY_DIR),		ray.c \
 																	collisions.c \
 																	trace.c) \
-										$(addprefix $(UTILS_DIR),	utils2.c \
-																	utils.c) \
+										$(addprefix $(UTILS_DIR),	utils.c) \
 										$(addprefix $(MATH_DIR),	common.c \
 																	point3.c \
 																	vec3.c) \

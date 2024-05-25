@@ -42,19 +42,18 @@ SRC		= 	ft_memset.c \
 			ft_putstr_fd.c \
 			ft_putendl_fd.c \
 			ft_putnbr_fd.c \
-			ft_free_2d.c \
 			ft_close_fds.c \
-			ft_len_2d.c \
 			ft_notdir.c \
 			ft_strdup_tail.c \
 			ft_sisnum.c \
 			ft_sislong.c \
-			get_next_line.c \
-			get_next_line_utils.c \
 			ft_abs.c \
 			ft_realloc.c \
 			ft_get_all_lines.c \
 			ft_read_file.c \
+			matrix.c \
+			get_next_line.c \
+			get_next_line_utils.c \
 
 SRCB	=	ft_lstnew.c \
 			ft_lstadd_front.c \

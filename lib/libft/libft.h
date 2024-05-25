@@ -6,22 +6,17 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/11 18:16:59 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:55:19 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:52:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <sys/wait.h>
-# include <stdbool.h>
-# include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <errno.h>
-# include <fcntl.h>
-# include <stdio.h>
 # include <math.h>
+
 # include "get_next_line.h"
 
 # define STD_OUT	1
@@ -37,14 +32,17 @@ typedef struct s_list
 /* ************************************************************************** */
 /*                                    MEMORY                                  */
 /* ************************************************************************** */
+size_t	null_terminated_matrix_len(void **matrix);
 void	*ft_realloc(void *ptr, size_t prev_size, size_t size);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
+void	free_matrix(void **matrix, size_t lines);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+
 
 /* ************************************************************************** */
 /*                                   STRINGS                                  */
@@ -87,11 +85,9 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 void	close_fds(int fd[], int n);
-void	free_2d(char **split);
 char	**ft_get_all_lines(int fd);
 char	*ft_read_file(int fd);
 char	*ft_notdir(char *path);
-int		len_2d(char **matrix);
 
 /* ************************************************************************** */
 /*                                  LISTS                                     */

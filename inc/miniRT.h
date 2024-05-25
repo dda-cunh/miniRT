@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/22 19:23:50 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:27:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <stdio.h>
 
 # include "../lib/cvector/cvector.h"
 # include "../lib/libft/libft.h"
@@ -34,12 +33,15 @@
 
 # define BAD_EXIT			"Error\n"
 
-# define MAX_RATIO 1.0
-# define MIN_RATIO 0.0
-# define FOV_MAX 180
-# define FOV_MIN 0 
-# define MAX_VECT 1.0
-# define MIN_VECT -1.0
+# define MAX_RATIO			1.0
+# define MIN_RATIO			0.0
+# define FOV_MAX			180
+# define FOV_MIN			0 
+# define MAX_VECT			1.0
+# define MIN_VECT			-1.0
+
+# define CHECK_FAILURE		0
+# define CHECK_SUCCESS		1
 
 typedef enum exit_status
 {
@@ -48,18 +50,16 @@ typedef enum exit_status
 	EXIT_ARGC,
 	EXIT_FILE_EXTENSION,
 	EXIT_OPENING_SCENE,
+	EXIT_CLOSE,
 	EXIT_SCENE,
 	EXIT_MLX,
 	EXIT_MISSING_OBJ,
-	CHECK_FAILURE,
-	CHECK_SUCCESS,
 	INVALID_OBJECT,
 	OBJECT_ALREADY_IN_USE,
 	WRONG_INFO_AMOUNT,
 	BAD_RGB_FORMAT,
 	BAD_COORDS_FORMAT,
 	BAD_RATIO_RANGE,
-	EXIT_CLOSE,
 	FOV_OUT_OF_RANGE,
 	VEC_OUT_OF_RANGE,
 	INVALID_SPHERE_DIAMETER,
@@ -67,7 +67,8 @@ typedef enum exit_status
 	INVALID_CYLINDER_HEIGHT,
 	INVALID_RATIO_FORMAT,
 	BAD_VEC_FORMAT,
-	NOTHING_TO_RENDER
+	NOTHING_TO_RENDER,
+	__LEN_EXIT_ENUM
 }	t_exit_status;
 
 typedef struct s_coll_point3
@@ -184,7 +185,6 @@ t_color				lighting(t_coll_point3 coll, t_vec3 to_light,
 /*                                   UTILS                                    */
 /* ************************************************************************** */
 t_exit_status		__on_exit(t_exit_status exit_code, char *verbose);
-size_t				array_len(char **array);
 bool				check_rgb_string_format(char *rgb, int nums_counter);
 bool				check_vec_string_format(char *vec, int nums_counter);
 void				free_matrix(void **matrix, size_t lines);

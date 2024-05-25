@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_all_lines.c                                 :+:      :+:    :+:   */
+/*   ft_read_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 00:17:30 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/25 01:48:34 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:33:01 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 char	*ft_read_file(int fd)
 {
 	char	buffer[BUFFER_SIZE];
-	char	*old_content;
 	char	*full_content;
-	char	*curr_content;
+	char	*old_content;
 	int		r;
 
 	full_content = NULL;
@@ -25,12 +24,8 @@ char	*ft_read_file(int fd)
 	r = read(fd, buffer, BUFFER_SIZE);
 	while (r > 0)
 	{
-		curr_content = ft_strdup(buffer);
-		if (!curr_content)
-			break ;
 		old_content = full_content;
-		full_content = ft_strjoin(full_content, curr_content);
-		free(curr_content);
+		full_content = ft_strjoin(full_content, buffer);
 		if (old_content)
 			free(old_content);
 		ft_bzero(buffer, BUFFER_SIZE);

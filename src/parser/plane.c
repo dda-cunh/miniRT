@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 21:10:15 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 14:57:09 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:55:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_exit_status	build_plane(char **array)
 	char			**vec;
 	t_exit_status	res;
 
-	if (array_len(array) != 4)
+	if (null_terminated_matrix_len((void *)array) != 4)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_rgb_string_format(array[3], 0))
 		return (BAD_RGB_FORMAT);
@@ -69,8 +69,8 @@ t_exit_status	build_plane(char **array)
 	res = check_coords_vec_rgb(coords, vec, rgb);
 	if (res == CHECK_SUCCESS)
 		res = set_plane(coords, vec, rgb);
-	free_matrix((void **)coords, array_len(coords));
-	free_matrix((void **)vec, array_len(vec));
-	free_matrix((void **)rgb, array_len(rgb));
+	free_matrix((void **)coords, null_terminated_matrix_len((void *)coords));
+	free_matrix((void **)vec, null_terminated_matrix_len((void *)vec));
+	free_matrix((void **)rgb, null_terminated_matrix_len((void *)rgb));
 	return (res);
 }

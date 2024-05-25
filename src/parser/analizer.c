@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:25:19 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/03/30 13:28:33 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:52:23 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ t_exit_status	object_analizer(char *line)
 		res = build_light(array);
 	else
 		res = set_collidable(array);
-	free_matrix((void **)array, array_len(array));
+	free_matrix((void **)array, null_terminated_matrix_len((void *)array));
 	return (res);
 }

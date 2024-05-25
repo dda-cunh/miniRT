@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:08:57 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 14:50:28 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:54:10 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ bool	check_rgb_format(char **rgb)
 	int		rgb_value;
 
 	i = 0;
-	if (array_len(rgb) != 3)
+	if (null_terminated_matrix_len((void *)rgb) != 3)
 		return (false);
 	while (rgb[i])
 	{
@@ -101,7 +101,7 @@ bool	check_coordinates(char **coords)
 	int		i;
 
 	i = 0;
-	if (array_len(coords) != 3)
+	if (null_terminated_matrix_len((void *)coords) != 3)
 		return (false);
 	while (coords[i])
 	{

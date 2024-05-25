@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 15:24:04 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 16:21:57 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:53:17 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,15 @@ t_exit_status	build_camera(char **array)
 
 	if (get_program()->camera.is_already_in_use)
 		return (OBJECT_ALREADY_IN_USE);
-	if (array_len(array) != 4)
+	if (null_terminated_matrix_len((void *)array) != 4)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_vec_string_format(array[2], 0))
 		return (BAD_VEC_FORMAT);
 	coords = ft_split(array[1], ',');
 	vector_orientations = ft_split(array[2], ',');
 	res = generic_camera_builder(array[3], coords, vector_orientations);
-	free_matrix((void **)coords, array_len(coords));
-	free_matrix((void **)vector_orientations, array_len(vector_orientations));
+	free_matrix((void **)coords, null_terminated_matrix_len((void *)coords));
+	free_matrix((void **)vector_orientations,
+		null_terminated_matrix_len((void *)vector_orientations));
 	return (res);
 }

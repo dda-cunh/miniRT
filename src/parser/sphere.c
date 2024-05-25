@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 17:11:46 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 14:58:12 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:55:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_exit_status	build_sphere(char **array)
 	char			**coords;
 	char			**rgb;
 
-	if (array_len(array) != 4)
+	if (null_terminated_matrix_len((void *)array) != 4)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_sphere_diameter(array[2]))
 		return (INVALID_SPHERE_DIAMETER);
@@ -71,13 +71,13 @@ t_exit_status	build_sphere(char **array)
 	rgb = ft_split(array[3], ',');
 	if (!rgb)
 	{
-		free_matrix((void **)coords, array_len(array));
+		free_matrix((void **)coords, null_terminated_matrix_len((void *)array));
 		return (EXIT_MALLOC);
 	}
 	res = check_coords_rgb(rgb, coords);
 	if (res == CHECK_SUCCESS)
 		res = set_sphere(array[2], coords, rgb);
-	free_matrix((void **)coords, array_len(coords));
-	free_matrix((void **)rgb, array_len(rgb));
+	free_matrix((void **)coords, null_terminated_matrix_len((void *)coords));
+	free_matrix((void **)rgb, null_terminated_matrix_len((void *)rgb));
 	return (res);
 }

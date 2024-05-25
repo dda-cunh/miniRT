@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 12:42:28 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/08 20:02:15 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:55:03 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_exit_status	build_ambient_light(char **array)
 
 	if (get_program()->ambient_l.is_already_in_use)
 		return (OBJECT_ALREADY_IN_USE);
-	if (array_len(array) != 3)
+	if (null_terminated_matrix_len((void *)array) != 3)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_rgb_string_format(array[2], 0))
 		return (BAD_RGB_FORMAT);
@@ -91,12 +91,12 @@ t_exit_status	build_ambient_light(char **array)
 		return (EXIT_MALLOC);
 	if (!check_rgb_format(rgb))
 	{
-		free_matrix((void **)rgb, array_len(rgb));
+		free_matrix((void **)rgb, null_terminated_matrix_len((void *)rgb));
 		return (BAD_RGB_FORMAT);
 	}
 	res = generic_light_builder(&get_program()->ambient_l,
 			array[1], rgb, NULL);
-	free_matrix((void **)rgb, array_len(rgb));
+	free_matrix((void **)rgb, null_terminated_matrix_len((void *)rgb));
 	return (res);
 }
 
@@ -112,7 +112,7 @@ t_exit_status	build_light(char **array)
 
 	if (get_program()->light.is_already_in_use)
 		return (OBJECT_ALREADY_IN_USE);
-	if (array_len(array) != 4)
+	if (null_terminated_matrix_len((void *)array) != 4)
 		return (WRONG_INFO_AMOUNT);
 	if (!check_rgb_string_format(array[3], 0))
 		return (BAD_RGB_FORMAT);
@@ -122,11 +122,11 @@ t_exit_status	build_light(char **array)
 	rgb = ft_split(array[3], ',');
 	if (!rgb)
 	{
-		free_matrix((void **)coords, array_len(coords));
+		free_matrix((void **)coords, null_terminated_matrix_len((void *)coords));
 		return (EXIT_MALLOC);
 	}
 	res = generic_light_builder(&get_program()->light, array[2], rgb, coords);
-	free_matrix((void **)rgb, array_len(rgb));
-	free_matrix((void **)coords, array_len(coords));
+	free_matrix((void **)rgb, null_terminated_matrix_len((void *)rgb));
+	free_matrix((void **)coords, null_terminated_matrix_len((void *)coords));
 	return (res);
 }

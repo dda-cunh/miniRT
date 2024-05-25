@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 10:43:18 by arabelo-          #+#    #+#             */
-/*   Updated: 2024/05/20 14:51:10 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:53:46 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_exit_status	check_vec_orientation(char **vec_orien)
 	double	orientation;
 
 	i = 0;
-	if (array_len(vec_orien) != 3)
+	if (null_terminated_matrix_len((void *)vec_orien) != 3)
 		return (WRONG_INFO_AMOUNT);
 	while (vec_orien[i])
 	{

@@ -3,33 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arabelo- <arabelo-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:07:53 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/17 21:56:58 by arabelo-         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:23:58 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/miniRT.h"
 
+/// @brief This function checks if the string, which represents
+/// the rgb is well formated.
+/// @param rgb 
+/// @param nums_counter 
+/// @return 
+bool	check_rgb_string_format(char *rgb, int nums_counter)
+{
+	int	counter;
+
+	counter = 0;
+	while (rgb && ft_isdigit(*rgb))
+	{
+		rgb++;
+		counter++;
+	}
+	if (rgb && *rgb && *rgb == ',' && counter <= 3 && nums_counter != 2)
+		return (check_rgb_string_format(++rgb, ++nums_counter));
+	else if (rgb && !*rgb && counter <= 3 && nums_counter == 2)
+		return (true);
+	return (false);
+}
+
+/// @brief This function checks if the string, which represents
+/// the vec is well formated.
+/// @param vec 
+/// @param nums_counter 
+/// @return 
+bool	check_vec_string_format(char *vec, int nums_counter)
+{
+	int	counter;
+
+	counter = 0;
+	if (vec && *vec == '-' && ft_isdigit(*(vec + 1)))
+		vec++;
+	while (vec && (ft_isdigit(*vec) || *vec == '.'))
+	{
+		vec++;
+		counter++;
+	}
+	if (vec && *vec && *vec == ',' && counter <= 3 && nums_counter != 2)
+		return (check_vec_string_format(++vec, ++nums_counter));
+	else if (vec && !*vec && counter <= 3 && nums_counter == 2)
+		return (true);
+	return (false);
+}
+
 static void	print_exit_msg(t_exit_status exit_code, char *verbose)
 {
-	if (exit_code == EXIT_MALLOC)
-		ft_putstr_fd("Failed Malloc", STD_ERR);
-	else if (exit_code == EXIT_ARGC)
-		ft_putstr_fd("Wrong number of parameters", STD_ERR);
-	else if (exit_code == EXIT_FILE_EXTENSION)
-		ft_putstr_fd("Wrong file extension", STD_ERR);
-	else if (exit_code == EXIT_OPENING_SCENE)
-		ft_putstr_fd("Failure at open", STD_ERR);
-	else if (exit_code == EXIT_CLOSE)
-		ft_putstr_fd("Close failed", STD_ERR);
-	else if (exit_code == EXIT_SCENE)
-		ft_putstr_fd("Bad Scene", STD_ERR);
-	else if (exit_code == EXIT_MLX)
-		ft_putstr_fd("MLX failed:\t", STD_OUT);
-	else
-		check_msg(exit_code);
+	static char	*exit_msgs[__LEN_EXIT_ENUM] = {"", "Failed Malloc",
+		"Wrong number of parameters", "Wrong file extension", "Failure at open",
+		"Close failed", "Bad Scene", "MLX failed", "Missing object",
+		"Invalid object", "Object already set", "Wrong amount of informations",
+		"Invalid RGB format", "Invalid coordinates format",
+		"Invalid ratio range", "Field Of View out of range",
+		"Vector magnitude out of range", "Invalid sphere diameter",
+		"Invalid cylinder diameter", "Invalid cylinder height",
+		"Invalid ratio format", "Invalid vector format",
+		"There's nothing to render"};
+
+	if (exit_code < 0 || exit_code >= __LEN_EXIT_ENUM)
+		return ;
+	ft_putstr_fd(exit_msgs[exit_code], STD_ERR);
 	if (verbose)
 	{
 		ft_putstr_fd(":\t", STD_ERR);
@@ -46,21 +90,4 @@ t_exit_status	__on_exit(t_exit_status exit_code, char *verbose)
 		print_exit_msg(exit_code, verbose);
 	}
 	return (exit_code);
-}
-
-void	free_matrix(void **matrix, size_t lines)
-{
-	size_t	i;
-
-	i = 0;
-	if (matrix)
-	{
-		while (i < lines)
-		{
-			if (matrix[i])
-				free(matrix[i]);
-			i++;
-		}
-		free(matrix);
-	}
 }
