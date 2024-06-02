@@ -3,7 +3,7 @@ NAME			=	miniRT
 
 CC				=	cc
 
-CFLAGS			=	-Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS			=	-Wall -Wextra -Werror #-g -fsanitize=thread
 
 RM				=	rm -rf
 
@@ -35,11 +35,12 @@ CVEC_PATH		=	$(addprefix $(LIBS_DIR), cvector/)
 
 MLX_PATH		=	$(addprefix $(LIBS_DIR), minilibx-linux/)
 
-LINKS			=	-lm -lXext -lX11 -L$(MLX_PATH) -lmlx -L$(LFT_PATH) -lft \
+LINKS			=	-pthread -lm -lXext -lX11 -L$(MLX_PATH) -lmlx -L$(LFT_PATH) -lft \
 					-L$(CVEC_PATH) -lcvector
 
 SRC				=	$(addprefix $(SRC_DIR),	main.c \
 										$(addprefix $(PROG_DIR),	program.c \
+																	coll_routine_data.c \
 																	events.c) \
 										$(addprefix $(RAY_DIR),		ray.c \
 																	collisions.c \

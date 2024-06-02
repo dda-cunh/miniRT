@@ -6,13 +6,14 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/25 16:27:08 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:50:11 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include <pthread.h>
 # include <stdbool.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -68,6 +69,8 @@ typedef enum exit_status
 	INVALID_RATIO_FORMAT,
 	BAD_VEC_FORMAT,
 	NOTHING_TO_RENDER,
+	EXIT_PTHREAD_CREATE,
+	EXIT_PTHREAD_JOIN,
 	__LEN_EXIT_ENUM
 }	t_exit_status;
 
@@ -152,19 +155,28 @@ typedef union u_collidable_shape
 	t_object_plane		*pl;
 }	t_collidable_shape;
 
+typedef struct s_coll_routine_data
+{
+	t_collidable_shape	*curr_ent;
+	pthread_t			thread;
+	t_ray3				ray;
+}	t_coll_routine_data;
+
 typedef struct s_prog
 {
-	t_coll_point3	**collisions;
-	t_cvector		*collidables;
-	t_light			light;
-	t_camera		camera;
-	t_light			ambient_l;
-	t_window		win;
+	t_coll_routine_data	*routine_arr;
+	t_coll_point3		**collisions;
+	t_cvector			*collidables;
+	t_light				light;
+	t_camera			camera;
+	t_light				ambient_l;
+	t_window			win;
 }	t_prog;
 
 /* ************************************************************************** */
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
+t_coll_routine_data	*new_coll_routine_data_arr(size_t length);
 t_prog				*get_program(void);
 int					killprogram(int keycode, t_prog *program);
 int					key_hook(int keycode, t_prog *program);

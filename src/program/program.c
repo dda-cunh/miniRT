@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:51:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/05/22 18:03:15 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:48:34 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	killprogram(int keycode, t_prog *program)
 {
 	if (program)
 	{
+		if (program->routine_arr)
+			free(program->routine_arr);
 		if (program->collidables)
 			program->collidables->destroy(program->collidables);
 		if (program->collisions)
