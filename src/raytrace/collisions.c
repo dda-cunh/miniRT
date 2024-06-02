@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 16:17:09 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 17:19:17 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:40:37 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,47 +29,6 @@ t_coll_point3	get_no_collision(void)
 }
 
 /**
- * Wrapper function to call the appropriate collision function
- 	based on the collidable shape type.
- * 
- * @param ray		The ray to check for collision.
- * @param curr_ent	The current collidable shape.
- * @return			The collision point structure representing the collision.
- */
-static t_coll_point3	coll_func_wrapper(t_ray3 ray,
-	t_collidable_shape *curr_ent)
-{
-	t_collidable_id	id;
-
-	if (curr_ent)
-	{
-		id = get_coll_shape_id(*curr_ent);
-		if (id == ID_CYLINDER)
-			return (curr_ent->cy->collide(curr_ent->cy, ray));
-		else if (id == ID_SPHERE)
-			return (curr_ent->sp->collide(curr_ent->sp, ray));
-		else if (id == ID_PLANE)
-			return (curr_ent->pl->collide(curr_ent->pl, ray));
-	}
-	return (get_no_collision());
-}
-
-static void	*coll_routine(void *arg)
-{
-	t_coll_routine_data	*data;
-	t_coll_point3		*collision;
-
-	collision = NULL;
-	if (arg)
-	{
-		data = (t_coll_routine_data *) arg;
-		collision = malloc(sizeof(t_coll_point3));
-		*collision = coll_func_wrapper(data->ray, data->curr_ent);
-	}
-	return ((void *) collision);
-}
-
-/**
  * Checks if a collision scalar value is considered valid.
  * 
  * @param scalar	The collision scalar value to check.
@@ -78,6 +37,31 @@ static void	*coll_routine(void *arg)
 bool	valid_collision(double scalar)
 {
 	return (scalar >= EPSILON && scalar < INFINITY);
+}
+
+static t_cvector	*new_coll_routine_data_arr(t_cvector *collidables,
+												t_ray3 ray)
+{
+	t_coll_routine_data	new_elem;
+	t_cvector			*arr;
+	size_t				i;
+
+	arr = cvector_new(sizeof(t_coll_routine_data), NULL);
+	if (!arr)
+		return (NULL);
+	i = 0;
+	while (i < collidables->length)
+	{
+		new_elem = (t_coll_routine_data)
+		{
+			collidables->get(collidables, i),
+			0,
+			ray
+		};
+		arr->add(arr, &new_elem, false);
+		i++;
+	}
+	return (arr);
 }
 
 /**
@@ -89,39 +73,20 @@ bool	valid_collision(double scalar)
  */
 t_coll_point3	do_collisions(t_ray3 ray, t_prog *program)
 {
-	t_coll_routine_data	*routine_arr;
-	t_coll_point3		*thread_ret;
-	t_coll_point3		min_coll;
-	size_t				i;
+	t_coll_point3	*worker_ret;
+	t_coll_point3	min_coll;
+	pthread_t		main_worker;
 
-	routine_arr = program->routine_arr;
-	routine_arr->ray = ray;
-	i = -1;
-	while (++i < program->collidables->length)
-	{
-		routine_arr[i].curr_ent = program->collidables
-			->get(program->collidables, i);
-		if (errno)
-		{
-			printf("%d:\t%s\n", errno, strerror(errno));
-		}
-		if (pthread_create(&routine_arr[i].thread, NULL, &coll_routine,
-				routine_arr + i))
-			killprogram(EXIT_PTHREAD_CREATE, program);
-	}
 	min_coll = get_no_collision();
-	i = -1;
-	while (++i < program->collidables->length)
+	if (pthread_create(&main_worker, NULL, async_rays_routine,
+						new_coll_routine_data_arr(program->collidables, ray)))
+		killprogram(EXIT_PTHREAD_CREATE, program);
+	if (pthread_join(main_worker, (void **) &worker_ret))
+		killprogram(EXIT_PTHREAD_JOIN, program);
+	if (worker_ret)
 	{
-		if (pthread_join(routine_arr[i].thread, (void **) &thread_ret))
-			killprogram(EXIT_PTHREAD_JOIN, program);
-		if (thread_ret)
-		{
-			if (valid_collision(thread_ret->scalar)
-				&& thread_ret->scalar < min_coll.scalar)
-				min_coll = *thread_ret;
-			free(thread_ret);
-		}
+		min_coll = *worker_ret;
+		free(worker_ret);
 	}
 	return (min_coll);
 }

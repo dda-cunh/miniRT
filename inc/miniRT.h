@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 16:50:11 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:31:22 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,32 +46,32 @@
 
 typedef enum exit_status
 {
-	EXIT_GOOD,
-	EXIT_MALLOC,
-	EXIT_ARGC,
-	EXIT_FILE_EXTENSION,
-	EXIT_OPENING_SCENE,
-	EXIT_CLOSE,
-	EXIT_SCENE,
-	EXIT_MLX,
-	EXIT_MISSING_OBJ,
-	INVALID_OBJECT,
-	OBJECT_ALREADY_IN_USE,
-	WRONG_INFO_AMOUNT,
-	BAD_RGB_FORMAT,
-	BAD_COORDS_FORMAT,
-	BAD_RATIO_RANGE,
-	FOV_OUT_OF_RANGE,
-	VEC_OUT_OF_RANGE,
-	INVALID_SPHERE_DIAMETER,
-	INVALID_CYLINDER_DIAMETER,
-	INVALID_CYLINDER_HEIGHT,
-	INVALID_RATIO_FORMAT,
-	BAD_VEC_FORMAT,
-	NOTHING_TO_RENDER,
-	EXIT_PTHREAD_CREATE,
-	EXIT_PTHREAD_JOIN,
-	__LEN_EXIT_ENUM
+	EXIT_GOOD,					// 0
+	EXIT_MALLOC, 				// 1
+	EXIT_ARGC,					// 2
+	EXIT_FILE_EXTENSION,		// 3
+	EXIT_OPENING_SCENE,			// 4
+	EXIT_CLOSE,					// 5
+	EXIT_SCENE,					// 6
+	EXIT_MLX,					// 7
+	EXIT_MISSING_OBJ,			// 8
+	INVALID_OBJECT,				// 9
+	OBJECT_ALREADY_IN_USE,		// 10
+	WRONG_INFO_AMOUNT,			// 11
+	BAD_RGB_FORMAT,				// 12
+	BAD_COORDS_FORMAT,			// 13
+	BAD_RATIO_RANGE,			// 14
+	FOV_OUT_OF_RANGE,			// 15
+	VEC_OUT_OF_RANGE,			// 16
+	INVALID_SPHERE_DIAMETER,	// 17
+	INVALID_CYLINDER_DIAMETER,	// 18
+	INVALID_CYLINDER_HEIGHT,	// 19
+	INVALID_RATIO_FORMAT,		// 20
+	BAD_VEC_FORMAT,				// 21
+	NOTHING_TO_RENDER,			// 22
+	EXIT_PTHREAD_CREATE,		// 23
+	EXIT_PTHREAD_JOIN,			// 24
+	__LEN_EXIT_ENUM				// 25
 }	t_exit_status;
 
 typedef struct s_coll_point3
@@ -164,7 +164,6 @@ typedef struct s_coll_routine_data
 
 typedef struct s_prog
 {
-	t_coll_routine_data	*routine_arr;
 	t_coll_point3		**collisions;
 	t_cvector			*collidables;
 	t_light				light;
@@ -176,7 +175,6 @@ typedef struct s_prog
 /* ************************************************************************** */
 /*                                   PROGRAM                                  */
 /* ************************************************************************** */
-t_coll_routine_data	*new_coll_routine_data_arr(size_t length);
 t_prog				*get_program(void);
 int					killprogram(int keycode, t_prog *program);
 int					key_hook(int keycode, t_prog *program);
@@ -187,11 +185,13 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 t_coll_point3		get_no_collision(void);
+void				*async_rays_routine(void *arg);
 bool				valid_collision(double scalar);
 void				do_rays(t_prog *program);
 void				trace(t_prog *program);
 t_color				lighting(t_coll_point3 coll, t_vec3 to_light,
 						t_light light);
+
 
 /* ************************************************************************** */
 /*                                   UTILS                                    */

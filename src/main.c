@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:16:25 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 16:50:32 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/02 22:15:08 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,5 @@ int	main(int ac, char **av)
 			WINDOW_W, WINDOW_H, "miniRT");
 	if (!program->win.mlx_ptr || !program->win.win_ptr)
 		return (killprogram(EXIT_MLX, program));
-	program->routine_arr = new_coll_routine_data_arr(program->collidables
-													->length);
 	return (render(program));
 }
