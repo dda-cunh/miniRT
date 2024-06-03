@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/03 11:11:22 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:13:15 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 t_coll_point3		get_no_collision(void);
 bool				valid_collision(double scalar);
+t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 void				do_rays(t_prog *program);
 void				trace(t_prog *program);
 t_color				lighting(t_coll_point3 coll, t_vec3 to_light,

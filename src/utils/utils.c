@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:07:53 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 22:35:49 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:13:34 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static void	print_exit_msg(t_exit_status exit_code, char *verbose)
 		"Vector magnitude out of range", "Invalid sphere diameter",
 		"Invalid cylinder diameter", "Invalid cylinder height",
 		"Invalid ratio format", "Invalid vector format",
-		"There's nothing to render", "On PTHREAD_CREATE",
 		"On PTHREAD_JOIN"};
 
 	if (exit_code < 0 || exit_code >= __LEN_EXIT_ENUM)

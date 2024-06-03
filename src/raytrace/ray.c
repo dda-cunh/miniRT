@@ -6,7 +6,7 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:56:54 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 23:05:59 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:13:56 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,6 @@ void	do_rays(t_prog *prog)
 			prog->collisions[curr_y][curr_x] = do_ray(curr_x, curr_y, prog);
 			if (valid_collision(prog->collisions[curr_y][curr_x].scalar))
 				ambient(&prog->collisions[curr_y][curr_x], prog->ambient_l);
-			ft_putnbr_fd(curr_x, 1);
-			ft_putstr_fd(" ", 1);
-			ft_putnbr_fd(curr_y, 1);
-			ft_putstr_fd(" ", 1);
-			ft_putnbr_fd(prog->collisions[curr_y][curr_x].scalar, 1);
-			ft_putendl_fd("", 1);
 		}
 	}
 }
