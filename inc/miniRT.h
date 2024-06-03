@@ -6,14 +6,13 @@
 /*   By: dda-cunh <dda-cunh@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:12 by dda-cunh          #+#    #+#             */
-/*   Updated: 2024/06/02 22:31:22 by dda-cunh         ###   ########.fr       */
+/*   Updated: 2024/06/03 11:11:22 by dda-cunh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include <pthread.h>
 # include <stdbool.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -69,9 +68,7 @@ typedef enum exit_status
 	INVALID_RATIO_FORMAT,		// 20
 	BAD_VEC_FORMAT,				// 21
 	NOTHING_TO_RENDER,			// 22
-	EXIT_PTHREAD_CREATE,		// 23
-	EXIT_PTHREAD_JOIN,			// 24
-	__LEN_EXIT_ENUM				// 25
+	__LEN_EXIT_ENUM				// 23
 }	t_exit_status;
 
 typedef struct s_coll_point3
@@ -155,13 +152,6 @@ typedef union u_collidable_shape
 	t_object_plane		*pl;
 }	t_collidable_shape;
 
-typedef struct s_coll_routine_data
-{
-	t_collidable_shape	*curr_ent;
-	pthread_t			thread;
-	t_ray3				ray;
-}	t_coll_routine_data;
-
 typedef struct s_prog
 {
 	t_coll_point3		**collisions;
@@ -183,15 +173,12 @@ int					kill_x(void *program);
 /* ************************************************************************** */
 /*                                  RAYTRACE                                  */
 /* ************************************************************************** */
-t_coll_point3		do_collisions(t_ray3 ray, t_prog *program);
 t_coll_point3		get_no_collision(void);
-void				*async_rays_routine(void *arg);
 bool				valid_collision(double scalar);
 void				do_rays(t_prog *program);
 void				trace(t_prog *program);
 t_color				lighting(t_coll_point3 coll, t_vec3 to_light,
 						t_light light);
-
 
 /* ************************************************************************** */
 /*                                   UTILS                                    */

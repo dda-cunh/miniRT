@@ -43,7 +43,6 @@ SRC				=	$(addprefix $(SRC_DIR),	main.c \
 																	events.c) \
 										$(addprefix $(RAY_DIR),		ray.c \
 																	collisions.c \
-																	async_rays.c \
 																	trace.c) \
 										$(addprefix $(UTILS_DIR),	utils.c) \
 										$(addprefix $(MATH_DIR),	common.c \
